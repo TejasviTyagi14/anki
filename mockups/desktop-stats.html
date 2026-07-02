@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Anki — desktop statistics</title>
+<style>
+  :root {
+    --canvas:#f5f5f5; --elevated:#fff; --overlay:#fcfcfc; --fg:#020202;
+    --fg-subtle:#737373; --fg-faint:#afafaf; --border:#c4c4c4; --border-subtle:#e4e4e4;
+    --blue:#3b82f6; --blue-deep:#2563eb; --new:#3b82f6; --learn:#dc2626; --due:#16a34a;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; -webkit-font-smoothing:antialiased; }
+  html, body { width:1280px; height:910px; font-family:"Helvetica Neue",Helvetica,system-ui,sans-serif;
+    background:radial-gradient(1400px 700px at 50% -10%, #fbfbfc,#e9eaee 70%,#e3e4e8 100%); color:var(--fg); font-size:15px; }
+  .board { padding:34px 40px; }
+  .window { width:1200px; height:842px; background:var(--canvas); border-radius:12px; overflow:hidden;
+    box-shadow:0 34px 70px -24px rgba(20,22,30,.5),0 0 0 1px rgba(0,0,0,.06); display:flex; flex-direction:column; }
+  .chrome { height:44px; background:#e8e8ea; border-bottom:1px solid #d6d6d9; display:flex; align-items:center; padding:0 14px; gap:14px; flex:none; }
+  .lights { display:flex; gap:8px; } .lights i{width:12px;height:12px;border-radius:50%;display:block;}
+  .lights .r{background:#ff5f57} .lights .y{background:#febc2e} .lights .g{background:#28c840}
+  .tab-chip{background:var(--canvas);border-radius:9px 9px 0 0;padding:8px 16px;font-size:12.5px;font-weight:600;color:#3a3a3a;display:flex;align-items:center;gap:8px;margin-bottom:-1px;}
+  .star{width:16px;height:16px;}
+  .urlbar{flex:1;height:26px;background:#fff;border-radius:7px;display:flex;align-items:center;gap:8px;padding:0 12px;font-size:12.5px;color:var(--fg-subtle);}
+  .toolbar{height:50px;flex:none;display:flex;align-items:center;justify-content:center;gap:4px;position:relative;background:rgba(252,252,252,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-subtle);}
+  .hitem{padding:6px 16px;font-weight:700;font-size:14px;color:#2a2a2a;border-radius:8px;display:flex;align-items:center;gap:7px;}
+  .hitem.active{color:var(--blue-deep);}
+
+  .rangebox{flex:none;display:flex;align-items:center;justify-content:center;gap:22px;padding:14px 0;border-bottom:1px solid var(--border-subtle);font-size:13.5px;}
+  .seg{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+  .seg span{padding:6px 14px;font-weight:600;color:var(--fg-subtle);border-right:1px solid var(--border);}
+  .seg span:last-child{border-right:none;}
+  .seg span.on{background:linear-gradient(var(--blue),var(--blue-deep));color:#fff;}
+
+  .grid{flex:1;overflow:hidden;padding:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-content:start;}
+  .gcard{background:#fff;border:1px solid var(--border-subtle);border-radius:12px;padding:15px 16px 16px;box-shadow:0 1px 3px rgba(20,20,20,.05);}
+  .gtitle{font-size:14px;font-weight:700;}
+  .gdesc{font-size:11.5px;color:var(--fg-subtle);margin:2px 0 12px;}
+
+  .today-grid{display:flex;gap:8px;margin-top:4px;}
+  .tc{flex:1;text-align:center;} .tn{font-size:24px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em;} .tl{font-size:10.5px;color:var(--fg-subtle);font-weight:600;}
+
+  .bars{display:flex;align-items:flex-end;gap:6px;height:92px;}
+  .bars > i{flex:1;border-radius:3px 3px 0 0;}
+
+  .donut-wrap{display:flex;align-items:center;gap:14px;}
+  .legend{font-size:11.5px;line-height:1.7;}
+  .legend b{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:middle;}
+
+  .heat{display:flex;flex-wrap:wrap;gap:3px;}
+  .heat > i{width:13px;height:13px;border-radius:3px;}
+
+  table.ret{width:100%;border-collapse:collapse;font-size:12px;}
+  table.ret th,table.ret td{text-align:right;padding:4px 6px;border-bottom:1px solid #f0f0f0;}
+  table.ret th:first-child,table.ret td:first-child{text-align:left;color:var(--fg-subtle);}
+  table.ret thead th{color:var(--fg-subtle);font-weight:600;}
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="window">
+    <div class="chrome">
+      <div class="lights"><i class="r"></i><i class="y"></i><i class="g"></i></div>
+      <div class="tab-chip">
+        <svg class="star" viewBox="0 0 24 24"><rect x="4" y="3" width="13" height="18" rx="2.5" fill="#9aa0a6"/><path d="M16 7l1.4 3.4L21 12l-3.6 1.6L16 17l-1.4-3.4L11 12l3.6-1.6z" fill="#0084dd"/></svg>
+        Anki
+      </div>
+      <div class="urlbar">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#737373"><path d="M12 1a7 7 0 00-7 7v3H4v11h16V11h-1V8a7 7 0 00-7-7zm0 2a5 5 0 015 5v3H7V8a5 5 0 015-5z"/></svg>
+        app.ankiweb.net/stats
+      </div>
+    </div>
+    <div class="toolbar">
+      <span class="hitem">Decks</span><span class="hitem">Add</span><span class="hitem">Browse</span><span class="hitem active"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Stats</span><span class="hitem">Sync</span>
+    </div>
+
+    <div class="rangebox">
+      <div class="seg"><span class="on">deck</span><span>collection</span><span>Search</span></div>
+      <div class="seg"><span class="on">last 12 months</span><span>all history</span></div>
+    </div>
+
+    <div class="grid">
+      <!-- Today -->
+      <div class="gcard">
+        <div class="gtitle">Today</div>
+        <div class="gdesc">Studied 47 cards in 12 minutes (15.3s/card)</div>
+        <div class="today-grid">
+          <div class="tc"><div class="tn" style="color:var(--new)">12</div><div class="tl">New</div></div>
+          <div class="tc"><div class="tn" style="color:var(--learn)">3</div><div class="tl">Learn</div></div>
+          <div class="tc"><div class="tn" style="color:var(--due)">32</div><div class="tl">Review</div></div>
+          <div class="tc"><div class="tn">92%</div><div class="tl">Mature</div></div>
+        </div>
+      </div>
+
+      <!-- Future Due -->
+      <div class="gcard">
+        <div class="gtitle">Future Due</div>
+        <div class="gdesc">The number of reviews due in the future.</div>
+        <div class="bars" id="future"></div>
+      </div>
+
+      <!-- Reviews -->
+      <div class="gcard">
+        <div class="gtitle">Reviews</div>
+        <div class="gdesc">The number of questions you have answered.</div>
+        <div class="bars" id="reviews"></div>
+      </div>
+
+      <!-- Card Counts donut -->
+      <div class="gcard">
+        <div class="gtitle">Card Counts</div>
+        <div class="gdesc">Total: 1,284 cards</div>
+        <div class="donut-wrap">
+          <svg width="92" height="92" viewBox="0 0 42 42">
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#eee" stroke-width="7"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#86bcf0" stroke-width="7" stroke-dasharray="14 86" stroke-dashoffset="25"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#f0a868" stroke-width="7" stroke-dasharray="8 92" stroke-dashoffset="11"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#7fd39b" stroke-width="7" stroke-dasharray="30 70" stroke-dashoffset="3"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#2e8b50" stroke-width="7" stroke-dasharray="40 60" stroke-dashoffset="-27"/>
+          </svg>
+          <div class="legend">
+            <div><b style="background:#86bcf0"></b>New 142</div>
+            <div><b style="background:#f0a868"></b>Learning 96</div>
+            <div><b style="background:#7fd39b"></b>Young 386</div>
+            <div><b style="background:#2e8b50"></b>Mature 612</div>
+            <div><b style="background:#FFDC41"></b>Suspended 48</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calendar -->
+      <div class="gcard">
+        <div class="gtitle">Calendar</div>
+        <div class="gdesc">2026</div>
+        <div class="heat" id="heat"></div>
+      </div>
+
+      <!-- Retention -->
+      <div class="gcard">
+        <div class="gtitle">Retention</div>
+        <div class="gdesc">Pass rate of reviewed cards.</div>
+        <table class="ret">
+          <thead><tr><th></th><th>Mature</th><th>All</th></tr></thead>
+          <tbody>
+            <tr><td>Today</td><td>92%</td><td>87%</td></tr>
+            <tr><td>Last week</td><td>90%</td><td>85%</td></tr>
+            <tr><td>Last month</td><td>89%</td><td>84%</td></tr>
+            <tr><td>All time</td><td>88%</td><td>83%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function fill(id, color, n, grad){ const el=document.getElementById(id); for(let i=0;i<n;i++){ const b=document.createElement('i'); b.style.height=(15+Math.random()*85)+'%'; b.style.background=grad?('linear-gradient('+color+',#9ec9f7)'):color; el.appendChild(b);} }
+  fill('future', '#3b82f6', 26, true);
+  fill('reviews', '#16a34a', 26, true);
+  const heat=document.getElementById('heat'); const shades=['#eef3f0','#bfe8cc','#84d39c','#46a86c','#2e8b50','#16a34a'];
+  for(let i=0;i<119;i++){ const d=document.createElement('i'); const r=Math.random(); d.style.background=r<.4?shades[0]:shades[Math.min(5,1+Math.floor(Math.random()*5))]; heat.appendChild(d); }
+</script>
+</body>
+</html>

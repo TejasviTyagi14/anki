@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Anki — desktop web</title>
+<style>
+  :root {
+    --canvas: #f5f5f5;
+    --elevated: #ffffff;
+    --overlay: #fcfcfc;
+    --fg: #020202;
+    --fg-subtle: #737373;
+    --fg-faint: #afafaf;
+    --border: #c4c4c4;
+    --border-subtle: #e4e4e4;
+    --blue: #3b82f6;
+    --blue-deep: #2563eb;
+    --link: #1d4ed8;
+    --new: #3b82f6;
+    --learn: #dc2626;
+    --due: #16a34a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+  html, body {
+    width: 1280px; height: 860px;
+    font-family: "Helvetica Neue", Helvetica, system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: radial-gradient(1400px 700px at 50% -10%, #fbfbfc, #e9eaee 70%, #e3e4e8 100%);
+    color: var(--fg); font-size: 15px;
+  }
+  .board { padding: 34px 40px; }
+
+  /* browser window */
+  .window { width: 1200px; height: 792px; background: var(--canvas); border-radius: 12px; overflow: hidden;
+    box-shadow: 0 34px 70px -24px rgba(20,22,30,.5), 0 0 0 1px rgba(0,0,0,.06); display:flex; flex-direction:column; }
+  .chrome { height: 44px; background: #e8e8ea; border-bottom: 1px solid #d6d6d9; display:flex; align-items:center; padding: 0 14px; gap: 14px; flex:none; }
+  .lights { display:flex; gap: 8px; }
+  .lights i { width: 12px; height: 12px; border-radius: 50%; display:block; }
+  .lights .r{background:#ff5f57} .lights .y{background:#febc2e} .lights .g{background:#28c840}
+  .tabstrip { display:flex; align-items:flex-end; gap:6px; height:100%; }
+  .tab-chip { background: var(--canvas); border-radius: 9px 9px 0 0; padding: 8px 16px; font-size: 12.5px; font-weight:600; color:#3a3a3a; display:flex; align-items:center; gap:8px; margin-bottom:-1px; }
+  .urlbar { flex:1; height: 26px; background:#fff; border-radius: 7px; display:flex; align-items:center; gap:8px; padding: 0 12px; font-size: 12.5px; color: var(--fg-subtle); }
+
+  /* anki toolbar */
+  .toolbar { height: 50px; flex:none; display:flex; align-items:center; justify-content:center; gap: 4px; position: relative;
+    background: rgba(252,252,252,.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); }
+  .hitem { padding: 6px 16px; font-weight: 700; font-size: 14px; color: #2a2a2a; border-radius: 8px; display:flex; align-items:center; gap:7px; }
+  .hitem.active { color: var(--blue-deep); }
+  .hitem svg { display:block; }
+  .tb-right { position:absolute; right: 16px; display:flex; align-items:center; gap: 12px; color: var(--fg-subtle); }
+
+  .main { flex:1; overflow:hidden; padding: 30px 0 0; display:flex; flex-direction:column; align-items:center; }
+  .content { width: 760px; }
+
+  .deck-table { background:#fff; border:1px solid var(--border-subtle); border-radius: 12px; overflow:hidden;
+    box-shadow: 0 1px 3px rgba(20,20,20,.06), 0 6px 18px -10px rgba(20,20,20,.12); }
+  .th { display:flex; align-items:center; padding: 11px 18px; font-size: 12px; font-weight: 700; letter-spacing:.03em; text-transform:uppercase; color: var(--fg-subtle); border-bottom:1px solid var(--border-subtle); }
+  .th .col-deck { flex:1; }
+  .th .col-n { width: 64px; text-align:right; }
+  .th .col-gear { width: 40px; }
+  .drow { display:flex; align-items:center; padding: 12px 18px; position: relative; }
+  .drow + .drow { border-top:1px solid #f0f0f0; }
+  .drow:hover { background: #f7f9fc; }
+  .drow:hover .gear { opacity: 1; }
+  .twisty { width: 18px; color: var(--fg-faint); font-size: 12px; flex:none; }
+  .col-deck { flex:1; display:flex; align-items:center; gap: 9px; }
+  .d-ic { color:#6b7280; display:flex; }
+  .d-ic.f { color: var(--blue); }
+  .dname { font-size: 15px; font-weight: 500; }
+  .dname.indent { padding-left: 22px; }
+  .col-n { width:64px; text-align:right; font-variant-numeric:tabular-nums; font-weight:700; font-size:15px; }
+  .nnew{color:var(--new)} .nlearn{color:var(--learn)} .ndue{color:var(--due)} .nz{color:var(--fg-faint)}
+  .col-gear { width:40px; text-align:right; }
+  .gear { opacity:0; transition: opacity .15s; color: var(--fg-faint); }
+
+  .studied { text-align:center; color: var(--fg-subtle); font-size: 14px; margin: 22px 0 4px; }
+
+  .bottombar { flex:none; height: 64px; border-top:1px solid var(--border-subtle); background: var(--overlay); display:flex; align-items:center; justify-content:center; gap: 12px; }
+  .btn { padding: 9px 18px; border-radius: 8px; font-size: 14px; font-weight: 500; border:1px solid var(--border); background: linear-gradient(#ffffff,#fcfcfc); color: var(--fg); }
+  .btn.primary { background: linear-gradient(var(--blue), var(--blue-deep)); color:#fff; border-color: transparent; }
+
+  .star { width:16px;height:16px; }
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="window">
+    <!-- browser chrome -->
+    <div class="chrome">
+      <div class="lights"><i class="r"></i><i class="y"></i><i class="g"></i></div>
+      <div class="tabstrip">
+        <div class="tab-chip">
+          <svg class="star" viewBox="0 0 24 24"><rect x="4" y="3" width="13" height="18" rx="2.5" fill="#9aa0a6"/><path d="M16 7l1.4 3.4L21 12l-3.6 1.6L16 17l-1.4-3.4L11 12l3.6-1.6z" fill="#0084dd"/></svg>
+          Anki
+        </div>
+      </div>
+      <div class="urlbar">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#737373"><path d="M12 1a7 7 0 00-7 7v3H4v11h16V11h-1V8a7 7 0 00-7-7zm0 2a5 5 0 015 5v3H7V8a5 5 0 015-5z"/></svg>
+        app.ankiweb.net/decks
+      </div>
+    </div>
+
+    <!-- anki toolbar -->
+    <div class="toolbar">
+      <span class="hitem active"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M6 3.5h12" stroke-linecap="round"/></svg>Decks</span>
+      <span class="hitem"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg>Add</span>
+      <span class="hitem"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>Browse</span>
+      <span class="hitem"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Stats</span>
+      <span class="hitem"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 11-3-6.7M21 4v4h-4"/></svg>Sync</span>
+      <span class="tb-right">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v2.5M12 18.5V21M21 12h-2.5M5.5 12H3M18 6l-1.8 1.8M7.8 16.2 6 18M18 18l-1.8-1.8M7.8 7.8 6 6" stroke-linecap="round"/></svg>
+      </span>
+    </div>
+
+    <!-- main -->
+    <div class="main">
+      <div class="content">
+        <div class="deck-table">
+          <div class="th"><span class="col-deck">Deck</span><span class="col-n">New</span><span class="col-n">Learn</span><span class="col-n">Due</span><span class="col-gear"></span></div>
+
+          <div class="drow">
+            <span class="twisty">▾</span>
+            <span class="col-deck"><span class="d-ic f"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2h-8z"/></svg></span><span class="dname">Spanish</span></span>
+            <span class="col-n nnew">24</span><span class="col-n nlearn">8</span><span class="col-n ndue">63</span>
+            <span class="col-gear"><span class="gear"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1l2-1.5-2-3.4-2.3 1a7 7 0 00-1.7-1l-.3-2.6H10.4l-.3 2.6a7 7 0 00-1.7 1l-2.3-1-2 3.4 2 1.5a7 7 0 000 2l-2 1.5 2 3.4 2.3-1a7 7 0 001.7 1l.3 2.6h4.2l.3-2.6a7 7 0 001.7-1l2.3 1 2-3.4-2-1.5a7 7 0 00.1-1z"/></svg></span></span>
+          </div>
+          <div class="drow">
+            <span class="twisty"></span>
+            <span class="col-deck"><span class="d-ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/></svg></span><span class="dname indent">Vocabulary</span></span>
+            <span class="col-n nnew">20</span><span class="col-n nlearn">5</span><span class="col-n ndue">41</span>
+            <span class="col-gear"></span>
+          </div>
+          <div class="drow">
+            <span class="twisty"></span>
+            <span class="col-deck"><span class="d-ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/></svg></span><span class="dname indent">Verb conjugation</span></span>
+            <span class="col-n nnew">4</span><span class="col-n nlearn">3</span><span class="col-n ndue">22</span>
+            <span class="col-gear"></span>
+          </div>
+          <div class="drow">
+            <span class="twisty"></span>
+            <span class="col-deck"><span class="d-ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/></svg></span><span class="dname">Anatomy</span></span>
+            <span class="col-n nnew">12</span><span class="col-n nlearn">0</span><span class="col-n ndue">9</span>
+            <span class="col-gear"></span>
+          </div>
+          <div class="drow">
+            <span class="twisty"></span>
+            <span class="col-deck"><span class="d-ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/></svg></span><span class="dname">Capital cities</span></span>
+            <span class="col-n nz">0</span><span class="col-n nz">0</span><span class="col-n nz">0</span>
+            <span class="col-gear"></span>
+          </div>
+          <div class="drow">
+            <span class="twisty"></span>
+            <span class="col-deck"><span class="d-ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/></svg></span><span class="dname">Japanese · Kanji</span></span>
+            <span class="col-n nnew">15</span><span class="col-n nlearn">2</span><span class="col-n ndue">58</span>
+            <span class="col-gear"></span>
+          </div>
+        </div>
+        <div class="studied">Studied 47 cards in 12 minutes today (15.3s/card)</div>
+      </div>
+    </div>
+
+    <!-- bottom -->
+    <div class="bottombar">
+      <span class="btn">Get Shared</span>
+      <span class="btn">Create Deck</span>
+      <span class="btn">Import File</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

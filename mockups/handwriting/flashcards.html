@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Anki — Handwriting Reviewer</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="flashcards.css" />
+</head>
+<body class="rev-body">
+  <main class="phone-shell">
+    <div class="rev">
+      <!-- Header: progress + counts -->
+      <div class="rev-header">
+        <span class="rev-deck">Spanish · Vocabulary</span>
+        <span class="rev-count" id="count">1 / 6</span>
+      </div>
+      <div class="rev-progress"><i id="progress"></i></div>
+
+      <!-- The card: prompt (longer side) shown, shorter side blanked -->
+      <section class="fcard" id="card">
+        <span class="fcard-lang" id="prompt-lang">Spanish</span>
+        <div class="fcard-prompt" id="prompt">Perro</div>
+        <div class="fcard-divider"></div>
+        <div class="fcard-ask" id="ask">Write the English</div>
+        <div class="fcard-answer" id="answer-reveal" hidden></div>
+      </section>
+
+      <!-- Handwriting input -->
+      <section class="pad-block" id="pad-block">
+        <div class="pad-tools">
+          <div class="tool-group">
+            <button class="chip" data-size="4">Thin</button>
+            <button class="chip is-active" data-size="8">Medium</button>
+            <button class="chip" data-size="14">Thick</button>
+          </div>
+          <div class="tool-group">
+            <button id="undo" class="btn btn--ghost btn--sm">Undo</button>
+            <button id="clear" class="btn btn--ghost btn--sm">Clear</button>
+            <label for="import" class="btn btn--ghost btn--sm">Import</label>
+            <input id="import" type="file" accept="image/*" hidden />
+          </div>
+        </div>
+        <div class="canvas-wrap" id="canvas-wrap">
+          <canvas id="pad" width="900" height="300"></canvas>
+          <span class="hint">Write the missing word</span>
+        </div>
+      </section>
+
+      <!-- Feedback after checking -->
+      <div class="verdict" id="verdict" hidden></div>
+
+      <!-- Bottom action -->
+      <div class="rev-actions">
+        <button id="check" class="btn btn--primary btn--wide">Check answer</button>
+        <button id="next" class="btn btn--primary btn--wide" hidden>Next card →</button>
+        <span id="status" class="status" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <!-- Summary shown at end -->
+    <section class="summary" id="summary" hidden>
+      <h2>Session complete</h2>
+      <div class="summary-score" id="summary-score">0 / 6</div>
+      <p class="summary-sub" id="summary-sub"></p>
+      <button id="restart" class="btn btn--primary btn--wide">Study again</button>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="pad.js"></script>
+  <script src="flashcards.js"></script>
+</body>
+</html>

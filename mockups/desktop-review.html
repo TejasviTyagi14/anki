@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Anki — desktop reviewer</title>
+<style>
+  :root {
+    --canvas:#f5f5f5; --elevated:#fff; --overlay:#fcfcfc; --fg:#020202;
+    --fg-subtle:#737373; --fg-faint:#afafaf; --border:#c4c4c4; --border-subtle:#e4e4e4;
+    --blue:#3b82f6; --blue-deep:#2563eb; --new:#3b82f6; --learn:#dc2626; --due:#16a34a;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; -webkit-font-smoothing:antialiased; }
+  html, body { width:1280px; height:860px; font-family:"Helvetica Neue",Helvetica,system-ui,sans-serif;
+    background:radial-gradient(1400px 700px at 50% -10%, #fbfbfc,#e9eaee 70%,#e3e4e8 100%); color:var(--fg); font-size:15px; }
+  .board { padding:34px 40px; }
+  .window { width:1200px; height:792px; background:var(--canvas); border-radius:12px; overflow:hidden;
+    box-shadow:0 34px 70px -24px rgba(20,22,30,.5),0 0 0 1px rgba(0,0,0,.06); display:flex; flex-direction:column; }
+  .chrome { height:44px; background:#e8e8ea; border-bottom:1px solid #d6d6d9; display:flex; align-items:center; padding:0 14px; gap:14px; flex:none; }
+  .lights { display:flex; gap:8px; } .lights i{width:12px;height:12px;border-radius:50%;display:block;}
+  .lights .r{background:#ff5f57} .lights .y{background:#febc2e} .lights .g{background:#28c840}
+  .tab-chip{background:var(--canvas);border-radius:9px 9px 0 0;padding:8px 16px;font-size:12.5px;font-weight:600;color:#3a3a3a;display:flex;align-items:center;gap:8px;margin-bottom:-1px;}
+  .star{width:16px;height:16px;}
+  .urlbar{flex:1;height:26px;background:#fff;border-radius:7px;display:flex;align-items:center;gap:8px;padding:0 12px;font-size:12.5px;color:var(--fg-subtle);}
+  .toolbar{height:50px;flex:none;display:flex;align-items:center;justify-content:center;gap:4px;position:relative;background:rgba(252,252,252,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-subtle);}
+  .hitem{padding:6px 16px;font-weight:700;font-size:14px;color:#2a2a2a;border-radius:8px;display:flex;align-items:center;gap:7px;}
+  .hitem.active{color:var(--blue-deep);}
+
+  .rev-counts-bar{flex:none;text-align:center;padding:12px 0 0;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;}
+  .rev-counts-bar .u{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px;}
+  .stage{flex:1;display:flex;align-items:center;justify-content:center;padding:10px 40px;}
+  .card{width:620px;background:#fff;border:1px solid var(--border-subtle);border-radius:14px;padding:54px 40px;text-align:center;
+    box-shadow:0 1px 3px rgba(20,20,20,.06),0 10px 30px -14px rgba(20,20,20,.16);position:relative;}
+  .card-crumb{position:absolute;top:16px;left:20px;font-size:12px;font-weight:600;color:var(--fg-faint);}
+  .card-mark{position:absolute;top:14px;right:18px;color:#facc15;}
+  .q{font-size:38px;font-weight:700;letter-spacing:-0.02em;}
+  .divider{height:1px;background:var(--border-subtle);margin:30px auto;width:75%;}
+  .a{font-size:26px;color:#2b2f36;line-height:1.5;}
+  .a small{display:block;font-size:15px;color:var(--fg-subtle);margin-top:6px;}
+
+  .bottombar{flex:none;height:78px;border-top:1px solid var(--border-subtle);background:var(--overlay);display:flex;align-items:center;padding:0 22px;gap:16px;}
+  .btn{padding:9px 16px;border-radius:8px;font-size:14px;font-weight:500;border:1px solid var(--border);background:linear-gradient(#fff,#fcfcfc);color:var(--fg);}
+  .answers{flex:1;display:flex;justify-content:center;gap:12px;}
+  .abtn{width:128px;border-radius:10px;padding:9px 0 8px;color:#fff;text-align:center;}
+  .abtn .lab{font-size:15px;font-weight:700;} .abtn .iv{font-size:12px;font-weight:600;opacity:.92;margin-top:2px;}
+  .abtn.again{background:#dc2626;} .abtn.hard{background:#d97706;} .abtn.good{background:#16a34a;} .abtn.easy{background:#2563eb;}
+  .muted{color:var(--fg-subtle);font-size:13px;}
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="window">
+    <div class="chrome">
+      <div class="lights"><i class="r"></i><i class="y"></i><i class="g"></i></div>
+      <div class="tab-chip">
+        <svg class="star" viewBox="0 0 24 24"><rect x="4" y="3" width="13" height="18" rx="2.5" fill="#9aa0a6"/><path d="M16 7l1.4 3.4L21 12l-3.6 1.6L16 17l-1.4-3.4L11 12l3.6-1.6z" fill="#0084dd"/></svg>
+        Anki
+      </div>
+      <div class="urlbar">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#737373"><path d="M12 1a7 7 0 00-7 7v3H4v11h16V11h-1V8a7 7 0 00-7-7zm0 2a5 5 0 015 5v3H7V8a5 5 0 015-5z"/></svg>
+        app.ankiweb.net/study/spanish::vocabulary
+      </div>
+    </div>
+    <div class="toolbar">
+      <span class="hitem">Decks</span><span class="hitem">Add</span><span class="hitem">Browse</span><span class="hitem">Stats</span><span class="hitem">Sync</span>
+    </div>
+
+    <div class="rev-counts-bar">
+      <span style="color:var(--new)">12</span> + <span style="color:var(--learn)">3</span> + <span class="u" style="color:var(--due)">40</span>
+    </div>
+
+    <div class="stage">
+      <div class="card">
+        <div class="card-crumb">Spanish › Vocabulary</div>
+        <div class="card-mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6.5 7 .6-5.3 4.6 1.6 6.9L12 17.8 5.7 20.6l1.6-6.9L2 9.1l7-.6z"/></svg></div>
+        <div class="q">la biblioteca</div>
+        <div class="divider"></div>
+        <div class="a">the library <small>noun · feminine · “Voy a la biblioteca.”</small></div>
+      </div>
+    </div>
+
+    <div class="bottombar">
+      <span class="btn">Edit</span>
+      <div class="answers">
+        <div class="abtn again"><div class="lab">Again</div><div class="iv">&lt;1m</div></div>
+        <div class="abtn hard"><div class="lab">Hard</div><div class="iv">8m</div></div>
+        <div class="abtn good"><div class="lab">Good</div><div class="iv">1d</div></div>
+        <div class="abtn easy"><div class="lab">Easy</div><div class="iv">4d</div></div>
+      </div>
+      <span class="btn">More ▾</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

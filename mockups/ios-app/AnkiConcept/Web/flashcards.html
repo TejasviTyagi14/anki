@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Anki — MCAT Handwriting Reviewer</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="flashcards.css" />
+</head>
+<body class="rev-body">
+  <main class="stage-shell">
+    <div class="rev">
+      <!-- Left rail: prompt + verdict + action -->
+      <div class="rev-header">
+        <span class="rev-deck" id="subject">Biochemistry</span>
+        <span class="rev-count" id="count">1 / 6</span>
+      </div>
+      <div class="rev-progress"><i id="progress"></i></div>
+
+      <section class="fcard" id="card">
+        <span class="fcard-lang" id="card-subject">MCAT</span>
+        <div class="fcard-prompt" id="prompt">Loading…</div>
+        <div class="fcard-divider"></div>
+        <div class="fcard-ask" id="ask">Write your answer</div>
+        <div class="fcard-answer" id="answer-reveal" hidden></div>
+      </section>
+
+      <!-- Input (handwrite or type) -->
+      <div class="answer-modes" role="tablist" aria-label="Answer input mode">
+        <button id="mode-write" class="is-active" data-mode="write" role="tab">Handwrite</button>
+        <button id="mode-type" data-mode="type" role="tab">Type</button>
+      </div>
+
+      <section class="pad-block" id="pad-block">
+        <div class="pad-tools">
+          <span class="pad-caption">Write with Apple Pencil</span>
+          <div class="tool-group">
+            <button id="undo" class="btn btn--ghost btn--sm">Undo</button>
+            <button id="clear" class="btn btn--ghost btn--sm">Clear</button>
+            <label for="import" class="btn btn--ghost btn--sm">Import</label>
+            <input id="import" type="file" accept="image/*" hidden />
+          </div>
+        </div>
+        <div class="canvas-wrap" id="canvas-wrap">
+          <canvas id="pad" width="900" height="360"></canvas>
+          <span class="hint">Write your answer</span>
+        </div>
+      </section>
+
+      <section class="type-block" id="type-block" hidden>
+        <input id="type-input" type="text" inputmode="text" autocomplete="off"
+               autocapitalize="none" spellcheck="false" placeholder="Type your answer" />
+        <p class="type-hint">Fallback for when handwriting doesn't read cleanly. Press Enter to check.</p>
+      </section>
+
+      <div class="verdict" id="verdict" hidden></div>
+
+      <!-- Desktop-only dashboard widgets -->
+      <aside class="rev-widgets">
+        <div class="widget">
+          <div class="widget-title">This session</div>
+          <div class="stat-grid">
+            <div class="stat"><b id="w-seen">0 / 18</b><span>Seen</span></div>
+            <div class="stat"><b id="w-correct" class="good">0</b><span>Correct</span></div>
+            <div class="stat"><b id="w-acc">—</b><span>Accuracy</span></div>
+            <div class="stat"><b id="w-streak">0</b><span>Streak</span></div>
+          </div>
+          <div class="widget-bar"><i id="w-bar"></i></div>
+          <div class="stat-row"><span>Last read</span><b id="w-reads">—</b></div>
+        </div>
+
+        <div class="widget">
+          <div class="widget-title">Subjects</div>
+          <ul class="subject-list" id="w-subjects"></ul>
+        </div>
+
+        <div class="widget widget--tip">
+          <div class="widget-title">How to answer</div>
+          <p>Write one word, large and clear, for the best recognition. If it misreads, switch to the <b>Type</b> tab. Use <b>Import</b> to grade a photo of paper notes.</p>
+        </div>
+      </aside>
+
+      <div class="rev-actions">
+        <button id="check" class="btn btn--primary btn--wide">Check answer</button>
+        <button id="next" class="btn btn--primary btn--wide" hidden>Next card →</button>
+        <span id="status" class="status" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <section class="summary" id="summary" hidden>
+      <h2>Session complete</h2>
+      <div class="summary-score" id="summary-score">0 / 6</div>
+      <p class="summary-sub" id="summary-sub"></p>
+      <button id="restart" class="btn btn--primary btn--wide">Study again</button>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="pad.js"></script>
+  <script src="flashcards.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+:root {
+  --bg: #f2f2f7;
+  --card: #ffffff;
+  --fg: #111315;
+  --fg-subtle: #8a8f98;
+  --border: #e5e5ea;
+  --blue: #3b82f6;
+  --blue-deep: #2563eb;
+  --green: #16a34a;
+  --green-bg: #eafaf0;
+  --red: #dc2626;
+  --red-bg: #fdecec;
+  --ink: #1c2b45;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+
+/* Ensure the `hidden` attribute always wins over layout rules like
+   `display: flex` on .rev / .summary / .result. */
+[hidden] { display: none !important; }
+
+html, body {
+  min-height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  background: radial-gradient(1200px 600px at 50% -10%, #ffffff, #ececef 60%, #e6e7ea 100%);
+  color: var(--fg);
+}
+
+.app {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 20px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.app-head h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; }
+.app-head .sub { margin-top: 8px; font-size: 14px; line-height: 1.5; color: var(--fg-subtle); }
+
+.prompt-card, .stage, .result {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px -18px rgba(20, 22, 30, 0.4);
+}
+
+.prompt-card { padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 12px; font-weight: 600; color: var(--fg-subtle); text-transform: uppercase; letter-spacing: 0.04em; }
+.field input, .field select {
+  font: inherit; font-size: 16px; padding: 10px 12px;
+  border: 1px solid var(--border); border-radius: 10px; background: #fbfbfd; color: var(--fg);
+}
+.field input:focus, .field select:focus { outline: none; border-color: var(--blue); background: #fff; }
+.field--inline select { max-width: 100%; }
+
+.stage { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+
+.toolbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.tool-group { display: flex; gap: 8px; align-items: center; }
+
+.chip {
+  font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  padding: 7px 12px; border-radius: 999px; border: 1px solid var(--border);
+  background: #fff; color: var(--fg-subtle);
+}
+.chip.is-active { background: var(--fg); color: #fff; border-color: var(--fg); }
+
+.btn {
+  font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+  padding: 9px 16px; border-radius: 10px; border: 1px solid transparent;
+}
+.btn--ghost { background: #f1f1f4; color: var(--fg); }
+.btn--ghost:hover { background: #e7e7ec; }
+.btn--primary { background: var(--blue); color: #fff; }
+.btn--primary:hover { background: var(--blue-deep); }
+.btn--primary:disabled { opacity: 0.55; cursor: default; }
+.import-label { display: inline-flex; align-items: center; }
+
+.canvas-wrap {
+  position: relative;
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    repeating-linear-gradient(0deg, transparent, transparent 68px, #eef1f6 68px, #eef1f6 69px);
+  overflow: hidden;
+  touch-action: none;
+}
+#pad { display: block; width: 100%; height: auto; cursor: crosshair; }
+#imported { display: block; width: 100%; height: auto; }
+.hint {
+  position: absolute; left: 16px; top: 12px; font-size: 13px; color: var(--fg-faint, #b8bcc4);
+  pointer-events: none; font-weight: 600; letter-spacing: 0.02em;
+}
+.canvas-wrap.has-ink .hint { display: none; }
+
+.actions { display: flex; align-items: center; gap: 14px; }
+.status { font-size: 13px; color: var(--fg-subtle); }
+
+.result { padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+.verdict { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; padding: 12px 14px; border-radius: 12px; }
+.verdict.correct { color: var(--green); background: var(--green-bg); }
+.verdict.incorrect { color: var(--red); background: var(--red-bg); }
+
+.readout { display: flex; flex-direction: column; gap: 8px; }
+.readout-row { display: flex; gap: 12px; font-size: 14px; }
+.readout-label { min-width: 92px; color: var(--fg-subtle); font-weight: 600; }
+.readout-value { font-weight: 600; word-break: break-word; }

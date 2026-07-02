@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Handwriting Answer Checker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app-head">
+      <h1>Handwriting Answer Checker</h1>
+      <p class="sub">Write your answer with a mouse, trackpad, or finger / Apple Pencil — or import a photo of an iPad drawing. It gets read as text and checked against the solution.</p>
+    </header>
+
+    <section class="prompt-card">
+      <div class="field">
+        <label for="question">Question / prompt</label>
+        <input id="question" type="text" value="Capital of France?" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label for="solution">Expected answer (solution)</label>
+        <input id="solution" type="text" value="Paris" autocomplete="off" />
+      </div>
+      <div class="field field--inline">
+        <label for="match-mode">Matching</label>
+        <select id="match-mode">
+          <option value="lenient" selected>Lenient (ignore case, spaces &amp; punctuation)</option>
+          <option value="normalized">Normalized (ignore case &amp; extra spaces)</option>
+          <option value="exact">Exact</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="stage">
+      <div class="toolbar">
+        <div class="tool-group">
+          <button id="pen-thin" class="chip" data-size="4">Thin</button>
+          <button id="pen-med" class="chip is-active" data-size="8">Medium</button>
+          <button id="pen-thick" class="chip" data-size="14">Thick</button>
+        </div>
+        <div class="tool-group">
+          <button id="undo" class="btn btn--ghost">Undo</button>
+          <button id="clear" class="btn btn--ghost">Clear</button>
+          <label for="import" class="btn btn--ghost import-label">Import image</label>
+          <input id="import" type="file" accept="image/*" hidden />
+        </div>
+      </div>
+
+      <div class="canvas-wrap">
+        <canvas id="pad" width="1000" height="420"></canvas>
+        <img id="imported" alt="imported drawing" hidden />
+        <span class="hint">Write here</span>
+      </div>
+
+      <div class="actions">
+        <button id="check" class="btn btn--primary">Check answer</button>
+        <span id="status" class="status" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <section id="result" class="result" hidden>
+      <div class="verdict" id="verdict"></div>
+      <div class="readout">
+        <div class="readout-row">
+          <span class="readout-label">Read as</span>
+          <span id="recognized" class="readout-value"></span>
+        </div>
+        <div class="readout-row">
+          <span class="readout-label">Solution</span>
+          <span id="expected" class="readout-value"></span>
+        </div>
+        <div class="readout-row">
+          <span class="readout-label">Confidence</span>
+          <span id="confidence" class="readout-value"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="pad.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
