@@ -38,6 +38,24 @@ const EL_COLORS = {
   I: "#7b1fa2",
 };
 
+// One-click reactants/reagents so a student can build a reaction without
+// hand-writing SMILES (the biggest intuitiveness win short of a full visual
+// editor). Plain SMILES; the grader canonicalizes, and atom-map numbers are only
+// needed on arrow endpoints, not for entering structures.
+const COMMON_FRAGMENTS = [
+  { label: "water", smiles: "O" },
+  { label: "hydroxide", smiles: "[OH-]" },
+  { label: "bromide", smiles: "[Br-]" },
+  { label: "CH\u2083Br", smiles: "CBr" },
+  { label: "t-BuBr", smiles: "CC(C)(C)Br" },
+  { label: "cyanide", smiles: "[C-]#N" },
+  { label: "formaldehyde", smiles: "C=O" },
+  { label: "ammonia", smiles: "N" },
+  { label: "ethanol", smiles: "CCO" },
+  { label: "ethene", smiles: "C=C" },
+  { label: "benzene", smiles: "c1ccccc1" },
+];
+
 // ── tiny DOM helper ──────────────────────────────────────────────────────────
 function el(tag, props = {}, children = []) {
   const node = document.createElement(tag);
@@ -217,9 +235,16 @@ export class MechEditor {
       "aria-live": "polite",
     });
     const head = el("div", { class: "mech-structure-head" }, [
-      el("span", { class: "mech-structure-title", text: "Active step — click a source, then a target" }),
+      el("span", { class: "mech-structure-title", text: "\u2461 Push electron-pushing arrows" }),
       this.els.structureStatus,
     ]);
+    const workspaceHelp = el("p", {
+      class: "mech-help",
+      html:
+        "Click a <b>source</b> (a bond, lone pair, or atom) then its <b>target</b> to draw a curved " +
+        "arrow — or pick <b>From/To</b> below. The picture shows the active step's reactants; " +
+        "each atom shows its <b>index</b> (used by arrow endpoints).",
+    });
 
     // #ketcher-slot: the documented Ketcher mount point (structure layer).
     //
@@ -280,6 +305,7 @@ export class MechEditor {
 
     const workspace = el("div", { class: "mech-workspace card" }, [
       head,
+      workspaceHelp,
       this.els.structure,
       arrowControls,
       this.els.arrowList,
@@ -306,13 +332,24 @@ export class MechEditor {
       onClick: () => this.submit(),
     });
 
+    // Guided order: enter the molecules first (Structures), then push arrows on
+    // the active step (Workspace), then Submit.
     this.root.append(
       prompt,
-      workspace,
       el("div", { class: "mech-steps-wrap" }, [
-        el("div", { class: "mech-steps-head" }, [el("h2", { class: "mech-h2", text: "Steps" }), addStep]),
+        el("div", { class: "mech-steps-head" }, [
+          el("h2", { class: "mech-h2", text: "\u2460 Structures" }),
+          addStep,
+        ]),
+        el("p", {
+          class: "mech-help",
+          html:
+            "Type each molecule's SMILES, or tap a <b>quick-insert</b> chip. Pick one step " +
+            "<b>active</b> to push its arrows above; add products before submitting.",
+        }),
         this.els.steps,
       ]),
+      workspace,
       el("div", { class: "mech-actions" }, [this.els.submit])
     );
   }
@@ -429,10 +466,33 @@ export class MechEditor {
       },
     });
 
-    return el("div", { class: "mech-molgroup", dataset: { role } }, [
+    const children = [
       el("div", { class: "mech-molgroup-head" }, [el("span", { text: singular + "s" }), add]),
       list,
-    ]);
+    ];
+    // Quick-insert palette for reactants: one tap adds a common molecule so
+    // students don't have to hand-write SMILES.
+    if (role === "reactants") {
+      const palette = el(
+        "div",
+        { class: "mech-frag-palette", role: "group", "aria-label": "Insert a common reactant" },
+        COMMON_FRAGMENTS.map((f) =>
+          el("button", {
+            class: "mech-frag",
+            type: "button",
+            text: f.label,
+            title: `Add ${f.label} (${f.smiles})`,
+            onClick: () => {
+              step.addReactant(f.smiles);
+              this._renderSteps();
+              if (stepIdx === this.activeStep) this._renderWorkspace();
+            },
+          })
+        )
+      );
+      children.push(palette);
+    }
+    return el("div", { class: "mech-molgroup", dataset: { role } }, children);
   }
 
   // ── active-step structure + arrows ───────────────────────────────────────────
