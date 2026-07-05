@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "description": "MCAT organic-chemistry reaction/mechanism coverage map. Drives the coverage %, the give-up rule, and the Readiness weighting. 'covered' flips true once the MechGrader deck has >=1 verifiable MechCard for that type; per-type Performance still requires >=3 graded attempts (see docs/give_up_rule.md).",
+  "weight_scale": "high | medium | low  (qualitative emphasis on the MCAT orgo outline; these are reasonable author estimates, NOT official AAMC numeric weights, and are marked as such honestly).",
+  "source_note": "Reaction-type list aligned to the AAMC MCAT content outline (Chem/Phys foundational concept 5D and Bio/Biochem enzyme/biomolecule mechanisms) and to the chem-grader mechanism rule library. Refine weights with a cited source before making Readiness claims.",
+  "sections": ["chem_phys", "bio_biochem"],
+  "reaction_types": [
+    {"id": "SN1", "name": "Unimolecular nucleophilic substitution", "section": "chem_phys", "weight": "high", "covered": false},
+    {"id": "SN2", "name": "Bimolecular nucleophilic substitution", "section": "chem_phys", "weight": "high", "covered": false},
+    {"id": "E1", "name": "Unimolecular elimination", "section": "chem_phys", "weight": "high", "covered": false},
+    {"id": "E2", "name": "Bimolecular elimination", "section": "chem_phys", "weight": "high", "covered": false},
+    {"id": "electrophilic_addition", "name": "Electrophilic addition to alkenes/alkynes", "section": "chem_phys", "weight": "high", "covered": false},
+    {"id": "EAS", "name": "Electrophilic aromatic substitution", "section": "chem_phys", "weight": "high", "covered": false},
+    {"id": "carbonyl_addition", "name": "Nucleophilic addition to carbonyls (aldehydes/ketones)", "section": "chem_phys", "weight": "high", "covered": false},
+    {"id": "nucleophilic_acyl_substitution", "name": "Nucleophilic acyl substitution (carboxylic acid derivatives)", "section": "chem_phys", "weight": "high", "covered": false},
+    {"id": "aldol", "name": "Aldol addition/condensation (enolate chemistry)", "section": "chem_phys", "weight": "medium", "covered": false},
+    {"id": "esterification", "name": "Fischer esterification / ester hydrolysis", "section": "chem_phys", "weight": "medium", "covered": false},
+    {"id": "keto_enol_tautomerization", "name": "Keto-enol tautomerization", "section": "chem_phys", "weight": "medium", "covered": false},
+    {"id": "acid_base", "name": "Acid-base / proton transfer", "section": "chem_phys", "weight": "medium", "covered": false},
+    {"id": "oxidation", "name": "Oxidation of alcohols/aldehydes", "section": "chem_phys", "weight": "medium", "covered": false},
+    {"id": "reduction", "name": "Reduction of carbonyls (hydride reagents, catalytic H2)", "section": "chem_phys", "weight": "medium", "covered": false},
+    {"id": "radical_halogenation", "name": "Free-radical halogenation", "section": "chem_phys", "weight": "low", "covered": false},
+    {"id": "imine_enamine", "name": "Imine / enamine formation", "section": "chem_phys", "weight": "low", "covered": false},
+    {"id": "acetal_formation", "name": "Acetal/hemiacetal formation (sugar chemistry)", "section": "bio_biochem", "weight": "medium", "covered": false},
+    {"id": "peptide_bond", "name": "Peptide bond formation/hydrolysis (amide chemistry)", "section": "bio_biochem", "weight": "medium", "covered": false},
+    {"id": "phosphoryl_transfer", "name": "Phosphoryl transfer (ATP, kinases)", "section": "bio_biochem", "weight": "medium", "covered": false},
+    {"id": "enzyme_acid_base_catalysis", "name": "Enzyme acid-base / covalent catalysis mechanisms", "section": "bio_biochem", "weight": "medium", "covered": false}
+  ]
+}

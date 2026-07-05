@@ -240,6 +240,7 @@ import anki.i18n_pb2
 import anki.image_occlusion_pb2
 import anki.import_export_pb2
 import anki.links_pb2
+import anki.mechgrader_pb2
 import anki.media_pb2
 import anki.notes_pb2
 import anki.notetypes_pb2

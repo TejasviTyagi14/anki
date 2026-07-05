@@ -25,6 +25,7 @@ pub mod latex;
 pub mod links;
 pub mod log;
 mod markdown;
+pub mod mechgrader;
 pub mod media;
 pub mod notes;
 pub mod notetype;

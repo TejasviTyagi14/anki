@@ -28,6 +28,7 @@ protobuf!(i18n, "i18n");
 protobuf!(image_occlusion, "image_occlusion");
 protobuf!(import_export, "import_export");
 protobuf!(links, "links");
+protobuf!(mechgrader, "mechgrader");
 protobuf!(media, "media");
 protobuf!(notes, "notes");
 protobuf!(notetypes, "notetypes");

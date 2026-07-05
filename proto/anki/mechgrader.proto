@@ -1,0 +1,36 @@
+// Copyright: Ankitects Pty Ltd and contributors
+// License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+//
+// MechGrader fork addition. Houses backend methods for the mastery-aware
+// review pipeline. Kept in its own service/proto file (rather than editing an
+// upstream core service) to keep the future-merge surface small.
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package anki.mechgrader;
+
+import "anki/generic.proto";
+
+service MechgraderService {
+  // Liveness/version probe. Proves the proto -> Rust -> Python (and, on
+  // Android, proto -> Rust -> rsdroid -> Kotlin) pipeline is wired against the
+  // forked engine. Stage 0 de-risking step; Stage 1 adds TopicMastery and the
+  // points_at_stake review ordering to this same service.
+  rpc MechgraderEngineInfo(generic.Empty) returns (EngineInfoResponse);
+}
+
+message EngineInfoResponse {
+  // Human-readable confirmation, e.g. "MechGrader engine live on Anki 26.05".
+  string info = 1;
+  // The Anki version the forked engine was compiled from.
+  string anki_version = 2;
+  // The build hash (or "dev").
+  string build_hash = 3;
+}
+
+// Required by the codegen: every FooService must have a matching
+// BackendFooService (see rslib/proto_gen). Empty here means every
+// MechgraderService method is auto-forwarded onto Backend.
+service BackendMechgraderService {}
