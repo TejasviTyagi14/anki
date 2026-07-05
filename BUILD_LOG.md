@@ -38,7 +38,7 @@ Bio/Biochem. See `README.md`.
 
 Status: **DONE** (desktop). Mobile: **BLOCKED in this environment** (no Android SDK) — plan recorded in `docs/mobile.md`.
 
-Commit hash (Stage 0): `<filled by the Stage 0 commit; see git log>`
+Commit hash (Stage 0): `7f902acbaddecf632093e406b9aea03f764aa0dc` (on branch `mockups-mcat-handwriting`, base `685138ad8`).
 
 ### 0.1 Fork builds (Rust + Python + web)
 
