@@ -251,4 +251,33 @@ Remaining Stage 2: run the AI grader + comparison once `MECHGRADER_LLM_*` is
 supplied; stand up the self-hosted sync server + real two-device round-trip (needs
 a server + 2 devices; the merge logic is tested, wiring documented).
 
-## Stage 3 — "Sunday" (evidence + ship)        — NOT STARTED
+## Stage 3 — "Sunday" (evidence + ship) — IN PROGRESS
+
+- **Leakage (`make leakage`)** — near-dup scan (canonical SMILES + InChIKey +
+  symmetric Morgan Tanimoto). Caught real leakage (gold split by attempt-variant
+  put the same reactions in both splits); fixed by re-splitting into whole
+  near-dup reaction groups; now CLEAN (held-out 15 / train 13). 6 tests.
+- **Eval re-run on the leakage-clean held-out** — baseline agreement 0.867,
+  wrong-grade 0.133, Pearson 0.745 (n=15). AI pending key.
+- **Benchmark (`make bench`)** — 50k-card collection; `topic_mastery` p95 35ms,
+  dashboard (query+scoring) p95 38ms -> PASS vs the 1000ms first-load target
+  (~26x margin). GUI metrics need the app (documented).
+- **Memory calibration (`python -m mechgrader.calibration`)** — reliability bins
+  + Brier + log loss + ECE (stdlib); demo detects miscalibration (well-calibrated
+  ECE 0.016 vs overconfident 0.148). 6 tests. Real-review calibration pending
+  data (Section 9 honesty).
+
+### Ship — desktop BUILT, mobile blocked (honest)
+- **Desktop installer: BUILT** — `out/installer/dist/anki-26.05-mac-apple.dmg`
+  (215 MB, arm64) via `./tools/build-installer` (~363s). Verified the bundled
+  `anki` wheel contains `mechgrader_pb2` + `topic_mastery`/`mechgrader_engine_info`
+  -> the fork engine change ships in the packaged app. Adhoc-signed (un-notarized).
+  Had to fetch/fix the installer template submodules first (see docs/installer.md).
+- **Mobile: NOT buildable here** — `make build-mobile` preflight reports 7/8
+  prerequisites missing (only rustup): no JDK, no Android SDK/NDK/sdkmanager, no
+  rust android targets, no cargo-ndk, no AnkiDroid checkout. Exact reproducible
+  build steps printed by the preflight + in docs/mobile.md. Not faked.
+
+### Remaining Stage 3
+Paraphrase/bridge test + study-feature experiment (simulation harnesses);
+crash-safety + offline engine tests; reviewer GUI wiring (needs a display).

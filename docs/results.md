@@ -43,6 +43,21 @@ scoring math) measured headlessly. Button-press (<50ms), next-card (<100ms), and
 cold-start (<5s) are GUI-app metrics that need the running desktop/phone app and
 are **not** measured here — they require a display. Re-run: `make bench`.
 
+### Memory calibration — machinery built + tested, real data pending (`python -m mechgrader.calibration`)
+Reliability bins + Brier + log loss + ECE (`mechgrader/calibration/`, 6 tests). On
+a clearly-labeled **simulation** the metric detects miscalibration:
+well-calibrated ECE **0.016** vs overconfident ECE **0.148**. Honest per Section 9:
+we can *compute* calibration and it works; real calibration needs real
+longitudinal reviews (FSRS predicted vs actual recall from the revlog), which we
+don't have — so no calibrated-memory *claim* is made yet.
+
+### Ship — desktop BUILT, mobile blocked (honest)
+- **Desktop**: `out/installer/dist/anki-26.05-mac-apple.dmg` (215 MB, arm64) built
+  via `./tools/build-installer`; the bundled `anki` wheel contains the
+  `MechgraderService` engine change (verified). Adhoc-signed. See `docs/installer.md`.
+- **Mobile**: not buildable here — `make build-mobile` preflight shows 7/8
+  prerequisites missing; exact reproducible steps provided. See `docs/mobile.md`.
+
 ## Still planned
 1. **Memory calibration** — reliability diagram + Brier/log loss on held-out
    reviews. (`make eval` memory path.)

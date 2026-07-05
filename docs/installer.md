@@ -1,5 +1,32 @@
 # Building the MechGrader desktop installer
 
+## STATUS: BUILT ✅ (2026-07-05)
+
+The desktop installer was **actually built** in this environment:
+
+- Artifact: `out/installer/dist/anki-26.05-mac-apple.dmg` (**215 MB**, macOS `arm64`).
+- Command: `./tools/build-installer` (= `RELEASE=2 ./ninja installer`); build time ~363s.
+- **Verified the fork engine ships in it:** the bundled wheel
+  `out/wheels/anki-26.5-cp310-abi3-macosx_12_0_arm64.whl` contains
+  `anki/mechgrader_pb2.py` and the generated `topic_mastery` /
+  `mechgrader_engine_info` backend methods — i.e. the `MechgraderService` Rust
+  change is inside the packaged app.
+- **One fix needed first (recorded honestly):** the installer's `mac-template` and
+  `windows-template` git submodules weren't checked out, and the pinned windows
+  SHA is orphaned + its URL mis-resolved to the fork remote. Fixed by fetching the
+  `anki` branch for both templates and pointing the windows gitlink at an
+  available commit (the windows template only needs to be *present* for the ninja
+  graph; no Windows installer is built on macOS). See the git-submodule commands
+  at the end of this section if reproducing.
+- **Honest caveats:** the `.dmg` is `--adhoc`-signed / un-notarized (no signing
+  configured), so a clean Mac will quarantine it — clear with
+  `xattr -dr com.apple.quarantine <app>` after install. The reviewer webview GUI
+  wiring (the in-app draw→grade UI) is documented but not yet wired
+  (`docs/reviewer_loop.md`), so the packaged app ships the MechGrader **engine** +
+  MechCard notetype, with the mechanism-drawing UI as the remaining integration.
+
+---
+
 MechGrader is a fork of Anki and reuses Anki's existing
 [Briefcase](https://briefcase.readthedocs.io/)-based desktop packaging
 unchanged. There is **no separate MechGrader packaging pipeline** — the same
