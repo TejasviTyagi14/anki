@@ -66,6 +66,7 @@ test:
 	$(PY) mechgrader/tests/test_sync_conflict.py
 	$(PY) mechgrader/tests/test_cardgen_check.py
 	$(PY) mechgrader/tests/test_eval.py
+	$(PY) mechgrader/tests/test_calibration.py
 	@echo ">> For the RDKit grader suite + the baseline eval, run: make test-grader eval"
 
 # Deterministic grader suite (needs RDKit in chem-grader/.venv). One-time setup:
@@ -94,15 +95,13 @@ stage1-proof:
 
 .PHONY: build-mobile
 build-mobile:
-	@echo "[MechGrader] AnkiDroid build is not wired in this environment."
-	@echo "            No Android SDK/NDK/JDK is installed here (see 'make help')."
-	@echo "            docs/mobile.md documents the exact procedure to rebuild"
-	@echo "            rsdroid against this fork's rslib so the Rust change ships to Android."
-	@exit 2
+	bash mechgrader/tools/mobile_preflight.sh
 
 .PHONY: run-mobile
 run-mobile:
-	@echo "[MechGrader] Requires an Android device/emulator + SDK. See docs/mobile.md."
+	@echo "[MechGrader] Install & launch on an Android device/emulator once built."
+	@echo "            Run 'make build-mobile' for the toolchain preflight + exact steps."
+	@echo "            See docs/mobile.md."
 	@exit 2
 
 # ----------------------------------------------------------------------------
