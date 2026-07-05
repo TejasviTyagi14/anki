@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MechGrader — organic mechanism practice</title>
+<link rel="stylesheet" href="./app.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">&#9086;</span>
+    <div>
+      <h1>MechGrader</h1>
+      <p class="tagline">Draw the electron flow &middot; push curved arrows &middot; get an honest check</p>
+    </div>
+  </div>
+  <div class="topbar-meta">
+    <span id="rdkitStatus" class="badge badge-warn" title="Chemistry engine">RDKit-JS: checking&hellip;</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- LEFT: the editor (prompt pin, structure + arrow tool, steps, submit) -->
+  <section id="mechEditor" class="editor-col" aria-label="Mechanism editor"></section>
+
+  <!-- RIGHT: assembled JSON, fallback grade, and the flip-to-reveal reference -->
+  <aside class="output-col">
+    <div class="card panel">
+      <div class="panel-head">
+        <h2 class="mech-h2">Result</h2>
+        <span class="panel-hint">Submit to assemble &amp; grade</span>
+      </div>
+      <div id="gradeBox" class="grade-box" aria-live="polite">
+        <p class="muted">No submission yet. Build a step, push a couple of arrows, then press
+        <kbd>Enter</kbd> or click <b>Submit</b>.</p>
+      </div>
+      <details class="json-details" open>
+        <summary>Assembled Mechanism JSON</summary>
+        <pre id="jsonBox" class="json-pre">{
+  "steps": []
+}</pre>
+      </details>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head">
+        <h2 class="mech-h2">Reference (answer)</h2>
+        <button id="flipBtn" class="btn btn-ghost" type="button" aria-expanded="false">Flip to reveal</button>
+      </div>
+      <div id="referenceBox" class="reference-box" aria-live="polite" hidden></div>
+      <p id="referenceHidden" class="muted">Hidden. Press <kbd>Space</kbd> or click <b>Flip</b> to compare
+      your answer with the reference mechanism.</p>
+    </div>
+  </aside>
+</main>
+
+<footer class="footbar">
+  <div class="shortcuts" aria-label="Keyboard shortcuts">
+    <span><kbd>Space</kbd> flip</span>
+    <span><kbd>Enter</kbd> submit</span>
+    <span><kbd>N</kbd> next</span>
+    <span class="muted">(shortcuts active when not typing in a field)</span>
+  </div>
+  <div class="honesty muted">
+    Real: editor, arrow overlay, serialize, submit. Stubbed seams: Ketcher structure editor,
+    real RDKit canonicalization &amp; the full 5-layer grader (this page uses a labeled string fallback).
+  </div>
+</footer>
+
+<script type="module">
+  // ── Standalone wiring: this is the ONLY page-specific glue. The bundle
+  //    (mechanism.js / arrows.js / editor.js / rdkit.js) is embed-ready as-is. ──
+  import { MechEditor } from "./editor.js";
+  import { loadRDKit, isRDKitReady, gradeAgainstReference } from "./rdkit.js";
+
+  // A "MechCard" = { prompt, reference } where reference is a serialized
+  // Mechanism (exactly the grader's JSON shape). These live only on the client
+  // here; in a real deployment the reference/answer stays server-side.
+  const CARDS = [
+    {
+      prompt: "SN2: hydroxide + bromomethane. Push the arrows for the concerted backside attack, then give the products.",
+      reference: {
+        steps: [
+          {
+            reactants: ["[OH-:1]", "[CH3:2][Br:3]"],
+            arrows: [
+              { from: "lp:0", to: "atom:1", kind: "curved" },
+              { from: "bond:1-2", to: "atom:2", kind: "curved" },
+            ],
+            products: ["[CH3:2][OH:1]", "[Br-:3]"],
+          },
+        ],
+      },
+    },
+    {
+      prompt: "SN1 (rate-determining step): ionization of tert-butyl bromide. Push the arrow that breaks the C\u2013Br bond, then give the carbocation + bromide.",
+      reference: {
+        steps: [
+          {
+            reactants: ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
+            arrows: [{ from: "bond:1-4", to: "atom:4", kind: "curved" }],
+            products: ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"],
+          },
+        ],
+      },
+    },
+    {
+      prompt: "Nucleophilic addition: cyanide + formaldehyde. Push the C\u2013C bond-forming arrow and the C=O \u03c0 arrow, then give the alkoxide.",
+      reference: {
+        steps: [
+          {
+            reactants: ["[C-:1]#[N:2]", "[CH2:3]=[O:4]"],
+            arrows: [
+              { from: "atom:0", to: "atom:2", kind: "curved" },
+              { from: "bond:2-3", to: "atom:3", kind: "curved" },
+            ],
+            products: ["[N:2]#[C:1][CH2:3][O-:4]"],
+          },
+        ],
+      },
+    },
+  ];
+
+  let current = 0;
+
+  // Tiny DOM helpers for the result panel.
+  function pill(kind, label) {
+    const s = document.createElement("span");
+    s.className = "badge badge-" + kind;
+    s.textContent = label;
+    return s;
+  }
+  function text(t) {
+    return document.createTextNode(t);
+  }
+  function spacer() {
+    const s = document.createElement("span");
+    s.className = "grow";
+    return s;
+  }
+
+  // The grade callback seam. Because window.mechgraderGrade is defined, the
+  // editor's Submit calls THIS instead of POSTing to gradeEndpoint. Remove it
+  // (or set editor.gradeEndpoint) to exercise the POST path — see README.
+  window.mechgraderGrade = (mechanism) => gradeAgainstReference(mechanism, CARDS[current].reference);
+
+  // Start each card with the reactants prefilled (so the arrow tool is instantly
+  // usable) but arrows + products empty — that's the part the student supplies.
+  function startingMechanism(card) {
+    const step0 = card.reference.steps[0];
+    return { steps: [{ reactants: step0.reactants.slice(), arrows: [], products: [] }] };
+  }
+
+  const root = document.getElementById("mechEditor");
+  const gradeBox = document.getElementById("gradeBox");
+  const jsonBox = document.getElementById("jsonBox");
+  const referenceBox = document.getElementById("referenceBox");
+  const referenceHidden = document.getElementById("referenceHidden");
+  const flipBtn = document.getElementById("flipBtn");
+
+  const editor = new MechEditor(root, {
+    prompt: CARDS[current].prompt,
+    mechanism: startingMechanism(CARDS[current]),
+    // gradeEndpoint: "http://localhost:8000/grade", // POST fallback if no window.mechgraderGrade
+    onSubmit: (mechanism, grade, error) => {
+      jsonBox.textContent = JSON.stringify(mechanism, null, 2);
+      renderGrade(grade, error);
+    },
+    onFlip: () => toggleReference(),
+    onNext: () => nextCard(),
+  });
+
+  function renderGrade(grade, error) {
+    if (error) {
+      gradeBox.innerHTML = "";
+      gradeBox.append(pill("err", "\u2717 Error"), text(" " + (error.message || String(error))));
+      return;
+    }
+    if (!grade) {
+      gradeBox.innerHTML = "<p class='muted'>Assembled the JSON (no grader configured).</p>";
+      return;
+    }
+    const verdict = grade.passed ? pill("ok", "\u2713 Product matches") : pill("err", "\u2717 Product differs");
+    const engine = pill(grade.canonical ? "ok" : "warn", grade.engine);
+    gradeBox.innerHTML = "";
+    const line = document.createElement("div");
+    line.className = "grade-line";
+    line.append(verdict, spacer(), text(`Score ${grade.score}/100`));
+    const sum = document.createElement("p");
+    sum.className = "grade-summary";
+    sum.textContent = grade.summary;
+    const eng = document.createElement("p");
+    eng.className = "grade-engine muted";
+    eng.append(text("engine: "), engine);
+    const det = document.createElement("details");
+    det.className = "json-details";
+    const s = document.createElement("summary");
+    s.textContent = "Grade details";
+    const pre = document.createElement("pre");
+    pre.className = "json-pre";
+    pre.textContent = JSON.stringify(grade.details, null, 2);
+    det.append(s, pre);
+    gradeBox.append(line, sum, eng, det);
+  }
+
+  function toggleReference() {
+    const show = referenceBox.hidden;
+    referenceBox.hidden = !show;
+    referenceHidden.hidden = show;
+    flipBtn.setAttribute("aria-expanded", String(show));
+    flipBtn.textContent = show ? "Hide reference" : "Flip to reveal";
+    if (show) {
+      referenceBox.textContent = "";
+      const ref = CARDS[current].reference;
+      const pre = document.createElement("pre");
+      pre.className = "json-pre";
+      pre.textContent = JSON.stringify(ref, null, 2);
+      referenceBox.appendChild(readableReference(ref));
+      referenceBox.appendChild(pre);
+    }
+  }
+
+  function readableReference(ref) {
+    const box = document.createElement("div");
+    box.className = "ref-readable";
+    (ref.steps || []).forEach((step, i) => {
+      const h = document.createElement("h3");
+      h.textContent = `Step ${i + 1}`;
+      const p = document.createElement("p");
+      p.innerHTML =
+        `<b>Reactants:</b> ${step.reactants.join("  +  ") || "\u2014"}<br>` +
+        `<b>Arrows:</b> ${(step.arrows || []).map((a) => `${a.from}\u2192${a.to}`).join(", ") || "\u2014"}<br>` +
+        `<b>Products:</b> ${step.products.join("  +  ") || "\u2014"}`;
+      box.append(h, p);
+    });
+    return box;
+  }
+
+  function nextCard() {
+    current = (current + 1) % CARDS.length;
+    editor.reset(CARDS[current].prompt, startingMechanism(CARDS[current]));
+    jsonBox.textContent = JSON.stringify(editor.getSerialized(), null, 2);
+    gradeBox.innerHTML = "<p class='muted'>New card. Push arrows, add products, then Submit.</p>";
+    referenceBox.hidden = true;
+    referenceHidden.hidden = false;
+    flipBtn.setAttribute("aria-expanded", "false");
+    flipBtn.textContent = "Flip to reveal";
+  }
+
+  flipBtn.addEventListener("click", () => editor.flip());
+
+  // ── keyboard shortcuts (standalone page): Space=flip, Enter=submit, N=next ──
+  document.addEventListener("keydown", (e) => {
+    const t = e.target;
+    const tag = t && t.tagName ? t.tagName.toLowerCase() : "";
+    const typing = tag === "input" || tag === "textarea" || tag === "select" || (t && t.isContentEditable);
+    if (typing || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.code === "Space") {
+      e.preventDefault();
+      editor.flip();
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      editor.submit();
+    } else if (e.key === "n" || e.key === "N") {
+      e.preventDefault();
+      editor.next();
+    }
+  });
+
+  // ── optional: try to bring up real RDKit-JS from an offline mirror. It is not
+  //    vendored here, so this is EXPECTED to fail -> we stay on the honest
+  //    string fallback and say so. ──
+  const rdkitStatus = document.getElementById("rdkitStatus");
+  (async () => {
+    try {
+      await loadRDKit();
+      rdkitStatus.className = "badge badge-ok";
+      rdkitStatus.textContent = "RDKit-JS: loaded (canonical SMILES)";
+    } catch (_) {
+      rdkitStatus.className = "badge badge-warn";
+      rdkitStatus.textContent = "RDKit-JS: not loaded \u2014 string fallback";
+      rdkitStatus.title = "Vendor @rdkit/rdkit offline to enable canonical matching (see rdkit.js seam).";
+    }
+  })();
+
+  // Initial JSON view.
+  jsonBox.textContent = JSON.stringify(editor.getSerialized(), null, 2);
+</script>
+</body>
+</html>

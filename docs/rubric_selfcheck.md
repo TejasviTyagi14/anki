@@ -8,12 +8,12 @@ marked by what is *demonstrable now*, not by intent.**
 | Section (weight) | Status | Proof location |
 | --- | --- | --- |
 | Rust change & fit (20%) | **Stage 1 real change DONE**: `TopicMastery` engine query (FSRS retrievability + reaction-type tags), 5 Rust unit tests + 1 Python integration test (incl. undo-safety). `points_at_stake` deferred (flag-gated). Android build confirmation pending toolchain. | `docs/rust_change.md`, `rslib/src/mechgrader/mastery.rs`, `BUILD_LOG.md §1.1`, `make stage1-proof` |
-| Score accuracy & honest uncertainty (20%) | Models designed + give-up rule fixed; evidence pending Stage 3 | `docs/model_*.md`, `docs/give_up_rule.md` |
+| Score accuracy & honest uncertainty (20%) | **Give-up rule + three-score module implemented & tested** (11 tests): readiness 118-132 with uncovered types widening range not adding points; abstains with no numeric leakage. Calibration/accuracy evidence still pending Stage 3. | `mechgrader/scoring/`, `docs/model_*.md`, `docs/give_up_rule.md` |
 | Study feature on learning science (15%) | Pre-registered; experiment pending Stage 3 | `docs/study_feature.md` |
 | AI checking & safety (15%) | Designed (sourced/checked/beats-baseline plan + injection hardening); pending Stage 2 | `docs/ai_eval.md`, `sources/registry.json` |
 | Re-runnable fair tests (12%) | `Makefile` + seeds plan; `make stage0-proof` real now; eval/bench/leakage pending | `Makefile`, `BUILD_LOG.md` |
 | One shared engine + working sync (10%) | Engine shared by design; desktop proven; **mobile build blocked (no SDK here)**; sync pending Stage 2 | `docs/mobile.md`, `docs/sync_conflict_rule.md` |
-| Useful product & clean UX both apps (8%) | Prototype exists (`chem-grader/`); integrated loop pending Stage 1 | `chem-grader/README.md`, `mockups/` |
+| Useful product & clean UX both apps (8%) | **Core loop pieces built + tested**: MechCard type, web editor (arrow overlay + submit), deterministic grader (62 tests), review pipeline glue (submit->grade->mg_pass->engine, tested end-to-end). aqt reviewer GUI wiring documented but not wired (headless box). Mobile deferred. | `mechgrader/`, `web/mechgrader/`, `docs/reviewer_loop.md` |
 
 ## Hard limits (must avoid)
 | Hard limit | Current standing |

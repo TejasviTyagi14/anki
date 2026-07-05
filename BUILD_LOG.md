@@ -159,10 +159,52 @@ change first and only add ordering if it can be done without undo instability).
 
 Build after this change: `just build` succeeded in 23.84s (exit 0).
 
-### 1.2 Remaining Stage 1 — TODO
-MechCard note type; shared web editor bundle (Ketcher + arrow overlay);
-deterministic grader (integrate `chem-grader/`); three-score skeleton + give-up
-rule enforcement; reviewer loop wiring; desktop installer.
+### 1.2 Core loop pieces — DONE (built by 5 parallel subagents, then consolidated)
+
+All disjoint-scope, no shared-build contention, then integrated + re-tested here.
+
+- **Deterministic grader** (`mechgrader/grading/`): adapter over `chem-grader/`'s
+  5-layer RDKit grader; adds full element+charge balance per step and per-species
+  InChIKey product match with a score cap on product miss. Returns
+  {valid, score, product_match, balance_ok, per_step, reasons, passed}.
+  Proof: `make test-grader` -> **62 passed** (6 adapter + 56 chem-grader).
+- **Three scores + give-up rule** (`mechgrader/scoring/`): pure-stdlib,
+  deterministic, offline. Readiness maps to 118-132 with uncovered types widening
+  the range (never adding points); abstains with no numeric leakage.
+  Proof: `make test` -> **11 passed**.
+- **MechCard note type** (`mechgrader/notetype/`): fields Prompt /
+  ReactionTypeTags / ReferenceMechanism(JSON) / SourceRef; back template mounts
+  the web editor at `#mechgrader-canvas`; enforces a resolvable `source_ref`;
+  tags `mechgrader::reaction::<type>` (so the Rust query sees them).
+  Proof: **5 passed**.
+- **Shared web editor** (`web/mechgrader/`): framework-free bundle - real data
+  model (exact `{steps:[{reactants,arrows:[{from,to,kind}],products}]}` shape) +
+  curved-arrow overlay (store-first / pure-render) + step/SMILES editing + Submit
+  dispatch; Ketcher + RDKit-JS are documented seams. Proof: `node --check` (4/4)
+  + 21-assertion smoke test.
+- **Review pipeline glue** (`mechgrader/reviewer/pipeline.py`): submit -> grade
+  (injectable grader) -> write per-card `mg_pass`/`mg_att` to custom_data (short
+  keys; Anki caps keys at 8 bytes) -> return breakdown + reference for reveal +
+  a *suggested* (not applied) FSRS rating. Proof (`make test`): end-to-end test
+  ties MechCard -> submit -> mg_pass -> the **Rust topic_mastery query reads the
+  same card**.
+- **Desktop installer** (`docs/installer.md`): exact command `./tools/build-installer`
+  -> `out/installer/dist/`, with honest submodule/signing caveats.
+
+Integrated verification (this machine): `make test` (Rust 6 + stage0 probe +
+topic_mastery + scoring 11 + notetype 5 + reviewer loop) all green, and
+`make test-grader` 62 passed. `just build` green.
+
+### 1.3 Remaining Stage 1 (honest gaps)
+- **aqt reviewer GUI wiring**: the pipeline is tested and UI-agnostic; mounting
+  the web editor in the reviewer webview + the pycmd bridge is documented in
+  `docs/reviewer_loop.md` but not wired into `aqt` (needs a display to verify;
+  this box is headless).
+- **RDKit-JS actual WASM** + **Ketcher** are documented seams in the web bundle
+  (not vendored).
+- **Desktop installer** command documented but not executed (heavy; needs
+  submodule checkout + network).
+- Mobile still deferred (`docs/mobile.md`).
 
 ## Stage 2 — "Friday" (AI + sync)              — NOT STARTED
 ## Stage 3 — "Sunday" (evidence + ship)        — NOT STARTED

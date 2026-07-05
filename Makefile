@@ -14,8 +14,9 @@ SHELL := /bin/bash
 
 # The Anki fork vendors its own Python + libs under out/. Use them so the
 # MechGrader scripts run against the exact engine build the app uses.
+# out/pylib -> the built `anki` package; `.` -> the `mechgrader` package.
 PYENV := out/pyenv/bin/python
-PY    := PYTHONPATH=out/pylib $(PYENV)
+PY    := PYTHONPATH=out/pylib:. $(PYENV)
 
 .DEFAULT_GOAL := help
 
@@ -51,12 +52,23 @@ run-desktop:
 test-anki:
 	just test
 
-# MechGrader engine tests (fast subset that covers the fork's Rust change).
+# MechGrader tests that run against the vendored engine (no RDKit needed).
 .PHONY: test
 test:
 	cargo test -p anki --lib mechgrader
 	$(PY) mechgrader/tools/stage0_engine_probe.py
 	$(PY) mechgrader/tests/test_topic_mastery.py
+	$(PY) mechgrader/tests/test_scoring.py
+	$(PY) mechgrader/tests/test_mechcard_notetype.py
+	$(PY) mechgrader/tests/test_reviewer_pipeline.py
+	@echo ">> For the RDKit deterministic grader suite, run: make test-grader"
+
+# Deterministic grader suite (needs RDKit in chem-grader/.venv). One-time setup:
+#   cd chem-grader && python3 -m venv .venv && ./.venv/bin/python -m pip install -r requirements.txt
+.PHONY: test-grader
+test-grader:
+	PYTHONPATH=chem-grader/src:. chem-grader/.venv/bin/python -m pytest \
+	    mechgrader/tests/test_deterministic_grader.py chem-grader/tests -q
 
 # Stage 0 gate proof, runnable on its own.
 .PHONY: stage0-proof
@@ -64,11 +76,12 @@ stage0-proof:
 	cargo test -p anki --lib mechgrader
 	$(PY) mechgrader/tools/stage0_engine_probe.py
 
-# Stage 1 real-Rust-change proof: topic_mastery unit tests + Python end-to-end.
+# Stage 1 proof: real Rust change + the review loop end-to-end.
 .PHONY: stage1-proof
 stage1-proof:
 	cargo test -p anki --lib mechgrader
 	$(PY) mechgrader/tests/test_topic_mastery.py
+	$(PY) mechgrader/tests/test_reviewer_pipeline.py
 
 # ----------------------------------------------------------------------------
 # Mobile (AnkiDroid fork on the shared engine) — see docs/mobile.md
