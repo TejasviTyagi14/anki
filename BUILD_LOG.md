@@ -231,15 +231,24 @@ harness folded in on completion.
   pre-registered cutoff (>=90% correct, 0 wrong, <=10% bad) that blocks failing
   cards; env-gated generation seam. **17 tests**.
 - **Eval harness + gold set** (`mechgrader/eval/` + `data/gold_mechanisms/`):
-  seeded metrics (agreement / wrong-grade rate / partial-credit correlation),
-  baseline(RDKit-only)-vs-AI table, pre-registered cutoffs. (Folded in on
-  subagent completion.)
+  seeded metrics (agreement / wrong-grade rate / Pearson+Spearman / MAE / bootstrap
+  CIs), baseline(RDKit-only)-vs-AI table, pre-registered cutoffs (agreement ≥ 0.85,
+  wrong-grade ≤ 0.05, beat baseline on 3 metrics). 28-item honest gold set (16
+  train / 12 heldout) with author labels + rationale. `python -m mechgrader.eval`
+  entry point. NOTE: this subagent was cut off mid-run by a Cursor billing error
+  ("unpaid invoice"), not a code failure; it had written the harness but no test
+  and had not run — I finished it (wrote `test_eval.py`, unified the AI kill
+  switch, wired `make eval`, ran the baseline).
+  - `make test` -> **7 eval tests** pass (synthetic graders; metrics + cutoff logic).
+  - `make eval` (real RDKit baseline, held-out n=12, seed 0):
+    agreement **0.833**, wrong-grade **0.167**, Pearson **0.746**, Spearman
+    **0.778**, MAE **21.08**. AI skipped honestly (no key) — no fabricated numbers.
 
 AI-off path: with no key/provider, grading + scoring fall back to the
 deterministic path (proven by the AI grader's `ai_status=="off"` test).
 
-Remaining Stage 2: `make eval` wiring + finalize `docs/ai_eval.md` numbers-when-key;
-self-hosted sync server + real two-device round-trip (needs a server + 2 devices;
-logic is tested, wiring documented).
+Remaining Stage 2: run the AI grader + comparison once `MECHGRADER_LLM_*` is
+supplied; stand up the self-hosted sync server + real two-device round-trip (needs
+a server + 2 devices; the merge logic is tested, wiring documented).
 
 ## Stage 3 — "Sunday" (evidence + ship)        — NOT STARTED

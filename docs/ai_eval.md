@@ -14,19 +14,34 @@ each with a **human-assigned grade**. A fraction is **held out** and never used
 for prompt/few-shot/calibration fitting (enforced by `make leakage`).
 Lives in `data/gold_mechanisms/`.
 
-## Pre-registered cutoffs (fill BEFORE looking at held-out results)
-> Record exact numbers here and commit them **before** running `make eval`.
-- Minimum held-out **agreement with human grade**: `TBD` (e.g. ≥ 0.85).
-- Maximum **wrong-grade rate** (confidently wrong): `TBD` (e.g. ≤ 5%).
-- Must **beat the baseline** (RDKit-only: final-product match / fingerprint
-  threshold) on: higher accuracy **and** better partial-credit correlation
-  **and** lower wrong-grade rate.
+## Pre-registered cutoffs (fixed before any held-out AI number is looked at)
+Locked in `mechgrader/eval/PREREGISTERED.md` and `mechgrader/eval/compare.py`
+(`PREREGISTERED`). The AI grader passes only if **all** hold on the held-out split:
+- Held-out **agreement with human grade** ≥ **0.85**.
+- **Wrong-grade rate** (confidently wrong) ≤ **0.05**.
+- **Beats the RDKit-only baseline** on **agreement**, **partial-credit
+  correlation (Pearson)**, **and wrong-grade rate** (all three).
 
-## Baseline comparison (required table — Stage 2)
-| Grader | Accuracy vs human | Partial-credit corr. | Wrong-grade rate |
-| --- | --- | --- | --- |
-| RDKit-only (baseline) | TBD | TBD | TBD |
-| AI rubric (constrained) | TBD | TBD | TBD |
+Pass line = 70/100; "clearly correct" = 90/100. Held-out split only; the harness
+has no code path that fits/tunes on held-out (`mechgrader/eval/harness.py`).
+
+## Baseline comparison (`make eval`, held-out n=12)
+Real numbers from the RDKit-only baseline on the held-out gold set (seed 0). The
+AI row is **honestly blank until `MECHGRADER_LLM_*` is provided** — no AI number
+is fabricated; `make eval` prints exactly why AI was skipped.
+
+| Grader | n | Agreement (acc.) | Wrong-grade rate | Pearson | Spearman | MAE |
+| --- | --- | --- | --- | --- | --- | --- |
+| RDKit-only (baseline) | 12 | 0.833 | 0.167 | 0.746 | 0.778 | 21.08 |
+| AI rubric (constrained) | — | pending key | pending key | pending key | pending key | pending key |
+
+Note the baseline's 0.833 agreement and 0.167 wrong-grade rate are *below* the
+AI's pre-registered bar (0.85 / 0.05) — i.e. the baseline is exactly the simpler
+method the AI must clear **and** beat. Re-run: `make eval` (needs `chem-grader/.venv`).
+
+**Status:** harness + gold set + metrics + baseline **implemented, tested, and run**
+(7 harness tests via `make test`; baseline via `make eval`). AI grading numbers
+land when a key is supplied.
 
 ## Prompt-injection hardening (required)
 - The LLM receives the **RDKit-validated structured mechanism as data**, never

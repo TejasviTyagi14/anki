@@ -65,7 +65,8 @@ test:
 	$(PY) mechgrader/tests/test_source_validator.py
 	$(PY) mechgrader/tests/test_sync_conflict.py
 	$(PY) mechgrader/tests/test_cardgen_check.py
-	@echo ">> For the RDKit deterministic grader suite, run: make test-grader"
+	$(PY) mechgrader/tests/test_eval.py
+	@echo ">> For the RDKit grader suite + the baseline eval, run: make test-grader eval"
 
 # Deterministic grader suite (needs RDKit in chem-grader/.venv). One-time setup:
 #   cd chem-grader && python3 -m venv .venv && ./.venv/bin/python -m pip install -r requirements.txt
@@ -109,11 +110,14 @@ run-mobile:
 # Placeholders exit non-zero so they are never mistaken for a passing check.
 # ----------------------------------------------------------------------------
 
+# AI grader held-out eval + RDKit-only baseline (seeded, re-runnable). Runs via
+# the chem-grader venv so the RDKit baseline runs now; the AI grader runs only
+# when MECHGRADER_LLM_PROVIDER + a key are set (no AI numbers fabricated
+# otherwise). One-time setup: see `make test-grader`. See docs/ai_eval.md.
+EVAL_ARGS ?=
 .PHONY: eval
 eval:
-	@echo "[MechGrader] 'eval' is scaffolded for Stage 2 (AI grader held-out eval + RDKit-only baseline)."
-	@echo "            Will live in mechgrader/eval/. See docs/ai_eval.md."
-	@exit 2
+	PYTHONPATH=chem-grader/src:. chem-grader/.venv/bin/python -m mechgrader.eval $(EVAL_ARGS)
 
 .PHONY: bench
 bench:
