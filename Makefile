@@ -48,6 +48,20 @@ build:
 run-desktop:
 	just run
 
+# Dev servers for the mechanism editor + the real RDKit grader.
+# Each CLEARS ITS PORT FIRST (so re-hosting never hits "address in use").
+# Run `make grader` in one terminal and `make editor` in another, then open
+# http://localhost:5178 — the editor's Submit POSTs to the grader on :8000.
+.PHONY: grader
+grader:
+	@bash -c 'p=$$(lsof -ti tcp:8000); [ -n "$$p" ] && kill -9 $$p || true'
+	PYTHONPATH=chem-grader/src:. chem-grader/.venv/bin/python -m uvicorn chemgrader.api:app --port 8000
+
+.PHONY: editor
+editor:
+	@bash -c 'p=$$(lsof -ti tcp:5178); [ -n "$$p" ] && kill -9 $$p || true'
+	cd web/mechgrader && python3 -m http.server 5178
+
 .PHONY: test-anki
 test-anki:
 	just test

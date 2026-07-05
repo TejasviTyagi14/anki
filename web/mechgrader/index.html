@@ -146,10 +146,35 @@
     return s;
   }
 
-  // The grade callback seam. Because window.mechgraderGrade is defined, the
-  // editor's Submit calls THIS instead of POSTing to gradeEndpoint. Remove it
-  // (or set editor.gradeEndpoint) to exercise the POST path — see README.
-  window.mechgraderGrade = (mechanism) => gradeAgainstReference(mechanism, CARDS[current].reference);
+  // The grade callback seam. Submit calls THIS. It POSTs to the real RDKit
+  // grader (chem-grader on :8000, endpoint /mech/grade) for an honest grade, and
+  // falls back to the client-side string grader if the server is unreachable
+  // (offline). Start the server with:  make grader   (clears :8000 first).
+  const GRADER_URL = "http://localhost:8000/mech/grade";
+  window.mechgraderGrade = async (mechanism) => {
+    const reference = CARDS[current].reference;
+    try {
+      const res = await fetch(GRADER_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ submission: mechanism, reference }),
+      });
+      if (!res.ok) throw new Error("server " + res.status);
+      const g = await res.json(); // MechGrader grade dict (real RDKit)
+      return {
+        passed: !!g.passed,
+        score: g.score,
+        canonical: true,
+        engine: "RDKit deterministic grader (server)",
+        summary: g.summary || (g.reasons || []).join(" · ") || "graded",
+        details: g,
+      };
+    } catch (e) {
+      const g = gradeAgainstReference(mechanism, reference); // offline fallback
+      g.engine = (g.engine || "string fallback") + " — server unreachable (start: make grader)";
+      return g;
+    }
+  };
 
   // Start each card with the reactants prefilled (so the arrow tool is instantly
   // usable) but arrows + products empty — that's the part the student supplies.
