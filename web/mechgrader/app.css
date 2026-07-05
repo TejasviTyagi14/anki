@@ -153,6 +153,48 @@ kbd {
 .mech-frag:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 .mech-frag:active { transform: translateY(1px); }
 
+/* ── structure drawer (draw.js) ── */
+.mech-draw-mol { min-height: 32px; font-size: var(--text-xs); }
+.draw-dialog {
+  border: none; border-radius: var(--radius-lg); padding: 0; width: min(680px, 94vw);
+  box-shadow: var(--shadow-md); color: var(--ink);
+}
+.draw-dialog::backdrop { background: rgba(15, 23, 42, .45); }
+.draw-dialog-bar {
+  display: flex; align-items: center; gap: var(--space-3);
+  padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border);
+}
+.draw-dialog-title { font: 700 var(--text-base)/1.2 var(--font); }
+.draw-root { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-4); }
+.draw-toolbar { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+.draw-el {
+  min-width: 38px; min-height: 34px; padding: 0 var(--space-2);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--surface); color: var(--ink); font: 700 var(--text-sm)/1 var(--mono); cursor: pointer;
+}
+.draw-el[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.draw-charge { display: inline-flex; align-items: center; gap: var(--space-1); margin-left: var(--space-2); }
+.draw-charge-val { min-width: 26px; text-align: center; font: 700 var(--text-sm)/1 var(--mono); }
+.draw-mini { min-width: 32px; min-height: 32px; padding: 0; }
+.draw-svg {
+  width: 100%; aspect-ratio: 620 / 360; border: 1px solid var(--border);
+  border-radius: var(--radius); background: var(--surface-2); cursor: crosshair;
+}
+.draw-bond { stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; }
+.draw-atom-bg { fill: var(--surface); }
+.draw-atom-sel { fill: var(--accent); opacity: .25; }
+.draw-atom-el { font: 700 18px var(--font); }
+.draw-atom-charge { font: 700 12px var(--mono); fill: var(--err); }
+.draw-atom-id { font: 500 9px var(--mono); fill: var(--faint); }
+.draw-empty { fill: var(--muted); font: 500 15px var(--font); }
+.draw-controls { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+.draw-sel { min-height: 34px; min-width: 64px; }
+.draw-ctrl-sep { color: var(--muted); font: 600 var(--text-xs)/1 var(--font); text-transform: uppercase; letter-spacing: .04em; }
+.draw-readout {
+  padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm);
+  background: #0f172a; color: #e2e8f0; font: 600 var(--text-sm)/1.4 var(--mono); word-break: break-all;
+}
+
 /* how-it-works strip under the header */
 .howto {
   max-width: 1280px; margin: 0 auto; padding: var(--space-3) var(--space-6);

@@ -91,6 +91,12 @@ test-grader:
 	    mechgrader/tests/test_deterministic_grader.py mechgrader/tests/test_leakage.py chem-grader/tests -q
 
 # Stage 0 gate proof, runnable on its own.
+# Web bundle checks: syntax-check the JS modules + run the drawer logic test.
+.PHONY: test-web
+test-web:
+	@for f in web/mechgrader/*.js; do out/extracted/node/bin/node --check "$$f" && echo "ok $$f"; done
+	out/extracted/node/bin/node web/mechgrader/draw.test.mjs
+
 .PHONY: stage0-proof
 stage0-proof:
 	cargo test -p anki --lib mechgrader

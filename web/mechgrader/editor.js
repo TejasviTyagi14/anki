@@ -19,6 +19,7 @@
  */
 import { Mechanism } from "./mechanism.js";
 import { ArrowOverlay, layoutAnchorsLinear } from "./arrows.js";
+import { openStructureDialog } from "./draw.js";
 
 const VIEW_W = 900;
 const VIEW_H = 300;
@@ -466,8 +467,31 @@ export class MechEditor {
       },
     });
 
+    // "Draw" opens the framework-free structure editor; on Use it inserts the
+    // drawn molecule's SMILES as a reactant (no hand-typing needed).
+    const drawBtn =
+      role === "reactants"
+        ? el("button", {
+            class: "btn mech-draw-mol",
+            type: "button",
+            text: "\u270e Draw",
+            "aria-label": "Draw a reactant molecule",
+            onClick: async () => {
+              const smi = await openStructureDialog({ title: "Draw a reactant molecule" });
+              if (smi) {
+                step.addReactant(smi);
+                this._renderSteps();
+                if (stepIdx === this.activeStep) this._renderWorkspace();
+              }
+            },
+          })
+        : null;
     const children = [
-      el("div", { class: "mech-molgroup-head" }, [el("span", { text: singular + "s" }), add]),
+      el(
+        "div",
+        { class: "mech-molgroup-head" },
+        [el("span", { text: singular + "s" }), el("span", { class: "grow" }), drawBtn, add].filter(Boolean)
+      ),
       list,
     ];
     // Quick-insert palette for reactants: one tap adds a common molecule so
