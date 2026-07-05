@@ -119,11 +119,13 @@ EVAL_ARGS ?=
 eval:
 	PYTHONPATH=chem-grader/src:. chem-grader/.venv/bin/python -m mechgrader.eval $(EVAL_ARGS)
 
+# Engine-side dashboard benchmark on a 50k-card collection (p50/p95/worst for the
+# Rust topic_mastery query + scoring). Builds & caches the collection under
+# out/mechgrader_bench/. GUI-interaction metrics need the app (see docs/results.md).
+BENCH_ARGS ?=
 .PHONY: bench
 bench:
-	@echo "[MechGrader] 'bench' is scaffolded for Stage 3 (50k-card p50/p95/worst-case)."
-	@echo "            See docs/results.md (Section 10 targets)."
-	@exit 2
+	$(PY) -m mechgrader.bench $(BENCH_ARGS)
 
 # Near-duplicate / leakage scan (canonical SMILES + InChIKey + Morgan Tanimoto)
 # over the gold set: no held-out reaction may appear in training/few-shot/
