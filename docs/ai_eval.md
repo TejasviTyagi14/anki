@@ -25,19 +25,28 @@ Locked in `mechgrader/eval/PREREGISTERED.md` and `mechgrader/eval/compare.py`
 Pass line = 70/100; "clearly correct" = 90/100. Held-out split only; the harness
 has no code path that fits/tunes on held-out (`mechgrader/eval/harness.py`).
 
-## Baseline comparison (`make eval`, held-out n=12)
-Real numbers from the RDKit-only baseline on the held-out gold set (seed 0). The
-AI row is **honestly blank until `MECHGRADER_LLM_*` is provided** — no AI number
-is fabricated; `make eval` prints exactly why AI was skipped.
+## Baseline comparison (`make eval`, held-out n=15, leakage-clean)
+Real numbers from the RDKit-only baseline on the held-out gold set (seed 0),
+**after the held-out set was re-split to be leakage-clean** (see below / `make
+leakage`). The AI row is **honestly blank until `MECHGRADER_LLM_*` is provided** —
+no AI number is fabricated; `make eval` prints exactly why AI was skipped.
 
 | Grader | n | Agreement (acc.) | Wrong-grade rate | Pearson | Spearman | MAE |
 | --- | --- | --- | --- | --- | --- | --- |
-| RDKit-only (baseline) | 12 | 0.833 | 0.167 | 0.746 | 0.778 | 21.08 |
+| RDKit-only (baseline) | 15 | 0.867 | 0.133 | 0.745 | 0.722 | 19.87 |
 | AI rubric (constrained) | — | pending key | pending key | pending key | pending key | pending key |
 
-Note the baseline's 0.833 agreement and 0.167 wrong-grade rate are *below* the
-AI's pre-registered bar (0.85 / 0.05) — i.e. the baseline is exactly the simpler
+The baseline's 0.867 agreement and 0.133 wrong-grade rate straddle the AI's
+pre-registered bar (0.85 / 0.05) — i.e. the baseline is exactly the simpler
 method the AI must clear **and** beat. Re-run: `make eval` (needs `chem-grader/.venv`).
+
+**Leakage note (honesty loop in action):** the first held-out split shared
+reference reactions with the training split (it was split by attempt-variant, not
+by reaction). `make leakage` caught it; the gold set was re-split so whole
+near-duplicate reaction groups stay on one side (`mechgrader/tools/resplit_gold.py`),
+and `make leakage` is now **CLEAN**. The tert-butyl SN1 and E1 items correctly
+group together (mechanistically related — same substrate/carbocation), so they
+never straddle the split.
 
 **Status:** harness + gold set + metrics + baseline **implemented, tested, and run**
 (7 harness tests via `make test`; baseline via `make eval`). AI grading numbers

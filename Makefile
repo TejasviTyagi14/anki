@@ -73,7 +73,7 @@ test:
 .PHONY: test-grader
 test-grader:
 	PYTHONPATH=chem-grader/src:. chem-grader/.venv/bin/python -m pytest \
-	    mechgrader/tests/test_deterministic_grader.py chem-grader/tests -q
+	    mechgrader/tests/test_deterministic_grader.py mechgrader/tests/test_leakage.py chem-grader/tests -q
 
 # Stage 0 gate proof, runnable on its own.
 .PHONY: stage0-proof
@@ -125,11 +125,12 @@ bench:
 	@echo "            See docs/results.md (Section 10 targets)."
 	@exit 2
 
+# Near-duplicate / leakage scan (canonical SMILES + InChIKey + Morgan Tanimoto)
+# over the gold set: no held-out reaction may appear in training/few-shot/
+# calibration inputs. Needs RDKit (chem-grader/.venv; see `make test-grader`).
 .PHONY: leakage
 leakage:
-	@echo "[MechGrader] 'leakage' is scaffolded for Stage 3 (canonical SMILES + InChIKey + Morgan near-dup scan)."
-	@echo "            See docs/results.md and Stage 3 §10.2."
-	@exit 2
+	PYTHONPATH=chem-grader/src:. chem-grader/.venv/bin/python -m mechgrader.leakage
 
 .PHONY: gold
 gold:

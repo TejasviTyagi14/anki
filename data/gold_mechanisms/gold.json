@@ -5,30 +5,60 @@
     "source_ref": "clayden-2e#ch15.1",
     "label_source": "author-reference",
     "human_grade": 100,
-    "human_labels": ["correct"],
+    "human_labels": [
+      "correct"
+    ],
     "split": "heldout",
     "grade_rationale": "Correct product (ethanol + bromide), single balanced concerted step, backside attack with correct curved arrows.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH2:2][Br:3]", "[OH-:4]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH2:2][Br:3]",
+            "[OH-:4]"
           ],
-          "products": ["[CH3:1][CH2:2][OH:4]", "[Br-:3]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH2:2][OH:4]",
+            "[Br-:3]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH2:2][Br:3]", "[OH-:4]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH2:2][Br:3]",
+            "[OH-:4]"
           ],
-          "products": ["[CH3:1][CH2:2][OH:4]", "[Br-:3]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH2:2][OH:4]",
+            "[Br-:3]"
+          ]
         }
       ]
     }
@@ -39,30 +69,60 @@
     "source_ref": "clayden-2e#ch15.1",
     "label_source": "author-reference",
     "human_grade": 78,
-    "human_labels": ["one-arrow-wrong"],
-    "split": "train",
+    "human_labels": [
+      "one-arrow-wrong"
+    ],
+    "split": "heldout",
     "grade_rationale": "Right product and right mechanism, but the nucleophile arrow points at the methyl carbon (atom:0) instead of the electrophilic CH2 (atom:1): one electron-pushing error.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH2:2][Br:3]", "[OH-:4]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH2:2][Br:3]",
+            "[OH-:4]"
           ],
-          "products": ["[CH3:1][CH2:2][OH:4]", "[Br-:3]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH2:2][OH:4]",
+            "[Br-:3]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH2:2][Br:3]", "[OH-:4]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:0", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH2:2][Br:3]",
+            "[OH-:4]"
           ],
-          "products": ["[CH3:1][CH2:2][OH:4]", "[Br-:3]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:0",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH2:2][OH:4]",
+            "[Br-:3]"
+          ]
         }
       ]
     }
@@ -73,30 +133,60 @@
     "source_ref": "clayden-2e#ch15.1",
     "label_source": "author-reference",
     "human_grade": 18,
-    "human_labels": ["wrong-product"],
+    "human_labels": [
+      "wrong-product"
+    ],
     "split": "heldout",
-    "grade_rationale": "Final product is dimethyl ether (a constitutional isomer of ethanol) — impossible by SN2 on bromoethane; wrong connectivity even though it is mass/charge balanced.",
+    "grade_rationale": "Final product is dimethyl ether (a constitutional isomer of ethanol) \u2014 impossible by SN2 on bromoethane; wrong connectivity even though it is mass/charge balanced.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH2:2][Br:3]", "[OH-:4]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH2:2][Br:3]",
+            "[OH-:4]"
           ],
-          "products": ["[CH3:1][CH2:2][OH:4]", "[Br-:3]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH2:2][OH:4]",
+            "[Br-:3]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH2:2][Br:3]", "[OH-:4]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH2:2][Br:3]",
+            "[OH-:4]"
           ],
-          "products": ["[CH3:1][O:4][CH3:2]", "[Br-:3]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][O:4][CH3:2]",
+            "[Br-:3]"
+          ]
         }
       ]
     }
@@ -107,27 +197,48 @@
     "source_ref": "clayden-2e#ch15.1",
     "label_source": "author-reference",
     "human_grade": 5,
-    "human_labels": ["valence-invalid"],
-    "split": "train",
-    "grade_rationale": "Product keeps both OH and Br on the same carbon giving a pentavalent carbon — not a real molecule.",
+    "human_labels": [
+      "valence-invalid"
+    ],
+    "split": "heldout",
+    "grade_rationale": "Product keeps both OH and Br on the same carbon giving a pentavalent carbon \u2014 not a real molecule.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH2:2][Br:3]", "[OH-:4]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH2:2][Br:3]",
+            "[OH-:4]"
           ],
-          "products": ["[CH3:1][CH2:2][OH:4]", "[Br-:3]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH2:2][OH:4]",
+            "[Br-:3]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH2:2][Br:3]", "[OH-:4]"],
+          "reactants": [
+            "[CH3:1][CH2:2][Br:3]",
+            "[OH-:4]"
+          ],
           "arrows": [],
-          "products": ["[CH3:1][C:2]([OH:4])([Br:3])([H])[H]"]
+          "products": [
+            "[CH3:1][C:2]([OH:4])([Br:3])([H])[H]"
+          ]
         }
       ]
     }
@@ -138,27 +249,48 @@
     "source_ref": "clayden-2e#ch15.1",
     "label_source": "author-reference",
     "human_grade": 55,
-    "human_labels": ["right-product-unbalanced"],
-    "split": "train",
+    "human_labels": [
+      "right-product-unbalanced"
+    ],
+    "split": "heldout",
     "grade_rationale": "Correct product drawn (ethanol + bromide) but the hydroxide nucleophile is omitted from the reactant side, so oxygen/hydrogen/charge are not conserved.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH2:2][Br:3]", "[OH-:4]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH2:2][Br:3]",
+            "[OH-:4]"
           ],
-          "products": ["[CH3:1][CH2:2][OH:4]", "[Br-:3]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH2:2][OH:4]",
+            "[Br-:3]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH2:2][Br:3]"],
+          "reactants": [
+            "[CH3:1][CH2:2][Br:3]"
+          ],
           "arrows": [],
-          "products": ["[CH3:1][CH2:2][OH:4]", "[Br-:3]"]
+          "products": [
+            "[CH3:1][CH2:2][OH:4]",
+            "[Br-:3]"
+          ]
         }
       ]
     }
@@ -169,44 +301,114 @@
     "source_ref": "clayden-2e#ch15.5",
     "label_source": "author-reference",
     "human_grade": 100,
-    "human_labels": ["correct"],
-    "split": "train",
+    "human_labels": [
+      "correct"
+    ],
+    "split": "heldout",
     "grade_rationale": "Textbook SN1 solvolysis of tert-butyl bromide: ionization to the tertiary carbocation, water capture, deprotonation to tert-butanol; every step balanced.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [{"from": "lp:4", "to": "atom:1", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"]
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]", "[OH2:7]"],
-          "arrows": [{"from": "lp:5", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]", "[OH3+:7]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]",
+            "[OH2:7]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:5",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]",
+            "[OH3+:7]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [{"from": "lp:4", "to": "atom:1", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"]
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]", "[OH2:7]"],
-          "arrows": [{"from": "lp:5", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]", "[OH3+:7]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]",
+            "[OH2:7]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:5",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]",
+            "[OH3+:7]"
+          ]
         }
       ]
     }
@@ -217,44 +419,114 @@
     "source_ref": "clayden-2e#ch15.5",
     "label_source": "author-reference",
     "human_grade": 80,
-    "human_labels": ["one-arrow-wrong"],
+    "human_labels": [
+      "one-arrow-wrong"
+    ],
     "split": "heldout",
     "grade_rationale": "Correct intermediates and product, but in step 2 the water lone-pair arrow attacks a methyl carbon (atom:0) instead of the cationic center (atom:1): one arrow wrong.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [{"from": "lp:4", "to": "atom:1", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"]
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]", "[OH2:7]"],
-          "arrows": [{"from": "lp:5", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]", "[OH3+:7]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]",
+            "[OH2:7]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:5",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]",
+            "[OH3+:7]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [{"from": "lp:4", "to": "atom:0", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"]
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]", "[OH2:7]"],
-          "arrows": [{"from": "lp:5", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]", "[OH3+:7]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]",
+            "[OH2:7]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:5",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]",
+            "[OH3+:7]"
+          ]
         }
       ]
     }
@@ -265,44 +537,114 @@
     "source_ref": "clayden-2e#ch15.5",
     "label_source": "author-reference",
     "human_grade": 40,
-    "human_labels": ["wrong-intermediate"],
+    "human_labels": [
+      "wrong-intermediate"
+    ],
     "split": "heldout",
-    "grade_rationale": "Ionizes to a primary (isobutyl) carbocation instead of the tertiary one — the wrong, far-less-stable intermediate — and consequently reaches isobutanol; steps balance but the mechanism is conceptually wrong.",
+    "grade_rationale": "Ionizes to a primary (isobutyl) carbocation instead of the tertiary one \u2014 the wrong, far-less-stable intermediate \u2014 and consequently reaches isobutanol; steps balance but the mechanism is conceptually wrong.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [{"from": "lp:4", "to": "atom:1", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"]
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]", "[OH2:7]"],
-          "arrows": [{"from": "lp:5", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]", "[OH3+:7]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]",
+            "[OH2:7]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:5",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]",
+            "[OH3+:7]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH2+:1][CH:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2+:1][CH:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH2+:1][CH:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [{"from": "lp:4", "to": "atom:0", "kind": "curved"}],
-          "products": ["[CH2:1]([OH2+:6])[CH:2]([CH3:3])[CH3:4]"]
+          "reactants": [
+            "[CH2+:1][CH:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]([OH2+:6])[CH:2]([CH3:3])[CH3:4]"
+          ]
         },
         {
-          "reactants": ["[CH2:1]([OH2+:6])[CH:2]([CH3:3])[CH3:4]", "[OH2:7]"],
-          "arrows": [{"from": "lp:5", "to": "atom:5", "kind": "curved"}],
-          "products": ["[CH2:1]([OH:6])[CH:2]([CH3:3])[CH3:4]", "[OH3+:7]"]
+          "reactants": [
+            "[CH2:1]([OH2+:6])[CH:2]([CH3:3])[CH3:4]",
+            "[OH2:7]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:5",
+              "to": "atom:5",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]([OH:6])[CH:2]([CH3:3])[CH3:4]",
+            "[OH3+:7]"
+          ]
         }
       ]
     }
@@ -313,47 +655,119 @@
     "source_ref": "clayden-2e#ch15.5",
     "label_source": "author-reference",
     "human_grade": 18,
-    "human_labels": ["wrong-product"],
-    "split": "train",
+    "human_labels": [
+      "wrong-product"
+    ],
+    "split": "heldout",
     "grade_rationale": "Correct ionization and water capture, but the final step lets bromide recombine, so the drawn final product is the starting tert-butyl bromide rather than tert-butanol.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [{"from": "lp:4", "to": "atom:1", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"]
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]", "[OH2:7]"],
-          "arrows": [{"from": "lp:5", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]", "[OH3+:7]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]",
+            "[OH2:7]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:5",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]",
+            "[OH3+:7]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
-        },
-        {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [{"from": "lp:4", "to": "atom:1", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"]
-        },
-        {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]", "[Br-:5]"],
-          "arrows": [
-            {"from": "lp:5", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-4", "to": "atom:4", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
           ],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]", "[OH2:6]"]
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
+        },
+        {
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"
+          ]
+        },
+        {
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]",
+            "[Br-:5]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:5",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]",
+            "[OH2:6]"
+          ]
         }
       ]
     }
@@ -364,44 +778,106 @@
     "source_ref": "clayden-2e#ch15.5",
     "label_source": "author-reference",
     "human_grade": 58,
-    "human_labels": ["right-product-unbalanced"],
-    "split": "train",
+    "human_labels": [
+      "right-product-unbalanced"
+    ],
+    "split": "heldout",
     "grade_rationale": "Reaches tert-butanol, but the final deprotonation omits the water base and the released proton, so the last step does not conserve mass/charge.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [{"from": "lp:4", "to": "atom:1", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"]
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]", "[OH2:7]"],
-          "arrows": [{"from": "lp:5", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]", "[OH3+:7]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]",
+            "[OH2:7]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:5",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]",
+            "[OH3+:7]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [{"from": "lp:4", "to": "atom:1", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"]
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"],
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"
+          ],
           "arrows": [],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]"]
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]"
+          ]
         }
       ]
     }
@@ -412,42 +888,104 @@
     "source_ref": "clayden-2e#ch15.5",
     "label_source": "author-reference",
     "human_grade": 95,
-    "human_labels": ["valid-alternative-route"],
-    "split": "train",
+    "human_labels": [
+      "valid-alternative-route"
+    ],
+    "split": "heldout",
     "grade_rationale": "Legitimate two-step variant: after ionization, water adds and a second water removes the proton in one concerted step to give tert-butanol + hydronium; balanced and correct, just fewer discrete steps than the reference.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [{"from": "lp:4", "to": "atom:1", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"]
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]", "[OH2:7]"],
-          "arrows": [{"from": "lp:5", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]", "[OH3+:7]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH2+:6]",
+            "[OH2:7]"
+          ],
+          "arrows": [
+            {
+              "from": "lp:5",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]",
+            "[OH3+:7]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]", "[OH2:7]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:1", "kind": "curved"},
-            {"from": "lp:5", "to": "atom:4", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]",
+            "[OH2:7]"
           ],
-          "products": ["[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]", "[OH3+:7]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "lp:5",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[OH:6]",
+            "[OH3+:7]"
+          ]
         }
       ]
     }
@@ -458,32 +996,72 @@
     "source_ref": "wade-9e#ch7.9",
     "label_source": "author-reference",
     "human_grade": 100,
-    "human_labels": ["correct"],
+    "human_labels": [
+      "correct"
+    ],
     "split": "train",
     "grade_rationale": "Concerted E2 of 2-bromopropane by hydroxide: anti-periplanar removal of a beta-H, C=C formation, loss of bromide, giving propene + water + bromide; balanced with the three standard arrows.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]([CH3:3])[Br:4]", "[OH-:5]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:0", "kind": "curved"},
-            {"from": "atom:0", "to": "bond:0-1", "kind": "curved"},
-            {"from": "bond:1-3", "to": "atom:3", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([CH3:3])[Br:4]",
+            "[OH-:5]"
           ],
-          "products": ["[CH2:1]=[CH:2][CH3:3]", "[Br-:4]", "[OH2:5]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            },
+            {
+              "from": "atom:0",
+              "to": "bond:0-1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-3",
+              "to": "atom:3",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]=[CH:2][CH3:3]",
+            "[Br-:4]",
+            "[OH2:5]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]([CH3:3])[Br:4]", "[OH-:5]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:0", "kind": "curved"},
-            {"from": "atom:0", "to": "bond:0-1", "kind": "curved"},
-            {"from": "bond:1-3", "to": "atom:3", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([CH3:3])[Br:4]",
+            "[OH-:5]"
           ],
-          "products": ["[CH2:1]=[CH:2][CH3:3]", "[Br-:4]", "[OH2:5]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            },
+            {
+              "from": "atom:0",
+              "to": "bond:0-1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-3",
+              "to": "atom:3",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]=[CH:2][CH3:3]",
+            "[Br-:4]",
+            "[OH2:5]"
+          ]
         }
       ]
     }
@@ -494,32 +1072,72 @@
     "source_ref": "wade-9e#ch7.9",
     "label_source": "author-reference",
     "human_grade": 76,
-    "human_labels": ["one-arrow-wrong"],
+    "human_labels": [
+      "one-arrow-wrong"
+    ],
     "split": "train",
     "grade_rationale": "Correct propene product, but the C-Br arrow is drawn from bromide back into the C-Br bond (reversed electron flow): one arrow wrong.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]([CH3:3])[Br:4]", "[OH-:5]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:0", "kind": "curved"},
-            {"from": "atom:0", "to": "bond:0-1", "kind": "curved"},
-            {"from": "bond:1-3", "to": "atom:3", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([CH3:3])[Br:4]",
+            "[OH-:5]"
           ],
-          "products": ["[CH2:1]=[CH:2][CH3:3]", "[Br-:4]", "[OH2:5]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            },
+            {
+              "from": "atom:0",
+              "to": "bond:0-1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-3",
+              "to": "atom:3",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]=[CH:2][CH3:3]",
+            "[Br-:4]",
+            "[OH2:5]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]([CH3:3])[Br:4]", "[OH-:5]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:0", "kind": "curved"},
-            {"from": "atom:0", "to": "bond:0-1", "kind": "curved"},
-            {"from": "atom:3", "to": "bond:1-3", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([CH3:3])[Br:4]",
+            "[OH-:5]"
           ],
-          "products": ["[CH2:1]=[CH:2][CH3:3]", "[Br-:4]", "[OH2:5]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            },
+            {
+              "from": "atom:0",
+              "to": "bond:0-1",
+              "kind": "curved"
+            },
+            {
+              "from": "atom:3",
+              "to": "bond:1-3",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]=[CH:2][CH3:3]",
+            "[Br-:4]",
+            "[OH2:5]"
+          ]
         }
       ]
     }
@@ -530,31 +1148,67 @@
     "source_ref": "wade-9e#ch7.9",
     "label_source": "author-reference",
     "human_grade": 20,
-    "human_labels": ["wrong-product"],
+    "human_labels": [
+      "wrong-product"
+    ],
     "split": "train",
     "grade_rationale": "Draws cyclopropane (a 1,3 ring closure) instead of propene. Cyclopropane is a constitutional isomer of propene so it balances, but it is the wrong product for base-promoted elimination.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]([CH3:3])[Br:4]", "[OH-:5]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:0", "kind": "curved"},
-            {"from": "atom:0", "to": "bond:0-1", "kind": "curved"},
-            {"from": "bond:1-3", "to": "atom:3", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([CH3:3])[Br:4]",
+            "[OH-:5]"
           ],
-          "products": ["[CH2:1]=[CH:2][CH3:3]", "[Br-:4]", "[OH2:5]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            },
+            {
+              "from": "atom:0",
+              "to": "bond:0-1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-3",
+              "to": "atom:3",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]=[CH:2][CH3:3]",
+            "[Br-:4]",
+            "[OH2:5]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]([CH3:3])[Br:4]", "[OH-:5]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:0", "kind": "curved"},
-            {"from": "bond:1-3", "to": "atom:3", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([CH3:3])[Br:4]",
+            "[OH-:5]"
           ],
-          "products": ["[CH2:1]1[CH2:2][CH2:3]1", "[Br-:4]", "[OH2:5]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-3",
+              "to": "atom:3",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]1[CH2:2][CH2:3]1",
+            "[Br-:4]",
+            "[OH2:5]"
+          ]
         }
       ]
     }
@@ -565,30 +1219,60 @@
     "source_ref": "wade-9e#ch7.9",
     "label_source": "author-reference",
     "human_grade": 50,
-    "human_labels": ["right-product-unbalanced"],
-    "split": "heldout",
+    "human_labels": [
+      "right-product-unbalanced"
+    ],
+    "split": "train",
     "grade_rationale": "Correct propene product, but the hydroxide base is omitted and the abstracted proton simply disappears, so hydrogen and charge are not conserved.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]([CH3:3])[Br:4]", "[OH-:5]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:0", "kind": "curved"},
-            {"from": "atom:0", "to": "bond:0-1", "kind": "curved"},
-            {"from": "bond:1-3", "to": "atom:3", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([CH3:3])[Br:4]",
+            "[OH-:5]"
           ],
-          "products": ["[CH2:1]=[CH:2][CH3:3]", "[Br-:4]", "[OH2:5]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            },
+            {
+              "from": "atom:0",
+              "to": "bond:0-1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-3",
+              "to": "atom:3",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]=[CH:2][CH3:3]",
+            "[Br-:4]",
+            "[OH2:5]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]([CH3:3])[Br:4]"],
-          "arrows": [
-            {"from": "bond:1-3", "to": "atom:3", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([CH3:3])[Br:4]"
           ],
-          "products": ["[CH2:1]=[CH:2][CH3:3]", "[Br-:4]"]
+          "arrows": [
+            {
+              "from": "bond:1-3",
+              "to": "atom:3",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]=[CH:2][CH3:3]",
+            "[Br-:4]"
+          ]
         }
       ]
     }
@@ -599,40 +1283,92 @@
     "source_ref": "wade-9e#ch7.10",
     "label_source": "author-reference",
     "human_grade": 100,
-    "human_labels": ["correct"],
+    "human_labels": [
+      "correct"
+    ],
     "split": "heldout",
     "grade_rationale": "E1 of tert-butyl bromide: ionization to the tertiary carbocation, then water removes a beta-H to give isobutylene + hydronium; balanced with correct arrows.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:0", "kind": "curved"},
-            {"from": "atom:0", "to": "bond:0-1", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
           ],
-          "products": ["[CH2:1]=[C:2]([CH3:3])[CH3:4]", "[OH3+:6]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            },
+            {
+              "from": "atom:0",
+              "to": "bond:0-1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]=[C:2]([CH3:3])[CH3:4]",
+            "[OH3+:6]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:0", "kind": "curved"},
-            {"from": "atom:0", "to": "bond:0-1", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
           ],
-          "products": ["[CH2:1]=[C:2]([CH3:3])[CH3:4]", "[OH3+:6]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            },
+            {
+              "from": "atom:0",
+              "to": "bond:0-1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]=[C:2]([CH3:3])[CH3:4]",
+            "[OH3+:6]"
+          ]
         }
       ]
     }
@@ -643,40 +1379,92 @@
     "source_ref": "wade-9e#ch7.10",
     "label_source": "author-reference",
     "human_grade": 79,
-    "human_labels": ["one-arrow-wrong"],
-    "split": "train",
+    "human_labels": [
+      "one-arrow-wrong"
+    ],
+    "split": "heldout",
     "grade_rationale": "Correct carbocation and isobutylene product, but in step 2 the base arrow points at the cationic carbon (atom:1) as if adding, rather than abstracting the beta-H (atom:0): one arrow wrong.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:0", "kind": "curved"},
-            {"from": "atom:0", "to": "bond:0-1", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
           ],
-          "products": ["[CH2:1]=[C:2]([CH3:3])[CH3:4]", "[OH3+:6]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            },
+            {
+              "from": "atom:0",
+              "to": "bond:0-1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]=[C:2]([CH3:3])[CH3:4]",
+            "[OH3+:6]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:1", "kind": "curved"},
-            {"from": "atom:0", "to": "bond:0-1", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
           ],
-          "products": ["[CH2:1]=[C:2]([CH3:3])[CH3:4]", "[OH3+:6]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "atom:0",
+              "to": "bond:0-1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]=[C:2]([CH3:3])[CH3:4]",
+            "[OH3+:6]"
+          ]
         }
       ]
     }
@@ -687,40 +1475,92 @@
     "source_ref": "wade-9e#ch7.10",
     "label_source": "author-reference",
     "human_grade": 15,
-    "human_labels": ["wrong-product"],
-    "split": "train",
+    "human_labels": [
+      "wrong-product"
+    ],
+    "split": "heldout",
     "grade_rationale": "Correct tertiary carbocation, but the drawn alkene is 1-butene, which requires a linear carbon skeleton impossible from the tert-butyl cation; wrong product.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:0", "kind": "curved"},
-            {"from": "atom:0", "to": "bond:0-1", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
           ],
-          "products": ["[CH2:1]=[C:2]([CH3:3])[CH3:4]", "[OH3+:6]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            },
+            {
+              "from": "atom:0",
+              "to": "bond:0-1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]=[C:2]([CH3:3])[CH3:4]",
+            "[OH3+:6]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:0", "kind": "curved"},
-            {"from": "atom:0", "to": "bond:0-1", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
           ],
-          "products": ["[CH2:1]=[CH:2][CH2:3][CH3:4]", "[OH3+:6]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            },
+            {
+              "from": "atom:0",
+              "to": "bond:0-1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]=[CH:2][CH2:3][CH3:4]",
+            "[OH3+:6]"
+          ]
         }
       ]
     }
@@ -731,40 +1571,92 @@
     "source_ref": "wade-9e#ch7.10",
     "label_source": "author-reference",
     "human_grade": 96,
-    "human_labels": ["valid-alternative-route"],
+    "human_labels": [
+      "valid-alternative-route"
+    ],
     "split": "heldout",
     "grade_rationale": "Reaches isobutylene by having bromide (rather than solvent water) act as the base that removes the beta-H, giving isobutylene + HBr; any available base is acceptable, so this is a valid alternative.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[OH2:6]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:0", "kind": "curved"},
-            {"from": "atom:0", "to": "bond:0-1", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[OH2:6]"
           ],
-          "products": ["[CH2:1]=[C:2]([CH3:3])[CH3:4]", "[OH3+:6]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            },
+            {
+              "from": "atom:0",
+              "to": "bond:0-1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]=[C:2]([CH3:3])[CH3:4]",
+            "[OH3+:6]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"],
-          "arrows": [{"from": "bond:1-4", "to": "atom:4", "kind": "curved"}],
-          "products": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"]
+          "reactants": [
+            "[CH3:1][C:2]([CH3:3])([CH3:4])[Br:5]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:1-4",
+              "to": "atom:4",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][C+:2]([CH3:3])[CH3:4]", "[Br-:5]"],
-          "arrows": [
-            {"from": "lp:4", "to": "atom:0", "kind": "curved"},
-            {"from": "atom:0", "to": "bond:0-1", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][C+:2]([CH3:3])[CH3:4]",
+            "[Br-:5]"
           ],
-          "products": ["[CH2:1]=[C:2]([CH3:3])[CH3:4]", "[BrH:5]"]
+          "arrows": [
+            {
+              "from": "lp:4",
+              "to": "atom:0",
+              "kind": "curved"
+            },
+            {
+              "from": "atom:0",
+              "to": "bond:0-1",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH2:1]=[C:2]([CH3:3])[CH3:4]",
+            "[BrH:5]"
+          ]
         }
       ]
     }
@@ -775,40 +1667,92 @@
     "source_ref": "mcmurry-9e#ch16.2",
     "label_source": "author-reference",
     "human_grade": 100,
-    "human_labels": ["correct"],
+    "human_labels": [
+      "correct"
+    ],
     "split": "train",
     "grade_rationale": "Electrophilic aromatic bromination: benzene pi system attacks Br+ to give the arenium (Wheland) intermediate, then a base removes the ipso proton to rearomatize to bromobenzene; balanced.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1", "[Br+:7]"],
-          "arrows": [{"from": "bond:0-5", "to": "atom:6", "kind": "curved"}],
-          "products": ["[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1"]
+          "reactants": [
+            "[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1",
+            "[Br+:7]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:0-5",
+              "to": "atom:6",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1"
+          ]
         },
         {
-          "reactants": ["[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1", "[Br-:8]"],
-          "arrows": [
-            {"from": "lp:8", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:0-1", "to": "atom:0", "kind": "curved"}
+          "reactants": [
+            "[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1",
+            "[Br-:8]"
           ],
-          "products": ["[c:1]1([Br:7])[cH:2][cH:3][cH:4][cH:5][cH:6]1", "[BrH:8]"]
+          "arrows": [
+            {
+              "from": "lp:8",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:0-1",
+              "to": "atom:0",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[c:1]1([Br:7])[cH:2][cH:3][cH:4][cH:5][cH:6]1",
+            "[BrH:8]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1", "[Br+:7]"],
-          "arrows": [{"from": "bond:0-5", "to": "atom:6", "kind": "curved"}],
-          "products": ["[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1"]
+          "reactants": [
+            "[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1",
+            "[Br+:7]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:0-5",
+              "to": "atom:6",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1"
+          ]
         },
         {
-          "reactants": ["[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1", "[Br-:8]"],
-          "arrows": [
-            {"from": "lp:8", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:0-1", "to": "atom:0", "kind": "curved"}
+          "reactants": [
+            "[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1",
+            "[Br-:8]"
           ],
-          "products": ["[c:1]1([Br:7])[cH:2][cH:3][cH:4][cH:5][cH:6]1", "[BrH:8]"]
+          "arrows": [
+            {
+              "from": "lp:8",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:0-1",
+              "to": "atom:0",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[c:1]1([Br:7])[cH:2][cH:3][cH:4][cH:5][cH:6]1",
+            "[BrH:8]"
+          ]
         }
       ]
     }
@@ -819,40 +1763,92 @@
     "source_ref": "mcmurry-9e#ch16.2",
     "label_source": "author-reference",
     "human_grade": 79,
-    "human_labels": ["one-arrow-wrong"],
+    "human_labels": [
+      "one-arrow-wrong"
+    ],
     "split": "train",
     "grade_rationale": "Correct arenium and bromobenzene, but the first arrow is drawn from Br+ into the ring rather than from the aromatic pi bond to Br+ (reversed electron flow): one arrow wrong.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1", "[Br+:7]"],
-          "arrows": [{"from": "bond:0-5", "to": "atom:6", "kind": "curved"}],
-          "products": ["[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1"]
+          "reactants": [
+            "[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1",
+            "[Br+:7]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:0-5",
+              "to": "atom:6",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1"
+          ]
         },
         {
-          "reactants": ["[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1", "[Br-:8]"],
-          "arrows": [
-            {"from": "lp:8", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:0-1", "to": "atom:0", "kind": "curved"}
+          "reactants": [
+            "[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1",
+            "[Br-:8]"
           ],
-          "products": ["[c:1]1([Br:7])[cH:2][cH:3][cH:4][cH:5][cH:6]1", "[BrH:8]"]
+          "arrows": [
+            {
+              "from": "lp:8",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:0-1",
+              "to": "atom:0",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[c:1]1([Br:7])[cH:2][cH:3][cH:4][cH:5][cH:6]1",
+            "[BrH:8]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1", "[Br+:7]"],
-          "arrows": [{"from": "atom:6", "to": "bond:0-5", "kind": "curved"}],
-          "products": ["[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1"]
+          "reactants": [
+            "[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1",
+            "[Br+:7]"
+          ],
+          "arrows": [
+            {
+              "from": "atom:6",
+              "to": "bond:0-5",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1"
+          ]
         },
         {
-          "reactants": ["[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1", "[Br-:8]"],
-          "arrows": [
-            {"from": "lp:8", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:0-1", "to": "atom:0", "kind": "curved"}
+          "reactants": [
+            "[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1",
+            "[Br-:8]"
           ],
-          "products": ["[c:1]1([Br:7])[cH:2][cH:3][cH:4][cH:5][cH:6]1", "[BrH:8]"]
+          "arrows": [
+            {
+              "from": "lp:8",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:0-1",
+              "to": "atom:0",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[c:1]1([Br:7])[cH:2][cH:3][cH:4][cH:5][cH:6]1",
+            "[BrH:8]"
+          ]
         }
       ]
     }
@@ -863,40 +1859,92 @@
     "source_ref": "mcmurry-9e#ch16.2",
     "label_source": "author-reference",
     "human_grade": 45,
-    "human_labels": ["wrong-intermediate"],
+    "human_labels": [
+      "wrong-intermediate"
+    ],
     "split": "train",
-    "grade_rationale": "Draws the arenium with the positive charge on the ipso carbon that bears the bromine — a non-contributing resonance form; the real sigma complex delocalizes the charge ortho/para to the sp3 center.",
+    "grade_rationale": "Draws the arenium with the positive charge on the ipso carbon that bears the bromine \u2014 a non-contributing resonance form; the real sigma complex delocalizes the charge ortho/para to the sp3 center.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1", "[Br+:7]"],
-          "arrows": [{"from": "bond:0-5", "to": "atom:6", "kind": "curved"}],
-          "products": ["[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1"]
+          "reactants": [
+            "[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1",
+            "[Br+:7]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:0-5",
+              "to": "atom:6",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1"
+          ]
         },
         {
-          "reactants": ["[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1", "[Br-:8]"],
-          "arrows": [
-            {"from": "lp:8", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:0-1", "to": "atom:0", "kind": "curved"}
+          "reactants": [
+            "[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1",
+            "[Br-:8]"
           ],
-          "products": ["[c:1]1([Br:7])[cH:2][cH:3][cH:4][cH:5][cH:6]1", "[BrH:8]"]
+          "arrows": [
+            {
+              "from": "lp:8",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:0-1",
+              "to": "atom:0",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[c:1]1([Br:7])[cH:2][cH:3][cH:4][cH:5][cH:6]1",
+            "[BrH:8]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1", "[Br+:7]"],
-          "arrows": [{"from": "bond:0-5", "to": "atom:6", "kind": "curved"}],
-          "products": ["[C+:1]1([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH2:6]1"]
+          "reactants": [
+            "[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1",
+            "[Br+:7]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:0-5",
+              "to": "atom:6",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[C+:1]1([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH2:6]1"
+          ]
         },
         {
-          "reactants": ["[C+:1]1([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH2:6]1", "[Br-:8]"],
-          "arrows": [
-            {"from": "lp:7", "to": "atom:6", "kind": "curved"},
-            {"from": "bond:0-6", "to": "atom:0", "kind": "curved"}
+          "reactants": [
+            "[C+:1]1([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH2:6]1",
+            "[Br-:8]"
           ],
-          "products": ["[c:1]1([Br:7])[cH:2][cH:3][cH:4][cH:5][cH:6]1", "[BrH:8]"]
+          "arrows": [
+            {
+              "from": "lp:7",
+              "to": "atom:6",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:0-6",
+              "to": "atom:0",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[c:1]1([Br:7])[cH:2][cH:3][cH:4][cH:5][cH:6]1",
+            "[BrH:8]"
+          ]
         }
       ]
     }
@@ -907,32 +1955,65 @@
     "source_ref": "mcmurry-9e#ch16.2",
     "label_source": "author-reference",
     "human_grade": 3,
-    "human_labels": ["valence-invalid"],
-    "split": "heldout",
-    "grade_rationale": "Puts two bromines on a single aromatic ring carbon, giving a four-coordinate aromatic carbon — not a valid structure.",
+    "human_labels": [
+      "valence-invalid"
+    ],
+    "split": "train",
+    "grade_rationale": "Puts two bromines on a single aromatic ring carbon, giving a four-coordinate aromatic carbon \u2014 not a valid structure.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1", "[Br+:7]"],
-          "arrows": [{"from": "bond:0-5", "to": "atom:6", "kind": "curved"}],
-          "products": ["[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1"]
+          "reactants": [
+            "[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1",
+            "[Br+:7]"
+          ],
+          "arrows": [
+            {
+              "from": "bond:0-5",
+              "to": "atom:6",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1"
+          ]
         },
         {
-          "reactants": ["[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1", "[Br-:8]"],
-          "arrows": [
-            {"from": "lp:8", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:0-1", "to": "atom:0", "kind": "curved"}
+          "reactants": [
+            "[C:1]1([H:9])([Br:7])[CH:2]=[CH:3][CH:4]=[CH:5][CH+:6]1",
+            "[Br-:8]"
           ],
-          "products": ["[c:1]1([Br:7])[cH:2][cH:3][cH:4][cH:5][cH:6]1", "[BrH:8]"]
+          "arrows": [
+            {
+              "from": "lp:8",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:0-1",
+              "to": "atom:0",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[c:1]1([Br:7])[cH:2][cH:3][cH:4][cH:5][cH:6]1",
+            "[BrH:8]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1", "[Br+:7]", "[Br-:8]"],
+          "reactants": [
+            "[cH:1]1[cH:2][cH:3][cH:4][cH:5][cH:6]1",
+            "[Br+:7]",
+            "[Br-:8]"
+          ],
           "arrows": [],
-          "products": ["[c:1]1([Br:7])([Br:8])[cH:2][cH:3][cH:4][cH:5][cH:6]1"]
+          "products": [
+            "[c:1]1([Br:7])([Br:8])[cH:2][cH:3][cH:4][cH:5][cH:6]1"
+          ]
         }
       ]
     }
@@ -943,46 +2024,102 @@
     "source_ref": "klein-4e#ch20.4",
     "label_source": "author-reference",
     "human_grade": 100,
-    "human_labels": ["correct"],
-    "split": "heldout",
+    "human_labels": [
+      "correct"
+    ],
+    "split": "train",
     "grade_rationale": "Cyanohydrin formation from acetaldehyde: cyanide adds to the carbonyl carbon to give an alkoxide, which is then protonated to the cyanohydrin; both steps balanced with correct arrows.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]=[O:3]", "[C-:4]#[N:5]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]=[O:3]",
+            "[C-:4]#[N:5]"
           ],
-          "products": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]", "[CH:6]#[N:7]"],
-          "arrows": [
-            {"from": "lp:2", "to": "atom:5", "kind": "curved"},
-            {"from": "bond:5-6", "to": "atom:5", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]",
+            "[CH:6]#[N:7]"
           ],
-          "products": ["[CH3:1][CH:2]([OH:3])[C:4]#[N:5]", "[C-:6]#[N:7]"]
+          "arrows": [
+            {
+              "from": "lp:2",
+              "to": "atom:5",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:5-6",
+              "to": "atom:5",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([OH:3])[C:4]#[N:5]",
+            "[C-:6]#[N:7]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]=[O:3]", "[C-:4]#[N:5]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]=[O:3]",
+            "[C-:4]#[N:5]"
           ],
-          "products": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]", "[CH:6]#[N:7]"],
-          "arrows": [
-            {"from": "lp:2", "to": "atom:5", "kind": "curved"},
-            {"from": "bond:5-6", "to": "atom:5", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]",
+            "[CH:6]#[N:7]"
           ],
-          "products": ["[CH3:1][CH:2]([OH:3])[C:4]#[N:5]", "[C-:6]#[N:7]"]
+          "arrows": [
+            {
+              "from": "lp:2",
+              "to": "atom:5",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:5-6",
+              "to": "atom:5",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([OH:3])[C:4]#[N:5]",
+            "[C-:6]#[N:7]"
+          ]
         }
       ]
     }
@@ -993,46 +2130,102 @@
     "source_ref": "klein-4e#ch20.4",
     "label_source": "author-reference",
     "human_grade": 75,
-    "human_labels": ["one-arrow-wrong"],
-    "split": "heldout",
+    "human_labels": [
+      "one-arrow-wrong"
+    ],
+    "split": "train",
     "grade_rationale": "Correct alkoxide and cyanohydrin, but the nucleophile arrow attacks the carbonyl oxygen (atom:2) instead of the carbonyl carbon (atom:1): one arrow wrong.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]=[O:3]", "[C-:4]#[N:5]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]=[O:3]",
+            "[C-:4]#[N:5]"
           ],
-          "products": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]", "[CH:6]#[N:7]"],
-          "arrows": [
-            {"from": "lp:2", "to": "atom:5", "kind": "curved"},
-            {"from": "bond:5-6", "to": "atom:5", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]",
+            "[CH:6]#[N:7]"
           ],
-          "products": ["[CH3:1][CH:2]([OH:3])[C:4]#[N:5]", "[C-:6]#[N:7]"]
+          "arrows": [
+            {
+              "from": "lp:2",
+              "to": "atom:5",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:5-6",
+              "to": "atom:5",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([OH:3])[C:4]#[N:5]",
+            "[C-:6]#[N:7]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]=[O:3]", "[C-:4]#[N:5]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:2", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]=[O:3]",
+            "[C-:4]#[N:5]"
           ],
-          "products": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:2",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]", "[CH:6]#[N:7]"],
-          "arrows": [
-            {"from": "lp:2", "to": "atom:5", "kind": "curved"},
-            {"from": "bond:5-6", "to": "atom:5", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]",
+            "[CH:6]#[N:7]"
           ],
-          "products": ["[CH3:1][CH:2]([OH:3])[C:4]#[N:5]", "[C-:6]#[N:7]"]
+          "arrows": [
+            {
+              "from": "lp:2",
+              "to": "atom:5",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:5-6",
+              "to": "atom:5",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([OH:3])[C:4]#[N:5]",
+            "[C-:6]#[N:7]"
+          ]
         }
       ]
     }
@@ -1043,45 +2236,97 @@
     "source_ref": "klein-4e#ch20.4",
     "label_source": "author-reference",
     "human_grade": 22,
-    "human_labels": ["wrong-product"],
-    "split": "heldout",
-    "grade_rationale": "Correct alkoxide, but the final product is drawn as ethyl cyanate (C-O-CN) — a constitutional isomer of the cyanohydrin with the wrong connectivity; wrong product.",
+    "human_labels": [
+      "wrong-product"
+    ],
+    "split": "train",
+    "grade_rationale": "Correct alkoxide, but the final product is drawn as ethyl cyanate (C-O-CN) \u2014 a constitutional isomer of the cyanohydrin with the wrong connectivity; wrong product.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]=[O:3]", "[C-:4]#[N:5]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]=[O:3]",
+            "[C-:4]#[N:5]"
           ],
-          "products": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]", "[CH:6]#[N:7]"],
-          "arrows": [
-            {"from": "lp:2", "to": "atom:5", "kind": "curved"},
-            {"from": "bond:5-6", "to": "atom:5", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]",
+            "[CH:6]#[N:7]"
           ],
-          "products": ["[CH3:1][CH:2]([OH:3])[C:4]#[N:5]", "[C-:6]#[N:7]"]
+          "arrows": [
+            {
+              "from": "lp:2",
+              "to": "atom:5",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:5-6",
+              "to": "atom:5",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([OH:3])[C:4]#[N:5]",
+            "[C-:6]#[N:7]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]=[O:3]", "[C-:4]#[N:5]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]=[O:3]",
+            "[C-:4]#[N:5]"
           ],
-          "products": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]", "[CH:6]#[N:7]"],
-          "arrows": [
-            {"from": "lp:2", "to": "atom:5", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]",
+            "[CH:6]#[N:7]"
           ],
-          "products": ["[CH3:1][CH2:2][O:3][C:4]#[N:5]", "[C-:6]#[N:7]"]
+          "arrows": [
+            {
+              "from": "lp:2",
+              "to": "atom:5",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH2:2][O:3][C:4]#[N:5]",
+            "[C-:6]#[N:7]"
+          ]
         }
       ]
     }
@@ -1092,43 +2337,89 @@
     "source_ref": "klein-4e#ch20.4",
     "label_source": "author-reference",
     "human_grade": 60,
-    "human_labels": ["right-product-unbalanced"],
+    "human_labels": [
+      "right-product-unbalanced"
+    ],
     "split": "train",
     "grade_rationale": "Reaches the correct cyanohydrin, but the protonation step omits the proton source, so the added hydrogen and the charge are not conserved.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]=[O:3]", "[C-:4]#[N:5]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]=[O:3]",
+            "[C-:4]#[N:5]"
           ],
-          "products": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]", "[CH:6]#[N:7]"],
-          "arrows": [
-            {"from": "lp:2", "to": "atom:5", "kind": "curved"},
-            {"from": "bond:5-6", "to": "atom:5", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]",
+            "[CH:6]#[N:7]"
           ],
-          "products": ["[CH3:1][CH:2]([OH:3])[C:4]#[N:5]", "[C-:6]#[N:7]"]
+          "arrows": [
+            {
+              "from": "lp:2",
+              "to": "atom:5",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:5-6",
+              "to": "atom:5",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([OH:3])[C:4]#[N:5]",
+            "[C-:6]#[N:7]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]=[O:3]", "[C-:4]#[N:5]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]=[O:3]",
+            "[C-:4]#[N:5]"
           ],
-          "products": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"],
+          "reactants": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"
+          ],
           "arrows": [],
-          "products": ["[CH3:1][CH:2]([OH:3])[C:4]#[N:5]"]
+          "products": [
+            "[CH3:1][CH:2]([OH:3])[C:4]#[N:5]"
+          ]
         }
       ]
     }
@@ -1139,45 +2430,97 @@
     "source_ref": "klein-4e#ch20.4",
     "label_source": "author-reference",
     "human_grade": 92,
-    "human_labels": ["valid-alternative-route"],
-    "split": "heldout",
+    "human_labels": [
+      "valid-alternative-route"
+    ],
+    "split": "train",
     "grade_rationale": "Reaches the cyanohydrin by protonating the alkoxide with water (giving hydroxide) instead of HCN; solvent protonation is a valid alternative proton source.",
     "reference": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]=[O:3]", "[C-:4]#[N:5]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]=[O:3]",
+            "[C-:4]#[N:5]"
           ],
-          "products": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]", "[CH:6]#[N:7]"],
-          "arrows": [
-            {"from": "lp:2", "to": "atom:5", "kind": "curved"},
-            {"from": "bond:5-6", "to": "atom:5", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]",
+            "[CH:6]#[N:7]"
           ],
-          "products": ["[CH3:1][CH:2]([OH:3])[C:4]#[N:5]", "[C-:6]#[N:7]"]
+          "arrows": [
+            {
+              "from": "lp:2",
+              "to": "atom:5",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:5-6",
+              "to": "atom:5",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([OH:3])[C:4]#[N:5]",
+            "[C-:6]#[N:7]"
+          ]
         }
       ]
     },
     "attempt": {
       "steps": [
         {
-          "reactants": ["[CH3:1][CH:2]=[O:3]", "[C-:4]#[N:5]"],
-          "arrows": [
-            {"from": "lp:3", "to": "atom:1", "kind": "curved"},
-            {"from": "bond:1-2", "to": "atom:2", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]=[O:3]",
+            "[C-:4]#[N:5]"
           ],
-          "products": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"]
+          "arrows": [
+            {
+              "from": "lp:3",
+              "to": "atom:1",
+              "kind": "curved"
+            },
+            {
+              "from": "bond:1-2",
+              "to": "atom:2",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]"
+          ]
         },
         {
-          "reactants": ["[CH3:1][CH:2]([O-:3])[C:4]#[N:5]", "[OH2:6]"],
-          "arrows": [
-            {"from": "lp:2", "to": "atom:5", "kind": "curved"}
+          "reactants": [
+            "[CH3:1][CH:2]([O-:3])[C:4]#[N:5]",
+            "[OH2:6]"
           ],
-          "products": ["[CH3:1][CH:2]([OH:3])[C:4]#[N:5]", "[OH-:6]"]
+          "arrows": [
+            {
+              "from": "lp:2",
+              "to": "atom:5",
+              "kind": "curved"
+            }
+          ],
+          "products": [
+            "[CH3:1][CH:2]([OH:3])[C:4]#[N:5]",
+            "[OH-:6]"
+          ]
         }
       ]
     }
