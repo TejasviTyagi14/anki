@@ -38,4 +38,11 @@ clock.** Concretely:
   (logical timestamps).
 
 ## Status
-Documented. Implementation + proof in Stage 2.
+**Conflict-resolution logic implemented + tested** (`mechgrader/sync/`, 10 tests):
+attempts keyed by `card_id`+UUID (both offline attempts retained, none lost or
+double-counted); genuine same-record updates resolved by logical/server timestamp
+(the device wall clock is excluded from identity/equality/ordering, so a wrong
+phone clock cannot win) with every override recorded in a conflict log; merge is
+idempotent, commutative, associative. Remaining: stand up the self-hosted Anki
+sync server + prove a real phone<->desktop round-trip (needs a server + 2
+devices; the merge logic it will run is the tested one).

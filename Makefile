@@ -61,6 +61,10 @@ test:
 	$(PY) mechgrader/tests/test_scoring.py
 	$(PY) mechgrader/tests/test_mechcard_notetype.py
 	$(PY) mechgrader/tests/test_reviewer_pipeline.py
+	$(PY) mechgrader/tests/test_ai_grader.py
+	$(PY) mechgrader/tests/test_source_validator.py
+	$(PY) mechgrader/tests/test_sync_conflict.py
+	$(PY) mechgrader/tests/test_cardgen_check.py
 	@echo ">> For the RDKit deterministic grader suite, run: make test-grader"
 
 # Deterministic grader suite (needs RDKit in chem-grader/.venv). One-time setup:

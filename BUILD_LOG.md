@@ -206,5 +206,40 @@ topic_mastery + scoring 11 + notetype 5 + reviewer loop) all green, and
   submodule checkout + network).
 - Mobile still deferred (`docs/mobile.md`).
 
-## Stage 2 — "Friday" (AI + sync)              — NOT STARTED
+## Stage 2 — "Friday" (AI + sync) — IN PROGRESS
+
+Built AI-off-runnable (no API key needed to build/test; keys only to actually
+run AI). 5 parallel subagents, disjoint scopes; 4 done + consolidated here, eval
+harness folded in on completion.
+
+- **AI rubric grader** (`mechgrader/ai/`): provider-agnostic, env-only
+  (`MECHGRADER_LLM_PROVIDER/_API_KEY/_MODEL`) + global kill switch; layers
+  arrow-pushing / intermediate / step-ordering partial credit on top of the
+  injected deterministic verdict; prompt-injection hardened (input is data);
+  requires a rubric+step citation per judgment (no citation -> no credit); clamps
+  `overall` off "correct" when product doesn't match; schema-validate + retry +
+  graceful fallback (offline/rate-limit/broken JSON). **11 tests** (no network).
+- **Source validator** (`mechgrader/registry/`): fails on any unresolvable
+  `source_ref` across MechCards + AI judgments; `assert_clean` CI gate. **6 tests**.
+- **Sync conflict logic** (`mechgrader/sync/`): attempts keyed by card_id+UUID
+  (both offline attempts retained; none lost/double-counted); genuine same-record
+  updates resolved by logical/server timestamp (never device wall clock) +
+  conflict log; merge idempotent/commutative/associative. **10 tests** incl. the
+  wrong-clock case.
+- **Card-gen check** (`mechgrader/cardgen/` + `data/gold_qa/`): 73-item gold Q&A;
+  deterministic 3-count checker (correct_useful / wrong / bad_teaching) with a
+  pre-registered cutoff (>=90% correct, 0 wrong, <=10% bad) that blocks failing
+  cards; env-gated generation seam. **17 tests**.
+- **Eval harness + gold set** (`mechgrader/eval/` + `data/gold_mechanisms/`):
+  seeded metrics (agreement / wrong-grade rate / partial-credit correlation),
+  baseline(RDKit-only)-vs-AI table, pre-registered cutoffs. (Folded in on
+  subagent completion.)
+
+AI-off path: with no key/provider, grading + scoring fall back to the
+deterministic path (proven by the AI grader's `ai_status=="off"` test).
+
+Remaining Stage 2: `make eval` wiring + finalize `docs/ai_eval.md` numbers-when-key;
+self-hosted sync server + real two-device round-trip (needs a server + 2 devices;
+logic is tested, wiring documented).
+
 ## Stage 3 — "Sunday" (evidence + ship)        — NOT STARTED
