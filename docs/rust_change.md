@@ -17,24 +17,30 @@ Its only job is to prove the `proto → Rust → Python` (and later
 de-risking the substantive Stage 1 change. Proven by a Rust unit test and an
 end-to-end Python `rsbridge` call (see `BUILD_LOG.md`).
 
-### Stage 1 (planned): mastery-aware review pipeline
-1. **`TopicMastery` query** — returns, per reaction-type tag (SN1, SN2, E1, E2,
-   EAS, carbonyl_addition, …): count of *mastered* cards and average recall,
-   computed **inside Rust** over the whole collection.
-   - *Mastered* (precise definition, to be enforced in code and documented in
-     `docs/model_performance.md`): FSRS retrievability ≥ 0.90 **and** ≥ N
-     passing mechanism grades (N default 2) for that card.
+### Stage 1: mastery-aware review pipeline
+1. **`TopicMastery` query — DONE.** Returns, per reaction-type tag (from note
+   tags under `mechgrader::reaction::`): total cards, cards with an FSRS memory
+   state, mastered-card count, and average recall — computed **inside Rust** over
+   the collection, scoped by tag so it stays fast on large collections.
+   - *Mastered* (enforced in `rslib/src/mechgrader/mastery.rs`): FSRS
+     retrievability ≥ `min_retrievability` (default 0.90) **AND** passing
+     mechanism grades (`custom_data.mg_pass`) ≥ `min_pass_grades` (default 2).
+   - **Tests:** 5 Rust unit tests (grouping, the two-part mastered gate, the
+     average-recall denominator, threshold override, and an
+     undo-does-not-break test) + 1 Python end-to-end integration test. All green
+     (`make stage1-proof`).
    - Target: fast enough to power the dashboard on a 50,000-card collection
-     within the Stage 3 speed budget (dashboard first load p95 < 1s).
-2. **`points_at_stake` review ordering** — an optional due-card order sorting by
-   `topic_weight × (1 − topic_mastery)` so the highest-value weak mechanisms
-   surface first, while keeping FSRS intervals valid and undo working. Gated
-   behind a flag; if it risks scheduler/undo instability under time pressure,
-   `TopicMastery` alone is the guaranteed real change.
+     within the Stage 3 speed budget (dashboard first load p95 < 1s) — measured
+     in Stage 3 `make bench`.
+2. **`points_at_stake` review ordering — DEFERRED (flag-gated).** An optional
+   due-card order sorting by `topic_weight × (1 − topic_mastery)`. It touches the
+   scheduler queue/undo, so per the plan we ship `TopicMastery` first (the
+   guaranteed real change) and only add ordering if it can be done without undo
+   instability.
 
-Required for Stage 1 (tracked): ≥ 3 Rust unit tests + 1 Python integration test;
-an undo-across-the-new-path test proving no collection corruption; and
-confirmation the change also builds/passes on the Android/rsdroid build.
+Required for the real change (status): ≥ 3 Rust unit tests ✓ (5), 1 Python
+integration test ✓, an undo-does-not-break test ✓. Android/rsdroid build
+confirmation is pending a machine with the Android toolchain (`docs/mobile.md`).
 
 ## Why this must be in Rust (not Python/JS)
 

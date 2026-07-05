@@ -16,9 +16,13 @@ import "anki/generic.proto";
 service MechgraderService {
   // Liveness/version probe. Proves the proto -> Rust -> Python (and, on
   // Android, proto -> Rust -> rsdroid -> Kotlin) pipeline is wired against the
-  // forked engine. Stage 0 de-risking step; Stage 1 adds TopicMastery and the
-  // points_at_stake review ordering to this same service.
+  // forked engine. Stage 0 de-risking step.
   rpc MechgraderEngineInfo(generic.Empty) returns (EngineInfoResponse);
+
+  // Stage 1 real change: per reaction-type mastery, computed inside the Rust
+  // engine over the whole collection. Powers the dashboard and the
+  // points_at_stake review ordering.
+  rpc TopicMastery(TopicMasteryRequest) returns (TopicMasteryResponse);
 }
 
 message EngineInfoResponse {
@@ -28,6 +32,37 @@ message EngineInfoResponse {
   string anki_version = 2;
   // The build hash (or "dev").
   string build_hash = 3;
+}
+
+message TopicMasteryRequest {
+  // Optional Anki search to scope the cards (empty = whole collection). It is
+  // ANDed with the reaction-type tag filter.
+  string search = 1;
+  // Tag namespace identifying reaction-type tags; the reaction type is the
+  // remainder after this prefix. Empty -> "mechgrader::reaction::".
+  string tag_prefix = 2;
+  // A card counts as "mastered" for its reaction type iff its FSRS
+  // retrievability >= min_retrievability AND its number of passing mechanism
+  // grades >= min_pass_grades. 0 -> defaults (0.9 and 2).
+  float min_retrievability = 3;
+  uint32 min_pass_grades = 4;
+}
+
+message TopicMasteryResponse {
+  message Topic {
+    // Reaction-type tag remainder, e.g. "SN1".
+    string reaction_type = 1;
+    // Cards carrying this reaction-type tag (within scope).
+    uint32 total_cards = 2;
+    // Of those, how many have an FSRS memory state (honest denominator for
+    // average_recall).
+    uint32 cards_with_memory = 3;
+    // Of those with memory, how many meet the mastered definition.
+    uint32 mastered_cards = 4;
+    // Mean FSRS retrievability over cards_with_memory (0.0 if none).
+    float average_recall = 5;
+  }
+  repeated Topic topics = 1;
 }
 
 // Required by the codegen: every FooService must have a matching

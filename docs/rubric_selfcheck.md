@@ -7,7 +7,7 @@ marked by what is *demonstrable now*, not by intent.**
 ## Weighted sections
 | Section (weight) | Status | Proof location |
 | --- | --- | --- |
-| Rust change & fit (20%) | Stage 0 done (liveness RPC in engine, tested end-to-end); Stage 1 `TopicMastery`/`points_at_stake` pending | `docs/rust_change.md`, `rslib/src/mechgrader/`, `BUILD_LOG.md §0.2` |
+| Rust change & fit (20%) | **Stage 1 real change DONE**: `TopicMastery` engine query (FSRS retrievability + reaction-type tags), 5 Rust unit tests + 1 Python integration test (incl. undo-safety). `points_at_stake` deferred (flag-gated). Android build confirmation pending toolchain. | `docs/rust_change.md`, `rslib/src/mechgrader/mastery.rs`, `BUILD_LOG.md §1.1`, `make stage1-proof` |
 | Score accuracy & honest uncertainty (20%) | Models designed + give-up rule fixed; evidence pending Stage 3 | `docs/model_*.md`, `docs/give_up_rule.md` |
 | Study feature on learning science (15%) | Pre-registered; experiment pending Stage 3 | `docs/study_feature.md` |
 | AI checking & safety (15%) | Designed (sourced/checked/beats-baseline plan + injection hardening); pending Stage 2 | `docs/ai_eval.md`, `sources/registry.json` |

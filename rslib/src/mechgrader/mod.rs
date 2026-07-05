@@ -8,7 +8,11 @@
 //! adds the substantive `topic_mastery` query and the `points_at_stake` review
 //! ordering to this same service.
 
+mod mastery;
+
 use anki_proto::mechgrader::EngineInfoResponse;
+use anki_proto::mechgrader::TopicMasteryRequest;
+use anki_proto::mechgrader::TopicMasteryResponse;
 
 use crate::prelude::*;
 
@@ -21,6 +25,10 @@ impl crate::services::MechgraderService for Collection {
             anki_version,
             build_hash,
         })
+    }
+
+    fn topic_mastery(&mut self, input: TopicMasteryRequest) -> Result<TopicMasteryResponse> {
+        self.compute_topic_mastery(input)
     }
 }
 

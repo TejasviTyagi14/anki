@@ -56,12 +56,19 @@ test-anki:
 test:
 	cargo test -p anki --lib mechgrader
 	$(PY) mechgrader/tools/stage0_engine_probe.py
+	$(PY) mechgrader/tests/test_topic_mastery.py
 
 # Stage 0 gate proof, runnable on its own.
 .PHONY: stage0-proof
 stage0-proof:
 	cargo test -p anki --lib mechgrader
 	$(PY) mechgrader/tools/stage0_engine_probe.py
+
+# Stage 1 real-Rust-change proof: topic_mastery unit tests + Python end-to-end.
+.PHONY: stage1-proof
+stage1-proof:
+	cargo test -p anki --lib mechgrader
+	$(PY) mechgrader/tests/test_topic_mastery.py
 
 # ----------------------------------------------------------------------------
 # Mobile (AnkiDroid fork on the shared engine) — see docs/mobile.md

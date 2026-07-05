@@ -127,6 +127,42 @@ and `data/gold_mechanisms/` + `data/gold_qa/` placeholders.
 
 ---
 
-## Stage 1 — "Wednesday" (core loop, no AI)  — NOT STARTED
+## Stage 1 — "Wednesday" (core loop, no AI) — IN PROGRESS
+
+### 1.1 The real Rust change — `topic_mastery` — DONE
+
+The mastery-aware review pipeline's first (guaranteed) half is implemented in the
+engine: `MechgraderService.TopicMastery`. It returns, per reaction-type tag
+(from note tags under `mechgrader::reaction::`), the total cards, cards with an
+FSRS memory state, mastered-card count, and average recall — all computed inside
+Rust over the collection, scoped by tag so it stays fast on large collections.
+
+- **"Mastered" definition (enforced in code):** FSRS retrievability
+  >= `min_retrievability` (default 0.90) AND passing mechanism grades
+  (`custom_data.mg_pass`) >= `min_pass_grades` (default 2).
+- Files: `proto/anki/mechgrader.proto` (+TopicMastery rpc + 2 messages),
+  `rslib/src/mechgrader/mastery.rs` (new), `rslib/src/mechgrader/mod.rs` (+trait
+  method). No new upstream-core edits beyond Stage 0's three 1-liners.
+
+**Proof (re-run with `make stage1-proof`):**
+```
+cargo test -p anki --lib mechgrader
+# 6 passed: engine_info + 5 mastery tests, incl. read_only_query_does_not_break_undo
+PYTHONPATH=out/pylib out/pyenv/bin/python mechgrader/tests/test_topic_mastery.py
+# SN1: total=2 ...  SN2: total=1 ...   OK: TopicMastery reachable from Python via rsbridge
+```
+
+This alone satisfies rubric 7a (a real Rust change, reachable + tested). The
+optional second half, `points_at_stake` review ordering, is deferred behind a
+flag (it touches the scheduler queue / undo; per the plan we ship the guaranteed
+change first and only add ordering if it can be done without undo instability).
+
+Build after this change: `just build` succeeded in 23.84s (exit 0).
+
+### 1.2 Remaining Stage 1 — TODO
+MechCard note type; shared web editor bundle (Ketcher + arrow overlay);
+deterministic grader (integrate `chem-grader/`); three-score skeleton + give-up
+rule enforcement; reviewer loop wiring; desktop installer.
+
 ## Stage 2 — "Friday" (AI + sync)              — NOT STARTED
 ## Stage 3 — "Sunday" (evidence + ship)        — NOT STARTED

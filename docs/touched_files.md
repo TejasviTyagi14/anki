@@ -27,9 +27,22 @@ requires every `FooService` to have a matching `BackendFooService` (asserted in
 `rslib/proto_gen`), so `mechgrader.proto` declares both (the backend one empty).
 That keeps all logic in `rslib/src/mechgrader/` and off upstream's hot paths.
 
-## Stage 1 (planned) — expected additional touches
+## Stage 1 (in progress)
+
+### `topic_mastery` (DONE) — new files + our-own-proto edits only
+| File | Change | Merge risk |
+| --- | --- | --- |
+| `proto/anki/mechgrader.proto` | +`TopicMastery` rpc + `TopicMasteryRequest`/`TopicMasteryResponse` | none (our file) |
+| `rslib/src/mechgrader/mastery.rs` | new — query impl + 5 unit tests | none (new file) |
+| `rslib/src/mechgrader/mod.rs` | +`mod mastery;` + trait method | none (our file) |
+| `mechgrader/tests/test_topic_mastery.py` | new — Python integration test | none (new file) |
+
+No new upstream-core edits beyond Stage 0's three 1-liners. Merge risk for the
+real Rust change: **trivial.**
+
+### Remaining Stage 1 (planned) — expected additional touches
 - **New files:** grading, scoring, mechanism-notetype registration, more of
-  `rslib/src/mechgrader/` (mastery + ordering + tests), `web/mechgrader/`.
+  `rslib/src/mechgrader/` (ordering + tests), `web/mechgrader/`.
 - **Likely small upstream edits:**
   - `proto/anki/mechgrader.proto` — add `TopicMastery*` and ordering messages
     (still our file).
