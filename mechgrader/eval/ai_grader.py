@@ -27,8 +27,10 @@ import json
 import os
 from typing import Any, Callable, Optional
 
-# Provider id (lowercased) -> the env var its API key lives in. All of these
-# speak the OpenAI-compatible /chat/completions contract.
+# Provider id (lowercased) -> the provider-specific env var its API key lives in.
+# All speak the OpenAI-compatible /chat/completions contract. The generic
+# MECHGRADER_LLM_API_KEY is ALWAYS accepted too (see _api_key), so you only ever
+# need to set one variable regardless of provider.
 _PROVIDER_KEY_ENV: dict[str, str] = {
     "openai": "OPENAI_API_KEY",
     "openai-compatible": "OPENAI_API_KEY",
@@ -36,7 +38,26 @@ _PROVIDER_KEY_ENV: dict[str, str] = {
     "together": "TOGETHER_API_KEY",
     "groq": "GROQ_API_KEY",
     "openrouter": "OPENROUTER_API_KEY",
+    # local OpenAI-compatible servers (set MECHGRADER_LLM_BASE_URL; key can be any
+    # non-empty string).
+    "ollama": "OPENAI_API_KEY",
+    "vllm": "OPENAI_API_KEY",
+    "lmstudio": "OPENAI_API_KEY",
+    "local": "OPENAI_API_KEY",
 }
+
+# The single, provider-agnostic key var documented in .env.example / README.
+_GENERIC_KEY_ENV = "MECHGRADER_LLM_API_KEY"
+
+
+def _api_key(provider: str) -> str:
+    """The API key for ``provider``: the provider-specific var, else the generic
+    ``MECHGRADER_LLM_API_KEY``. So one variable works for every provider."""
+    specific = _PROVIDER_KEY_ENV.get(provider, "")
+    return (
+        os.environ.get(specific, "").strip()
+        or os.environ.get(_GENERIC_KEY_ENV, "").strip()
+    )
 
 _DEFAULT_BASE_URL = "https://api.openai.com/v1"
 _DEFAULT_MODEL = "gpt-4o-mini"
@@ -85,10 +106,13 @@ def ai_grader_status() -> dict:
             "provider": provider,
         }
     key_env = _PROVIDER_KEY_ENV[provider]
-    if not os.environ.get(key_env, "").strip():
+    if not _api_key(provider):
         return {
             "available": False,
-            "reason": f"{key_env} not set — refusing to emit AI metrics without a real key",
+            "reason": (
+                f"no API key — set {_GENERIC_KEY_ENV} (or {key_env}); "
+                "refusing to emit AI metrics without a real key"
+            ),
             "provider": provider,
             "key_env": key_env,
         }
@@ -118,10 +142,11 @@ def load_ai_grader(*, require_key: bool = True) -> tuple[Callable[[dict, dict], 
             f"unknown provider {provider!r} (known: {sorted(_PROVIDER_KEY_ENV)})"
         )
     key_env = _PROVIDER_KEY_ENV[provider]
-    api_key = os.environ.get(key_env, "").strip()
+    api_key = _api_key(provider)
     if require_key and not api_key:
         raise AIGraderUnavailable(
-            f"{key_env} not set — refusing to emit AI metrics without a real key"
+            f"no API key — set {_GENERIC_KEY_ENV} (or {key_env}) — "
+            "refusing to emit AI metrics without a real key"
         )
     base_url = os.environ.get("MECHGRADER_LLM_BASE_URL", _DEFAULT_BASE_URL).rstrip("/")
     model = os.environ.get("MECHGRADER_LLM_MODEL", _DEFAULT_MODEL)

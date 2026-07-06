@@ -22,12 +22,41 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
+from pathlib import Path
 from typing import Optional
 
 from . import compare as compare_mod
 from .ai_grader import AIGraderUnavailable, ai_grader_status, load_ai_grader
 from .harness import load_gold_items, run_eval, split_counts, validate_gold_item
+
+
+def _load_dotenv() -> Optional[str]:
+    """Load a gitignored ``.env`` (repo root, else CWD) into the environment so
+    the AI key can live in a file instead of being exported every shell.
+
+    A variable already set in the real environment always wins (``setdefault``),
+    and the key is never printed. Returns the path loaded, or None.
+    """
+    candidates = [Path(__file__).resolve().parents[2] / ".env", Path.cwd() / ".env"]
+    for path in candidates:
+        if not path.is_file():
+            continue
+        try:
+            for raw in path.read_text().splitlines():
+                line = raw.strip()
+                if not line or line.startswith("#"):
+                    continue
+                if line.startswith("export "):
+                    line = line[len("export "):].strip()
+                key, sep, val = line.partition("=")
+                if sep and key.strip():
+                    os.environ.setdefault(key.strip(), val.strip().strip('"').strip("'"))
+        except OSError:
+            continue
+        return str(path)
+    return None
 
 
 def _load_baseline():
@@ -55,6 +84,10 @@ def main(argv: Optional[list[str]] = None) -> int:
     print("MechGrader eval — held-out grading vs. human labels")
     print("Cutoffs are PRE-REGISTERED (see mechgrader/eval/PREREGISTERED.md).")
     print("=" * 72)
+
+    dotenv = _load_dotenv()
+    if dotenv:
+        print(f"[env]   loaded {dotenv} (shell-exported vars still win)")
 
     # --- gold set --------------------------------------------------------- #
     try:

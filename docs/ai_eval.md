@@ -31,6 +31,23 @@ Real numbers from the RDKit-only baseline on the held-out gold set (seed 0),
 leakage`). The AI row is **honestly blank until `MECHGRADER_LLM_*` is provided** —
 no AI number is fabricated; `make eval` prints exactly why AI was skipped.
 
+### Where to put your API key (to fill the AI row)
+Easiest — a gitignored `.env` at the repo root (`make eval` loads it):
+```
+cp .env.example .env     # then set MECHGRADER_LLM_PROVIDER + MECHGRADER_LLM_API_KEY
+make eval                # the AI row now runs
+```
+Or export in the shell (takes precedence over `.env`):
+```
+export MECHGRADER_LLM_PROVIDER=openai
+export MECHGRADER_LLM_API_KEY=sk-...
+make eval
+```
+The single `MECHGRADER_LLM_API_KEY` works for any provider (openai / groq /
+together / openrouter / azure-openai), and for a **local** model with
+`MECHGRADER_LLM_PROVIDER=ollama` + `MECHGRADER_LLM_BASE_URL=http://localhost:11434/v1`
+(any non-empty key). The key is read from the environment only and never committed.
+
 | Grader | n | Agreement (acc.) | Wrong-grade rate | Pearson | Spearman | MAE |
 | --- | --- | --- | --- | --- | --- | --- |
 | RDKit-only (baseline) | 15 | 0.867 | 0.133 | 0.745 | 0.722 | 19.87 |
