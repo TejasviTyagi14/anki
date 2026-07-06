@@ -133,8 +133,14 @@ run-mobile:
 
 .PHONY: ios
 ios:
-	@echo "[MechGrader] Building the iOS WebView companion and launching it in the Simulator..."
+	@echo "[MechGrader] Building the iOS app (native rslib engine + editor) and launching it in the Simulator..."
 	bash ios/build_sim.sh
+
+# Prove the iOS FFI runs the real forked engine RPC (host build of the same crate
+# the simulator links). Re-runnable engine-sharing check.
+.PHONY: test-ios-ffi
+test-ios-ffi:
+	cargo test -p mechgrader_ffi
 
 # ----------------------------------------------------------------------------
 # Model eval / benchmarks / leakage / gold / sync — later stages
