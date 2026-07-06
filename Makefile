@@ -171,6 +171,12 @@ bench:
 leakage:
 	PYTHONPATH=chem-grader/src:. chem-grader/.venv/bin/python -m mechgrader.leakage
 
+# Print the three scores (Memory/Performance/Readiness) with ranges + the give-up
+# rule abstaining — the demo video's "three scores" shot in one command.
+.PHONY: scores
+scores:
+	$(PY) -m mechgrader.scoring
+
 .PHONY: gold
 gold:
 	@echo "[MechGrader] 'gold' is scaffolded for Stage 2 (build/refresh data/gold_mechanisms + data/gold_qa)."

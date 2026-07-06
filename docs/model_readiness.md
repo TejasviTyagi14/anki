@@ -31,5 +31,11 @@ with a weight and a `covered` flag; the dashboard shows % covered and abstains
 below the line. A big deck skipping a high-weight section must not show "ready."
 
 ## Status
-Method fixed. The mapping + range implementation and validation land in Stage 3;
-the projected number is gated by the give-up rule and shown with caveats.
+**Implemented + tested:** `mechgrader/scoring/scores.py::readiness` computes the
+stated coverage-weighted mapping onto 118–132 with a Wilson-propagated range,
+gated by the give-up rule (`mechgrader/scoring/give_up.py`); `test_scoring.py`
+(11 tests). Demo: `make scores` (shows a projected Chem/Phys range *and* a
+thin-data abstention). The one open item is **validation against real MCAT
+outcomes** (Section 9, bonus — not available in a week); until then the projected
+number is always shown with the "not yet validated" caveat, and abstains below the
+give-up line.

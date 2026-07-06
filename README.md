@@ -34,30 +34,69 @@ baseline. Current honest status (incl. what isn't done yet) lives in
 
 ## Architecture (one shared engine, not two apps)
 1. **Rust engine** — Anki's `rslib` + MechGrader's `MechgraderService`
-   (`rslib/src/mechgrader/`). Native on desktop and on Android (via `rsdroid`
-   rebuilt on the same `rslib`), so the Rust change ships to both. (`docs/rust_change.md`)
-2. **Mechanism editor + grading client** — one TypeScript web bundle
-   (`web/mechgrader/`: Ketcher + RDKit-JS + curved-arrow overlay + submit/grade
-   UI), embedded in the desktop webview and the Android WebView. Written once.
-3. **Scoring math** — the three scores computed from primitives (FSRS state,
-   per-type mechanism grades, coverage) by deterministic functions in the shared
-   layer, so both apps compute identical numbers offline. Only the LLM rubric
-   grade is online-dependent.
+   (`rslib/src/mechgrader/`: `topic_mastery`, `mechgrader_engine_info`). The **same
+   crate** runs on **desktop** (via `rsbridge`/PyO3), on **iOS** (via
+   `ios/rust-ffi`, a C FFI cross-compiled to the iOS simulator — the app calls the
+   real engine RPC natively), and on **Android** (via `rsdroid`/JNI, once the SDK
+   is present). So the Rust change ships to every client.
+   (`docs/rust_change.md`, `docs/mobile.md`)
+2. **Mechanism editor + grading client** — one framework-free web bundle
+   (`web/mechgrader/`: an SVG click-to-draw structure editor + curved electron-
+   pushing arrow overlay + a flashcard review flow + submit/grade UI), embedded in
+   the desktop webview and the phone `WebView`. Written once. (Ketcher and RDKit-JS
+   are optional, documented seams — not required.)
+3. **Deterministic grader** — RDKit (`chem-grader/` + `mechgrader/grading/`) checks
+   canonical SMILES / InChIKey / valence / substructure; the editor's Submit calls
+   it for a real grade, with an offline string fallback.
+4. **Scoring math** — the three scores from primitives (FSRS state, per-type
+   mechanism grades, coverage) by deterministic pure-stdlib functions
+   (`mechgrader/scoring/`), so every client computes identical numbers offline.
+   Only the optional LLM rubric grade (`mechgrader/ai/`) is online-dependent.
+5. **Sync** — Anki's own sync (`make sync-roundtrip` proves an A→server→B
+   round-trip on the shared engine); mechanism attempts merge via a CRDT
+   (`mechgrader/sync/`). (`docs/sync_conflict_rule.md`)
 
-## Build & run
-Everything is a `make` target (which wraps Anki's `just` recipes). See `make help`.
+## Build & run — both apps
+Everything is a `make` target (wrapping Anki's `just` recipes). Run `make help`.
 
+**Desktop** (macOS/Linux/Windows):
 ```bash
-make build         # build the desktop app (Rust + Python + web)
-make run-desktop   # build & launch the desktop app (needs a display)
-make test          # MechGrader engine tests (Rust + Python rsbridge probe)
-make stage0-proof  # re-run the Stage 0 engine-liveness proof
+make build              # build the desktop app (Rust + Python + web)
+make run-desktop        # build & launch the desktop app (needs a display)
+./tools/build-installer # package the installer (.dmg/.exe) — docs/installer.md
+make grader             # serve the editor + RDKit grader at http://localhost:8000
 ```
 
-- **Toolchain / build notes** (incl. the sandbox `tsx` caveat and proto gotchas):
-  `BUILD_LOG.md`.
-- **Mobile** (AnkiDroid on the shared engine): `docs/mobile.md` — *not yet built
-  in this environment (no Android SDK); procedure documented.*
+**Phone — iOS (runs the NATIVE shared engine in the Simulator):**
+```bash
+make ios                # build ios/rust-ffi (native rslib engine) + the Swift app,
+                        # then link + install + launch on a booted iOS simulator
+```
+On launch the app shows **"MechGrader engine live on Anki <ver> (<hash>)"** from
+the real Rust RPC running natively on the phone, above the shared editor. Requires
+Xcode. Full detail + the physical-device last-mile: `docs/mobile.md`.
+
+**Phone — Android (AnkiDroid on the shared engine):**
+```bash
+make build-mobile       # honest toolchain preflight + exact reproducible steps
+```
+Needs the Android SDK/NDK (absent in this environment). `docs/mobile.md`.
+
+**Tests / evidence (all re-runnable):**
+```bash
+make test               # Rust engine tests + Python engine/scoring/AI/sync tests
+make test-grader        # RDKit deterministic grader suite (69 tests)
+make test-ios-ffi       # native-engine FFI over rslib (host build of the iOS crate)
+make eval               # held-out grading vs labels (RDKit baseline; AI when keyed)
+make leakage            # held-out vs training near-duplicate scan (must be CLEAN)
+make bench              # 50k-card engine dashboard benchmark
+make sync-roundtrip     # real A -> self-hosted server -> B sync round-trip
+```
+
+- **Build/toolchain notes** (proto gotchas, the tokio-feature fix for iOS):
+  `BUILD_LOG.md`, `docs/mobile.md`.
+- **List of files touched** (for a clean rebase onto upstream Anki):
+  `docs/touched_files.md`.
 
 ## Docs & registries
 `docs/rust_change.md`, `docs/touched_files.md`, `docs/mobile.md`,

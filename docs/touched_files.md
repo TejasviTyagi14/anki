@@ -4,59 +4,71 @@ An honest accounting of what MechGrader changes in the upstream Anki tree, so a
 future rebase onto upstream Anki is predictable. Design goal: **keep new code in
 new files; touch upstream files with the smallest possible diffs.**
 
-## Stage 0 (current)
-
-### New files (no merge conflict risk — additive)
-| File | Purpose |
-| --- | --- |
-| `proto/anki/mechgrader.proto` | New `MechgraderService` + `BackendMechgraderService` + `EngineInfoResponse`. |
-| `rslib/src/mechgrader/mod.rs` | `impl MechgraderService for Collection` + unit test. |
-| `mechgrader/tools/stage0_engine_probe.py` | Re-runnable end-to-end proof. |
-| `Makefile`, `THIRD_PARTY_NOTICES.md`, `BUILD_LOG.md`, `docs/*.md`, `sources/registry.json`, `data/**` | Scaffolding. |
-
-### Upstream files edited (all 1-line, additive)
+## Upstream Anki files edited (the ENTIRE core diff — all tiny + additive)
 | File | Change | Merge risk |
 | --- | --- | --- |
 | `rslib/src/lib.rs` | `+ pub mod mechgrader;` (alphabetical) | **Very low** — one line in a sorted module list. |
 | `rslib/proto/src/lib.rs` | `+ protobuf!(mechgrader, "mechgrader");` | **Very low** — one line in the proto module list. |
-| `rslib/proto/python.rs` | `+ import anki.mechgrader_pb2` in the generated-header list | **Very low** — one line; only needed because a generated Python method references the new pb2 module. |
+| `rslib/proto/python.rs` | `+ import anki.mechgrader_pb2` in the generated-header list | **Very low** — one line. |
+| `Cargo.toml` (workspace) | `+ "ios/rust-ffi"` to `[workspace] members` | **Very low** — one line; adds a leaf member. |
 
-**Why so small:** MechGrader uses a *dedicated service in its own proto file*
-rather than adding RPCs to a core service (e.g. `SchedulerService`). The codegen
-requires every `FooService` to have a matching `BackendFooService` (asserted in
-`rslib/proto_gen`), so `mechgrader.proto` declares both (the backend one empty).
-That keeps all logic in `rslib/src/mechgrader/` and off upstream's hot paths.
+That is the complete list of edits to files that exist in upstream Anki. Everything
+else below is **new files/dirs** (no merge conflict risk). MechGrader deliberately
+uses a *dedicated service in its own proto file* instead of adding RPCs to a core
+service, so all engine logic stays in `rslib/src/mechgrader/` and off upstream's
+hot paths. (`Cargo.lock` also updates, as expected.)
 
-## Stage 1 (in progress)
+## New files & directories (additive — no merge risk)
 
-### `topic_mastery` (DONE) — new files + our-own-proto edits only
-| File | Change | Merge risk |
-| --- | --- | --- |
-| `proto/anki/mechgrader.proto` | +`TopicMastery` rpc + `TopicMasteryRequest`/`TopicMasteryResponse` | none (our file) |
-| `rslib/src/mechgrader/mastery.rs` | new — query impl + 5 unit tests | none (new file) |
-| `rslib/src/mechgrader/mod.rs` | +`mod mastery;` + trait method | none (our file) |
-| `mechgrader/tests/test_topic_mastery.py` | new — Python integration test | none (new file) |
+### Rust engine change (the "real Rust change")
+| Path | Purpose |
+| --- | --- |
+| `proto/anki/mechgrader.proto` | `MechgraderService` (+empty `BackendMechgraderService`): `MechgraderEngineInfo`, `TopicMastery` + messages. |
+| `rslib/src/mechgrader/mod.rs` | `impl MechgraderService for Collection` + engine-info unit test. |
+| `rslib/src/mechgrader/mastery.rs` | `topic_mastery` query (FSRS retrievability + reaction-type tags) + 5 unit tests. |
 
-No new upstream-core edits beyond Stage 0's three 1-liners. Merge risk for the
-real Rust change: **trivial.**
+### Phone (shared engine on iOS) + FFI
+| Path | Purpose |
+| --- | --- |
+| `ios/rust-ffi/` | C-FFI `staticlib` crate over the `anki` engine crate; `mechgrader_engine_info` (+ host unit test). Cross-compiles to `aarch64-apple-ios-sim`. |
+| `ios/MechGrader/` | SwiftUI app: calls the native engine RPC + hosts the shared web editor in a `WKWebView`. |
+| `ios/build_sim.sh` | Builds the Rust FFI + Swift app, links, installs/launches on booted simulators. |
 
-### Remaining Stage 1 (planned) — expected additional touches
-- **New files:** grading, scoring, mechanism-notetype registration, more of
-  `rslib/src/mechgrader/` (ordering + tests), `web/mechgrader/`.
-- **Likely small upstream edits:**
-  - `proto/anki/mechgrader.proto` — add `TopicMastery*` and ordering messages
-    (still our file).
-  - Possibly `rslib/src/scheduler/` — to expose a due-card ordering hook for
-    `points_at_stake`. This is the **highest merge-risk** item because it touches
-    the scheduler queue; it will be kept behind a flag and isolated to the
-    smallest hook. If the hook proves invasive, `points_at_stake` is deferred and
-    `TopicMastery` (which needs no scheduler edits) remains the guaranteed change.
-  - Notetype: the MechCard type is created as data (a notetype in the collection),
-    not by editing upstream notetype code where avoidable.
+### Web editor (shared client, written once)
+| Path | Purpose |
+| --- | --- |
+| `web/mechgrader/` | Framework-free mechanism editor: `editor.js`, `mechanism.js`, `arrows.js`, `draw.js` (SVG click-to-draw), `chem.js`, `rdkit.js`, `index.html`, `app.css` (burnt-orange theme + flashcard flow). |
+
+### Python: grading, scoring, AI, sync, evidence
+| Path | Purpose |
+| --- | --- |
+| `mechgrader/grading/` | Deterministic RDKit grader adapter (+ tests). |
+| `mechgrader/scoring/` | Memory / Performance / Readiness + give-up rule (pure stdlib, 11 tests). |
+| `mechgrader/notetype/` | MechCard notetype registration (+ tests). |
+| `mechgrader/reviewer/` | Review pipeline: submit → grade → `mg_pass` (+ test). |
+| `mechgrader/ai/` | Provider-agnostic AI rubric grader (kill switch, citation-required, clamped; 11 tests). |
+| `mechgrader/eval/` | Held-out eval harness + pre-registered cutoffs + baseline vs AI (7 tests). |
+| `mechgrader/registry/`, `mechgrader/cardgen/` | Source validator; card-gen quality checker. |
+| `mechgrader/sync/` | Attempt CRDT (logical-timestamp LWW, wrong-clock-safe; 10 tests). |
+| `mechgrader/leakage/` | RDKit near-duplicate leakage scan (+ tests). |
+| `mechgrader/bench/`, `mechgrader/calibration/`, `mechgrader/experiment/`, `mechgrader/paraphrase/` | Benchmarks; calibration (Brier/log-loss/ECE); study-feature experiment; paraphrase bridge. |
+| `mechgrader/tools/` | `stage0_engine_probe.py`, `sync_roundtrip.py`, `resplit_gold.py`, `mobile_preflight.sh`. |
+| `mechgrader/tests/` | Integration tests (`test_topic_mastery.py`, `test_crash_recovery.py`, …). |
+
+### Data, prototype grader, docs, build
+| Path | Purpose |
+| --- | --- |
+| `chem-grader/` | RDKit grader + FastAPI (`/mech/grade`, serves the editor at `/`); wrapped by `mechgrader/grading`. |
+| `data/gold_mechanisms/`, `data/gold_qa/`, `data/coverage/` | Held-out gold sets (leakage-clean split) + MCAT orgo coverage outline. |
+| `sources/registry.json` | Source registry (real texts) for AI citation validation. |
+| `Makefile` | All build/test/eval/bench/leakage/ios/sync targets. |
+| `README.md` (MechGrader header), `BUILD_LOG.md`, `THIRD_PARTY_NOTICES.md`, `BRAINLIFT.md`, `docs/*.md` (MechGrader docs) | Fork overview, build log, attributions, model/architecture/results docs. |
 
 ## Overall merge-difficulty assessment
-- **Stage 0: trivial.** Three 1-line additive edits + new files. A rebase onto a
-  newer upstream Anki would almost certainly apply cleanly.
-- **Stage 1: low–moderate.** The only real risk is the optional scheduler
-  ordering hook; everything else is additive/new-file. Mitigation: flag-gate the
-  scheduler hook and keep it to one call site.
+**Trivial.** The upstream core diff is four one-line additive edits (a sorted
+module list, a proto list, a generated-header import, and a workspace member).
+Everything substantive is new files under `rslib/src/mechgrader/`, `ios/`,
+`web/mechgrader/`, `mechgrader/`, `chem-grader/`, and `data/`. A rebase onto a
+newer upstream Anki should apply cleanly. The one item that *would* raise risk —
+a scheduler ordering hook for `points_at_stake` — was intentionally **not** taken;
+`topic_mastery` needs no scheduler edits.
