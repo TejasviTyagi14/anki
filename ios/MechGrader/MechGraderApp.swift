@@ -27,27 +27,86 @@ func nativeEngineInfo() -> String {
     return String(cString: ptr)
 }
 
+/// Adds a card to a local collection in the app's Documents dir and sync-uploads
+/// it to `endpoint` — the native engine doing real Anki sync from the phone.
+func nativeSyncPush(endpoint: String) -> String {
+    let docs = FileManager.default
+        .urls(for: .documentDirectory, in: .userDomainMask).first?.path
+        ?? NSTemporaryDirectory()
+    let front = "SN2 mechanism — synced from iPhone"
+    let back = "hydroxide + bromomethane (backside attack)"
+    guard let ptr = mechgrader_sync_push(docs, endpoint, "tester", "pw-abc-12345", front, back)
+    else { return "sync: <null>" }
+    defer { mechgrader_string_free(ptr) }
+    return String(cString: ptr)
+}
+
+private let PRIMARY = Color(red: 0.76, green: 0.25, blue: 0.05)
+
 struct ContentView: View {
     @State private var engine: String = "querying native engine…"
+    @State private var endpoint: String = "http://localhost:27701"
+    @State private var syncMsg: String = ""
+    @State private var syncing = false
 
     var body: some View {
         VStack(spacing: 0) {
+            // Native engine banner (proves the phone runs rslib natively).
             VStack(alignment: .leading, spacing: 3) {
                 Text("NATIVE RUST ENGINE (rslib) ON THIS PHONE")
-                    .font(.system(size: 10, weight: .bold))
-                    .foregroundColor(Color(red: 0.76, green: 0.25, blue: 0.05))
+                    .font(.system(size: 10, weight: .bold)).foregroundColor(PRIMARY)
                 Text(engine)
                     .font(.system(.footnote, design: .monospaced))
                     .foregroundColor(Color(red: 0.11, green: 0.10, blue: 0.09))
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 14)
-            .padding(.vertical, 10)
-            .background(Color(red: 0.992, green: 0.914, blue: 0.867)) // --primary-soft
+            .padding(.horizontal, 14).padding(.vertical, 8)
+            .background(Color(red: 0.992, green: 0.914, blue: 0.867))
+
+            // Phone -> desktop sync (native engine does real Anki sync).
+            VStack(alignment: .leading, spacing: 6) {
+                HStack(spacing: 8) {
+                    TextField("sync server", text: $endpoint)
+                        .textFieldStyle(.roundedBorder)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled(true)
+                        .font(.system(size: 12, design: .monospaced))
+                    Button(action: doSync) {
+                        Text(syncing ? "Syncing…" : "Sync card → desktop")
+                            .font(.system(size: 13, weight: .bold)).foregroundColor(.white)
+                            .padding(.horizontal, 12).padding(.vertical, 9)
+                            .background(PRIMARY).cornerRadius(8)
+                    }
+                    .disabled(syncing)
+                }
+                if !syncMsg.isEmpty {
+                    Text(syncMsg)
+                        .font(.system(size: 11, design: .monospaced))
+                        .foregroundColor(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 14).padding(.vertical, 8)
+            .background(Color(red: 1.0, green: 0.973, blue: 0.949))
+
             MechWebView().ignoresSafeArea(.container, edges: .bottom)
         }
         .onAppear { engine = nativeEngineInfo() }
+    }
+
+    private func doSync() {
+        syncing = true
+        syncMsg = "syncing to \(endpoint)…"
+        let ep = endpoint
+        DispatchQueue.global().async {
+            let result = nativeSyncPush(endpoint: ep)
+            DispatchQueue.main.async {
+                syncMsg = result
+                syncing = false
+            }
+        }
     }
 }
 

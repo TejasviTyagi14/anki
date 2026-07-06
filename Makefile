@@ -29,6 +29,7 @@ help:
 	@echo "  make run-mobile    Install & launch the Android build on a device/emulator     [needs Android SDK/NDK — see docs/mobile.md]"
 	@echo "  make ios           Build the iOS app (NATIVE rslib engine + editor) & launch in the Simulator [needs Xcode]"
 	@echo "  make sync-roundtrip Real A->server->B sync round-trip on the shared engine (self-hosted sync server)"
+	@echo "  make sync-ios-verify Phone->desktop: the native iOS sync_push -> server -> desktop syncs it down"
 	@echo "  make grader        Serve the editor + RDKit grader at http://localhost:8000 (clears :8000 first)"
 	@echo "  make test          Run the MechGrader Rust + Python engine tests"
 	@echo "  make test-anki     Run the full upstream Anki test suite (cargo + pytest + vitest)"
@@ -189,7 +190,23 @@ gold:
 sync-roundtrip:
 	$(PY) mechgrader/tools/sync_roundtrip.py
 
-# Just start the self-hosted sync server (Ctrl-C to stop); env: SYNC_USER1=user:pass
+# Phone -> desktop: the NATIVE iOS sync_push (built for host) pushes a card to a
+# self-hosted server, then a desktop collection syncs it down. Same code the iOS
+# "Sync card to desktop" button runs. Needs cargo + the anki python env.
+.PHONY: sync-ios-verify
+sync-ios-verify:
+	$(PY) mechgrader/tools/sync_ios_verify.py
+
+# Desktop side of the LIVE demo: after `make sync-server` + tapping the app's
+# "Sync card -> desktop" button, this syncs down and prints the card received.
+.PHONY: sync-pull
+sync-pull:
+	$(PY) mechgrader/tools/sync_pull.py
+
+# Start the self-hosted sync server for the live phone->desktop demo (Ctrl-C to
+# stop). Fixed port 27701 + user tester:pw-abc-12345 match the iOS app's defaults,
+# so you can tap "Sync card -> desktop" in the Simulator and it reaches this server.
 .PHONY: sync-server
 sync-server:
-	SYNC_USER1=$${SYNC_USER1:-tester:pw-abc-12345} $(PY) -m anki.syncserver
+	SYNC_HOST=$${SYNC_HOST:-127.0.0.1} SYNC_PORT=$${SYNC_PORT:-27701} \
+	  SYNC_USER1=$${SYNC_USER1:-tester:pw-abc-12345} $(PY) -m anki.syncserver

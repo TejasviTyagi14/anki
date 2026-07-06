@@ -7,7 +7,14 @@
 // heap string owned by the caller (free with mechgrader_string_free).
 char *mechgrader_engine_info(void);
 
-// Frees a string returned by mechgrader_engine_info.
+// Adds a Basic card (front/back) to a local collection under base_dir and
+// sync-uploads it to the Anki sync server at endpoint (username/password).
+// Returns a JSON string {"ok":bool,"message":str} owned by the caller.
+char *mechgrader_sync_push(const char *base_dir, const char *endpoint,
+                           const char *username, const char *password,
+                           const char *front, const char *back);
+
+// Frees a string returned by this library.
 void mechgrader_string_free(char *ptr);
 
 #endif /* MECHGRADER_FFI_H */

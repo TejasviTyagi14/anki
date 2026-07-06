@@ -64,13 +64,19 @@ don't have — so no calibrated-memory *claim* is made yet.
 - **Android**: not buildable here — `make build-mobile` preflight shows 7/8
   prerequisites missing; exact reproducible steps provided. See `docs/mobile.md`.
 
-### Working sync — real round-trip on the shared engine (`make sync-roundtrip`)
-Starts Anki's own `RustBackend.syncserver`, then: collection **A** (1 note) →
-`full-upload`; fresh collection **B** → `full-download` → **1 note, card_found=True
-→ PASS**. Server + both clients are the same forked engine; the desktop analogue
-of a phone↔desktop sync against a self-hosted server. Honest: one machine, two
-collection files (not two physical devices); the iOS sync button through the FFI
-is the remaining wiring (`docs/mobile.md`).
+### Working sync — phone → desktop on the shared engine
+- **`make sync-roundtrip`**: collection **A** (1 note) → `full-upload`; fresh
+  collection **B** → `full-download` → **1 note, card_found=True → PASS**.
+- **`make sync-ios-verify`** (the iOS "Sync card → desktop" path): runs the
+  *identical* native `mechgrader_ffi::sync_push` the Swift button calls, pushing a
+  card to a self-hosted server; a desktop `Collection` then syncs it down →
+  `[phone] pushed 1 card [full-upload]` → `[desktop] phone_card_found=True → PASS`.
+- **Live**: `make sync-server` → tap the app button → `make sync-pull` prints
+  `SN2 mechanism — synced from iPhone → PASS`.
+
+Server + both clients are the same forked engine. Honest: one machine against a
+localhost sync server (real Anki protocol), not two physical devices
+(`docs/mobile.md`).
 
 ### Study-feature experiment — interleaving vs blocked vs plain (`python -m mechgrader.experiment`)
 Fair three-arm SIMULATION (stated learner model; interleaving pays a switch cost

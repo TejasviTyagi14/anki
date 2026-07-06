@@ -92,24 +92,35 @@ crate requests `tokio` `full` so the cross-compile resolves the same surface.
 The WebView is served via a `WKURLSchemeHandler` (`mgapp://`) so ES modules load
 with a correct JS MIME (plain `file://` renders HTML but won't run the modules).
 
-### Working sync — real client↔server↔client round-trip (`make sync-roundtrip`)
+### Phone → desktop sync — the iOS app pushes a card through the native engine
 
-`mechgrader/tools/sync_roundtrip.py` starts Anki's **own** self-hosted sync
-server (`RustBackend.syncserver`), creates collection **A** with a card, syncs it
-up, then a fresh collection **B** syncs down and the card is present — same forked
-engine on the server and both clients. Verified: `A notes=1 -> full-upload`,
-`B before=0 -> full-download -> after=1, card_found=True → PASS`. This is the
-desktop analogue of a phone↔desktop sync against a self-hosted server.
+The app has a **"Sync card → desktop"** button. It calls
+`mechgrader_sync_push` (FFI): the native engine creates a card in a local
+collection in the app's Documents dir and **sync-uploads it** to a self-hosted
+Anki sync server via the real `sync_login` → `sync_collection` → `full_upload`
+path (the same Backend methods the desktop uses). A desktop then syncs that card
+down.
+
+Two reproducible proofs:
+- **`make sync-ios-verify`** (automated): runs the *identical* native
+  `mechgrader_ffi::sync_push` the button calls (host build), pushing a card to a
+  self-hosted server, then a desktop `Collection` syncs it down. Verified:
+  `[phone] pushed 1 card [full-upload]` → `[desktop] note_count=1,
+  phone_card_found=True → PASS`.
+- **Live (filmable):** `make sync-server` (port 27701, matches the app's default)
+  → tap **Sync card → desktop** in the Simulator → `make sync-pull` prints the
+  card: `SN2 mechanism — synced from iPhone | … → PASS`.
+- `make sync-roundtrip` additionally proves an A→server→B round-trip on the engine.
 
 ### Honest scope / remaining last-mile
-- The iOS app runs in the **Simulator**, not signed onto a physical device
-  (that needs an Apple Developer cert; the build + native engine are real).
-- The proven sync round-trip is **on one machine** (two collection files + the
-  real Anki sync protocol), not two physical devices; the iOS app's grade/sync
-  buttons calling `sync_collection` **through the FFI** is the remaining wiring
-  (the engine + FFI are in place; `mechgrader_engine_info` proves the seam works).
-- Grade submission in the WebView still uses the web/offline path or the desktop
-  grader at `localhost:8000`; routing it through the native engine FFI is next.
+- The iOS app runs in the **Simulator**, not signed onto a physical device (that
+  needs an Apple Developer cert; the build + native engine + sync are real).
+- Both sides run on **one machine** against a localhost sync server (the real Anki
+  sync protocol), not two separate physical devices.
+- The pushed card is a demo `Basic` card; wiring the **WebView editor's** graded
+  MechCard into the pushed collection (instead of a fixed demo card) is the next
+  polish. Grade submission in the WebView still uses the web/offline path or the
+  desktop grader at `localhost:8000`.
 
 ### Android (AnkiDroid) — still the recommended path for a shipping phone app
 AnkiDroid + `rsdroid` already wrap `rslib` over JNI, so it's the cheapest route to

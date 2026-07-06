@@ -30,15 +30,17 @@ Open **http://localhost:8000**. Walk the flashcard loop:
   Anki 26.05 (&lt;hash&gt;)"** — the *same* Rust `mechgrader_engine_info` RPC running
   **natively on the phone** (via `ios/rust-ffi`). Same engine, two clients.
 
-### 3. A card synced, phone ↔ desktop (~40s) — required (honest scope)
-- Run `make sync-roundtrip`: it starts Anki's **own** self-hosted sync server, makes
-  a card on collection **A**, uploads it, then a fresh collection **B** syncs down
-  and the card appears — **`card_found=True → PASS`**. Server + both clients are the
-  same forked engine (the desktop analogue of phone↔desktop sync).
-- Show the iOS app (shot 2) running that same engine natively.
-- **Say plainly:** the reproducible round-trip is engine-level (two collections via
-  the real Anki sync protocol); wiring the iOS app's *sync button* to call
-  `sync_collection` through the FFI is the remaining last-mile (`docs/mobile.md`).
+### 3. A card synced, phone → desktop (~45s) — required
+Two terminals + the Simulator:
+- Terminal A: `make sync-server` (Anki's own self-hosted sync server on :27701).
+- iOS Simulator: tap **"Sync card → desktop"** — the native engine creates a card
+  and sync-uploads it; the button shows `pushed 1 card(s) … [full-upload]`.
+- Terminal B: `make sync-pull` → the card **"SN2 mechanism — synced from iPhone"**
+  appears on the desktop. Same forked engine on the phone, server, and desktop.
+- One-command proof: **`make sync-ios-verify`** runs the *identical* native
+  `sync_push` the button calls + a desktop sync-down → `PASS`.
+- Honest: both run on one machine against a localhost server (real Anki protocol),
+  not two separate physical devices.
 
 ### 4. The three scores, with ranges (~40s) — required
 - Run `make scores`. Show:
@@ -74,7 +76,7 @@ Run and show the outputs:
 | --- | --- | --- |
 | A review session | 1 | `make grader` → localhost:8000 |
 | Rust change in action | 2 | `make test`, `make ios` |
-| Card synced phone→desktop | 3 | `make sync-roundtrip` (+ iOS app); last-mile noted |
+| Card synced phone→desktop | 3 | `make sync-server` → tap app button → `make sync-pull` (or `make sync-ios-verify`) |
 | Three scores with ranges | 4 | `make scores` |
 | AI features | 5 | `make test` (AI tests), `make eval` |
 | Test results | 6 | `make test-grader`, `make eval`, `make leakage`, `make bench` |

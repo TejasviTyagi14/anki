@@ -9,11 +9,14 @@ description = "C FFI over the forked Anki engine (rslib) for the iOS app — pro
 
 [lib]
 name = "mechgrader_ffi"
-crate-type = ["staticlib"]
+# staticlib -> the iOS app links it; lib -> host tests/examples can use it too.
+crate-type = ["staticlib", "lib"]
 
 [dependencies]
 # The SAME engine crate the desktop (rsbridge) and Android (rsdroid) wrap.
 anki = { path = "../../rslib" }
+anki_proto.workspace = true
+anki_i18n.workspace = true
 # Building anki as a standalone lib needs tokio's io-util/fs (the full workspace
 # build gets these via feature unification; here we request them explicitly so
 # the cross-compile to iOS resolves the same tokio surface).
