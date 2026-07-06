@@ -13,14 +13,41 @@ import WebKit
 struct MechGraderApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView().ignoresSafeArea()
+            ContentView()
         }
     }
 }
 
+/// Calls the SAME forked Rust engine RPC the desktop uses, compiled natively for
+/// the phone (ios/rust-ffi over rslib). Proves the engine is shared, not a
+/// reimplementation. Returns e.g. "MechGrader engine live on Anki 26.05 (<hash>)".
+func nativeEngineInfo() -> String {
+    guard let ptr = mechgrader_engine_info() else { return "native engine: <null>" }
+    defer { mechgrader_string_free(ptr) }
+    return String(cString: ptr)
+}
+
 struct ContentView: View {
+    @State private var engine: String = "querying native engine…"
+
     var body: some View {
-        MechWebView().ignoresSafeArea()
+        VStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: 3) {
+                Text("NATIVE RUST ENGINE (rslib) ON THIS PHONE")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundColor(Color(red: 0.76, green: 0.25, blue: 0.05))
+                Text(engine)
+                    .font(.system(.footnote, design: .monospaced))
+                    .foregroundColor(Color(red: 0.11, green: 0.10, blue: 0.09))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
+            .background(Color(red: 0.992, green: 0.914, blue: 0.867)) // --primary-soft
+            MechWebView().ignoresSafeArea(.container, edges: .bottom)
+        }
+        .onAppear { engine = nativeEngineInfo() }
     }
 }
 

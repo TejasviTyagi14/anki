@@ -1,0 +1,20 @@
+[package]
+name = "mechgrader_ffi"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "C FFI over the forked Anki engine (rslib) for the iOS app — proves the phone runs the SAME Rust engine as desktop."
+
+[lib]
+name = "mechgrader_ffi"
+crate-type = ["staticlib"]
+
+[dependencies]
+# The SAME engine crate the desktop (rsbridge) and Android (rsdroid) wrap.
+anki = { path = "../../rslib" }
+# Building anki as a standalone lib needs tokio's io-util/fs (the full workspace
+# build gets these via feature unification; here we request them explicitly so
+# the cross-compile to iOS resolves the same tokio surface).
+tokio = { workspace = true, features = ["full"] }

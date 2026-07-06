@@ -27,7 +27,8 @@ help:
 	@echo "  make run-desktop   Build & launch the desktop app (needs a display)"
 	@echo "  make build-mobile  Build the AnkiDroid fork w/ rsdroid rebuilt on this rslib  [needs Android SDK/NDK — see docs/mobile.md]"
 	@echo "  make run-mobile    Install & launch the Android build on a device/emulator     [needs Android SDK/NDK — see docs/mobile.md]"
-	@echo "  make ios           Build the iOS WebView companion & launch it in the Simulator [needs Xcode — see docs/mobile.md]"
+	@echo "  make ios           Build the iOS app (NATIVE rslib engine + editor) & launch in the Simulator [needs Xcode]"
+	@echo "  make sync-roundtrip Real A->server->B sync round-trip on the shared engine (self-hosted sync server)"
 	@echo "  make grader        Serve the editor + RDKit grader at http://localhost:8000 (clears :8000 first)"
 	@echo "  make test          Run the MechGrader Rust + Python engine tests"
 	@echo "  make test-anki     Run the full upstream Anki test suite (cargo + pytest + vitest)"
@@ -169,8 +170,14 @@ gold:
 	@echo "[MechGrader] 'gold' is scaffolded for Stage 2 (build/refresh data/gold_mechanisms + data/gold_qa)."
 	@exit 2
 
+# Real client<->server<->client sync round-trip through Anki's OWN self-hosted
+# sync server (RustBackend.syncserver): a note made on collection A is uploaded
+# and then appears on a separate collection B. Same forked engine on all sides.
+.PHONY: sync-roundtrip
+sync-roundtrip:
+	$(PY) mechgrader/tools/sync_roundtrip.py
+
+# Just start the self-hosted sync server (Ctrl-C to stop); env: SYNC_USER1=user:pass
 .PHONY: sync-server
 sync-server:
-	@echo "[MechGrader] 'sync-server' is scaffolded for Stage 2 (self-hosted Anki sync server)."
-	@echo "            Will wrap 'just' / anki's built-in syncserver. See docs/sync_conflict_rule.md."
-	@exit 2
+	SYNC_USER1=$${SYNC_USER1:-tester:pw-abc-12345} $(PY) -m anki.syncserver

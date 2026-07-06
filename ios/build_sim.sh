@@ -18,12 +18,23 @@ cp web/mechgrader/*.html web/mechgrader/*.css "$APP/web/"
 cp web/mechgrader/*.js "$APP/web/"          # .mjs test file is excluded
 cp ios/MechGrader/Info.plist "$APP/Info.plist"
 
-echo "== compiling (arm64 iOS simulator) =="
+echo "== building the native Rust engine (rslib) FFI for the simulator =="
+# This compiles the SAME anki engine crate the desktop uses, for the iOS sim.
+cargo build -p mechgrader_ffi --target aarch64-apple-ios-sim
+RUST_TARGET_DIR="$(cargo metadata --format-version 1 --no-deps | python3 -c 'import json,sys;print(json.load(sys.stdin)["target_directory"])')"
+RUST_LIB_DIR="$RUST_TARGET_DIR/aarch64-apple-ios-sim/debug"
+test -f "$RUST_LIB_DIR/libmechgrader_ffi.a" || { echo "missing libmechgrader_ffi.a in $RUST_LIB_DIR"; exit 1; }
+
+echo "== compiling (arm64 iOS simulator) + linking the native engine =="
 xcrun --sdk iphonesimulator swiftc \
   -target arm64-apple-ios18.0-simulator \
   -sdk "$SDK" \
   -parse-as-library \
+  -import-objc-header ios/MechGrader/mechgrader_ffi.h \
   -framework SwiftUI -framework WebKit -framework UIKit \
+  -L "$RUST_LIB_DIR" -lmechgrader_ffi \
+  -framework Security -framework SystemConfiguration -framework CoreFoundation -framework CFNetwork \
+  -lc++ -lresolv \
   -o "$APP/MechGrader" \
   ios/MechGrader/MechGraderApp.swift
 

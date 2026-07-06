@@ -3935,6 +3935,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "mechgrader_ffi"
+version = "0.0.0"
+dependencies = [
+ "anki",
+ "tokio",
+]
+
+[[package]]
 name = "memchr"
 version = "2.7.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6519,6 +6527,7 @@ dependencies = [
  "io-uring",
  "libc",
  "mio",
+ "parking_lot",
  "pin-project-lite",
  "signal-hook-registry",
  "slab",

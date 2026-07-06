@@ -51,12 +51,26 @@ we can *compute* calibration and it works; real calibration needs real
 longitudinal reviews (FSRS predicted vs actual recall from the revlog), which we
 don't have — so no calibrated-memory *claim* is made yet.
 
-### Ship — desktop BUILT, mobile blocked (honest)
+### Ship — desktop BUILT; iOS runs the NATIVE shared engine
 - **Desktop**: `out/installer/dist/anki-26.05-mac-apple.dmg` (215 MB, arm64) built
   via `./tools/build-installer`; the bundled `anki` wheel contains the
   `MechgraderService` engine change (verified). Adhoc-signed. See `docs/installer.md`.
-- **Mobile**: not buildable here — `make build-mobile` preflight shows 7/8
+- **iOS (native engine)** (`make ios`): `ios/rust-ffi/` cross-compiles the **same
+  `anki`/`rslib` engine crate** to `aarch64-apple-ios-sim`; the SwiftUI app calls
+  the real `mechgrader_engine_info` RPC natively and displays **"MechGrader engine
+  live on Anki 26.05 (6acf80c0)"** in the iPhone/iPad Simulator, above the shared
+  `web/mechgrader/` editor. Proves the phone runs the desktop's engine (not a
+  reimplementation / not just a WebView). `cargo test -p mechgrader_ffi` green.
+- **Android**: not buildable here — `make build-mobile` preflight shows 7/8
   prerequisites missing; exact reproducible steps provided. See `docs/mobile.md`.
+
+### Working sync — real round-trip on the shared engine (`make sync-roundtrip`)
+Starts Anki's own `RustBackend.syncserver`, then: collection **A** (1 note) →
+`full-upload`; fresh collection **B** → `full-download` → **1 note, card_found=True
+→ PASS**. Server + both clients are the same forked engine; the desktop analogue
+of a phone↔desktop sync against a self-hosted server. Honest: one machine, two
+collection files (not two physical devices); the iOS sync button through the FFI
+is the remaining wiring (`docs/mobile.md`).
 
 ### Study-feature experiment — interleaving vs blocked vs plain (`python -m mechgrader.experiment`)
 Fair three-arm SIMULATION (stated learner model; interleaving pays a switch cost
