@@ -3,21 +3,32 @@
  * into Anki's webview or an Android WebView). Tokens follow WCAG AA contrast.
  */
 :root {
-  --bg: #f5f7fa;
-  --surface: #ffffff;
-  --surface-2: #f1f4f9;
-  --ink: #0f172a;
-  --muted: #556072;
-  --faint: #8b95a7;
-  --border: #e4e8ef;
+  /* ── COLOR: single source of truth — Burnt Orange + White (WCAG AA) ── */
+  --bg: #FFFFFF;            /* app background */
+  --surface: #FFFFFF;       /* cards */
+  --surface-2: #FFF7F2;     /* subtle warm panel tint */
+  --border: #F0E0D6;        /* hairline borders */
+  --primary: #C2410C;       /* burnt orange — primary actions, active states */
+  --primary-hover: #9A3412; /* darker burnt orange for hover/pressed */
+  --primary-soft: #FDE9DD;  /* soft orange fill for chips/badges/highlights */
+  --text: #1C1917;          /* near-black warm text */
+  --text-muted: #78716C;    /* secondary text */
+  --code-bg: #1C1917;       /* JSON block stays dark for contrast */
+  --code-text: #FDE9DD;     /* warm off-white for JSON text */
+  --success: #15803D;
+  --error: #B91C1C;
 
-  --accent: #2563eb;
-  --accent-strong: #1d4ed8;
+  /* aliases: existing rules read these, so the palette above is the ONE source */
+  --ink: var(--text);
+  --muted: var(--text-muted);
+  --faint: #A8A29E;          /* warm gray for atom-index labels */
+  --accent: var(--primary);
+  --accent-strong: var(--primary-hover);
+  --accent-soft: var(--primary-soft);
   --accent-ink: #ffffff;
-  --accent-soft: #eaf1ff;
-  --ok: #15803d;   --ok-soft: #e7f6ec;
-  --warn: #b45309; --warn-soft: #fbf1e5;
-  --err: #dc2626;  --err-soft: #fdecec;
+  --ok: var(--success);   --ok-soft: #E8F3EC;
+  --warn: var(--primary); --warn-soft: var(--primary-soft); /* keep the only accent orange */
+  --err: var(--error);    --err-soft: #FBE9E9;
 
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -27,11 +38,12 @@
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
   --space-5: 20px; --space-6: 24px; --space-7: 32px; --space-8: 48px;
 
+  /* 12px cards · 8px buttons/inputs/chips · soft shadows only */
   --radius-sm: 8px; --radius: 12px; --radius-lg: 16px; --radius-pill: 999px;
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, .06);
-  --shadow-md: 0 12px 30px -12px rgba(15, 23, 42, .25), 0 2px 6px rgba(15, 23, 42, .05);
-  --focus-ring: 0 0 0 3px rgba(37, 99, 235, .35);
-  --tap: 40px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, .06);
+  --shadow-md: 0 10px 30px -14px rgba(28, 25, 23, .18), 0 1px 3px rgba(0, 0, 0, .06);
+  --focus-ring: 0 0 0 3px rgba(194, 65, 12, .35);
+  --tap: 44px;
 }
 
 * { box-sizing: border-box; }
@@ -47,17 +59,17 @@ body {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
   min-height: var(--tap); padding: 0 var(--space-4);
   border: 1px solid var(--border); border-radius: var(--radius-sm);
-  background: var(--surface); color: var(--ink);
+  background: var(--surface); color: var(--primary);   /* secondary: white bg, primary text */
   font: 700 var(--text-sm)/1 var(--font); cursor: pointer;
-  transition: background .15s, border-color .15s, box-shadow .15s, transform .06s;
+  transition: background .15s, border-color .15s, box-shadow .15s, transform .06s, color .15s;
 }
-.btn:hover { background: var(--surface-2); }
+.btn:hover { background: var(--primary-soft); border-color: var(--primary); }
 .btn:active { transform: translateY(1px); }
-.btn:disabled { opacity: .5; cursor: not-allowed; }
-.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.btn-primary:hover { background: var(--accent-strong); }
-.btn-ghost { background: transparent; color: var(--muted); border-color: transparent; }
-.btn-ghost:hover { background: var(--surface-2); color: var(--ink); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn-primary { background: var(--primary); border-color: var(--primary); color: var(--accent-ink); }
+.btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+.btn-ghost { background: transparent; color: var(--primary); border-color: transparent; }
+.btn-ghost:hover { background: var(--primary-soft); color: var(--primary-hover); }
 
 .card {
   background: var(--surface); border: 1px solid var(--border);
@@ -69,7 +81,9 @@ body {
   border: 1px solid var(--border); border-radius: var(--radius-sm);
   background: var(--surface); color: var(--ink); font: 500 var(--text-sm)/1 var(--font);
 }
-.input:hover, .select:hover { border-color: #cfd6e2; }
+.input:hover, .select:hover { border-color: var(--primary); }
+.input:focus-visible, .select:focus-visible { border-color: var(--primary); }
+input[type="radio"], input[type="checkbox"] { accent-color: var(--primary); width: 18px; height: 18px; }
 
 .badge {
   display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px;
@@ -144,13 +158,13 @@ kbd {
 /* quick-insert fragment chips (make "writing a reaction" one-tap) */
 .mech-frag-palette { display: flex; flex-wrap: wrap; gap: var(--space-2); padding-top: var(--space-1); }
 .mech-frag {
-  min-height: 30px; padding: 0 var(--space-3);
-  border: 1px dashed var(--border); border-radius: var(--radius-pill);
-  background: var(--surface-2); color: var(--ink);
-  font: 600 var(--text-xs)/1 var(--font); cursor: pointer;
+  min-height: 40px; padding: 0 var(--space-3);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--surface); color: var(--text);
+  font: 600 var(--text-sm)/1 var(--font); cursor: pointer;
   transition: background .12s, border-color .12s, color .12s;
 }
-.mech-frag:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.mech-frag:hover, .mech-frag[aria-pressed="true"] { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
 .mech-frag:active { transform: translateY(1px); }
 
 /* ── structure drawer (draw.js) ── */
@@ -192,7 +206,7 @@ kbd {
 .draw-ctrl-sep { color: var(--muted); font: 600 var(--text-xs)/1 var(--font); text-transform: uppercase; letter-spacing: .04em; }
 .draw-readout {
   padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm);
-  background: #0f172a; color: #e2e8f0; font: 600 var(--text-sm)/1.4 var(--mono); word-break: break-all;
+  background: var(--code-bg); color: var(--code-text); font: 600 var(--text-sm)/1.4 var(--mono); word-break: break-all;
 }
 
 /* how-it-works strip under the header */
@@ -212,8 +226,8 @@ kbd {
   border: 1px solid var(--border); border-radius: var(--radius);
   background:
     linear-gradient(var(--surface-2) 0 0) padding-box,
-    repeating-linear-gradient(0deg, transparent, transparent 23px, #eef1f6 24px),
-    repeating-linear-gradient(90deg, transparent, transparent 23px, #eef1f6 24px);
+    repeating-linear-gradient(0deg, transparent, transparent 23px, var(--primary-soft) 24px),
+    repeating-linear-gradient(90deg, transparent, transparent 23px, var(--primary-soft) 24px);
   overflow: hidden;
 }
 .ketcher-slot { position: absolute; inset: 0; }
@@ -260,7 +274,7 @@ kbd {
 .mech-steps { display: flex; flex-direction: column; gap: var(--space-3); }
 
 .mech-step { padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); }
-.mech-step.is-active { border-color: var(--accent); box-shadow: var(--focus-ring); }
+.mech-step.is-active { border-color: var(--primary); background: var(--surface-2); box-shadow: 0 0 0 2px var(--primary); }
 .mech-step-head { display: flex; align-items: center; justify-content: space-between; }
 .mech-step-active { display: inline-flex; align-items: center; gap: var(--space-2); font-weight: 700; cursor: pointer; }
 .mech-step-remove { min-height: 32px; }
@@ -293,9 +307,84 @@ kbd {
 .json-details summary { cursor: pointer; font: 700 var(--text-sm)/1.4 var(--font); color: var(--muted); }
 .json-pre {
   margin: var(--space-2) 0 0; padding: var(--space-3);
-  background: #0f172a; color: #e2e8f0; border-radius: var(--radius-sm);
+  background: var(--code-bg); color: var(--code-text); border-radius: var(--radius-sm);
   font: 500 var(--text-sm)/1.5 var(--mono); overflow: auto; max-height: 340px;
 }
 .reference-box { display: flex; flex-direction: column; gap: var(--space-2); }
 .ref-readable h3 { margin: var(--space-2) 0 var(--space-1); font-size: var(--text-sm); }
 .ref-readable p { margin: 0; font: 500 var(--text-sm)/1.5 var(--mono); }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Flashcard deck (Part 2): FRONT (prompt) → FLIP → GRADE → CONTINUE.
+   One MechEditor instance lives in the back face; phases gate visibility.
+   ───────────────────────────────────────────────────────────────────────── */
+.deck {
+  max-width: 1180px; margin: 0 auto; padding: var(--space-5) var(--space-6) var(--space-6);
+  display: flex; flex-direction: column; gap: var(--space-4);
+}
+
+/* progress + navigation */
+.deck-progress { display: flex; flex-direction: column; gap: var(--space-2); }
+.deck-progress-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; }
+.deck-count { font: 700 var(--text-sm)/1 var(--font); color: var(--text-muted); }
+.deck-nav { display: flex; gap: var(--space-2); }
+.deck-nav .btn { min-width: 84px; }
+.deck-bar { height: 6px; border-radius: var(--radius-pill); background: var(--primary-soft); overflow: hidden; }
+.deck-bar-fill { height: 100%; width: 0; background: var(--primary); border-radius: inherit; transition: width .3s ease; }
+
+/* the flip container */
+.flashcard { perspective: 1400px; }
+.flashcard-inner { position: relative; transform-origin: center; }
+.flashcard.flipping .flashcard-inner { animation: card-flip .4s ease both; }
+@keyframes card-flip {
+  0%     { transform: rotateY(0deg); }
+  49.99% { transform: rotateY(90deg); }
+  50%    { transform: rotateY(-90deg); }
+  100%   { transform: rotateY(0deg); }
+}
+
+/* FRONT face — big centered prompt + a single primary Flip button (card-framed) */
+.face-front {
+  min-height: 48vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--space-5); text-align: center; padding: var(--space-8) var(--space-6);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow-sm);
+}
+.face-front .mech-pin { align-self: center; }
+.prompt-big {
+  margin: 0; max-width: 42ch; color: var(--text); font-weight: 600;
+  font-size: clamp(20px, 3.2vw, 30px); line-height: 1.35;
+}
+.flip-btn { min-width: 200px; min-height: 52px; font-size: var(--text-base); }
+.flip-hint { margin: 0; font-size: var(--text-sm); }
+
+/* BACK face — the working area: editor (left) + outputs (right) */
+.face-back {
+  display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(300px, 1fr);
+  gap: var(--space-5); align-items: start; padding: var(--space-5);
+}
+.face-back .output-col { position: static; }
+@media (max-width: 900px) { .face-back { grid-template-columns: 1fr; } }
+
+/* phase gating: front vs working vs graded */
+.flashcard[data-phase="front"] .face-back { display: none; }
+.flashcard[data-phase="back"]  .face-front,
+.flashcard[data-phase="graded"] .face-front { display: none; }
+.result-panel, .reference-panel, .continue-bar { display: none; }
+.flashcard[data-phase="graded"] .result-panel,
+.flashcard[data-phase="graded"] .reference-panel { display: flex; }
+.flashcard[data-phase="graded"] .continue-bar { display: flex; }
+
+.continue-bar { gap: var(--space-3); align-items: center; justify-content: flex-end; flex-wrap: wrap; }
+.continue-bar .btn-primary { min-width: 150px; }
+
+/* verdict emphasis uses success/error (only status colors besides primary) */
+.grade-pass { color: var(--success); }
+.grade-fail { color: var(--error); }
+
+/* reduced motion: the global rule zeroes the flip; JS swaps faces instantly
+   (a hard cut / crossfade) instead of the 3D animation. */
+@media (prefers-reduced-motion: reduce) {
+  .flashcard.flipping .flashcard-inner { animation: none; }
+}

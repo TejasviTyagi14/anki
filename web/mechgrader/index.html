@@ -21,51 +21,88 @@
 </header>
 
 <div class="howto">
-  <b>How it works:</b> &#9312; enter each molecule under <b>Structures</b> (type SMILES or tap a
-  quick-insert chip) &middot; &#9313; click a <b>source</b> then a <b>target</b> to push curved arrows
-  &middot; &#9314; add the <b>products</b> &middot; then press <kbd>Enter</kbd> to submit &amp; compare with the reference.
+  <b>How it works:</b> &#9312; read the <b>prompt</b>, press <kbd>Space</kbd> or <b>Flip</b> to start
+  &middot; &#9313; build <b>Structures</b> (type SMILES or tap a quick-insert chip) and push curved
+  arrows &middot; &#9314; press <kbd>Enter</kbd> or <b>Submit</b> to grade &amp; reveal the reference
+  &middot; &#9315; hit <b>Continue &#8594;</b> for the next card.
 </div>
 
-<main class="wrap">
-  <!-- LEFT: the editor (prompt pin, structure + arrow tool, steps, submit) -->
-  <section id="mechEditor" class="editor-col" aria-label="Mechanism editor"></section>
+<main class="deck">
+  <div class="deck-progress">
+    <div class="deck-progress-row">
+      <span class="deck-count" id="deckCount">Card 1 of 1</span>
+      <div class="deck-nav">
+        <button id="prevBtn" class="btn" type="button" aria-label="Previous card">&#8592; Prev</button>
+        <button id="nextBtn" class="btn" type="button" aria-label="Next card">Next &#8594;</button>
+      </div>
+    </div>
+    <div class="deck-bar" role="progressbar" aria-label="Deck progress" aria-valuemin="1" aria-valuenow="1">
+      <div class="deck-bar-fill" id="deckBarFill"></div>
+    </div>
+  </div>
 
-  <!-- RIGHT: assembled JSON, fallback grade, and the flip-to-reveal reference -->
-  <aside class="output-col">
-    <div class="card panel">
-      <div class="panel-head">
-        <h2 class="mech-h2">Result</h2>
-        <span class="panel-hint">Submit to assemble &amp; grade</span>
-      </div>
-      <div id="gradeBox" class="grade-box" aria-live="polite">
-        <p class="muted">No submission yet. Build a step, push a couple of arrows, then press
-        <kbd>Enter</kbd> or click <b>Submit</b>.</p>
-      </div>
-      <details class="json-details" open>
-        <summary>Assembled Mechanism JSON</summary>
-        <pre id="jsonBox" class="json-pre">{
+  <div class="flashcard" id="flashcard" data-phase="front">
+    <div class="flashcard-inner">
+      <!-- FRONT: the prompt only -->
+      <section class="face face-front" aria-label="Card front — prompt">
+        <span class="mech-pin">Prompt</span>
+        <p class="prompt-big" id="frontPrompt"></p>
+        <button id="flipBtn" class="btn btn-primary flip-btn" type="button">Flip to start &#8635;</button>
+        <p class="flip-hint muted">or press <kbd>Space</kbd></p>
+      </section>
+
+      <!-- BACK: the working area (editor + outputs), gated by phase -->
+      <div class="face face-back" aria-label="Card back — working area">
+        <section id="mechEditor" class="editor-col" aria-label="Mechanism editor"></section>
+
+        <aside class="output-col">
+          <div class="card panel">
+            <div class="panel-head">
+              <h2 class="mech-h2">Assembled JSON</h2>
+              <span class="panel-hint">updates live</span>
+            </div>
+            <details class="json-details" open>
+              <summary>Mechanism JSON</summary>
+              <pre id="jsonBox" class="json-pre">{
   "steps": []
 }</pre>
-      </details>
-    </div>
+            </details>
+          </div>
 
-    <div class="card panel">
-      <div class="panel-head">
-        <h2 class="mech-h2">Reference (answer)</h2>
-        <button id="flipBtn" class="btn btn-ghost" type="button" aria-expanded="false">Flip to reveal</button>
+          <div class="card panel result-panel">
+            <div class="panel-head">
+              <h2 class="mech-h2">Result</h2>
+              <span class="panel-hint">pass / fail</span>
+            </div>
+            <div id="gradeBox" class="grade-box" aria-live="polite">
+              <p class="muted">Press <kbd>Enter</kbd> or click <b>Submit</b> to grade.</p>
+            </div>
+          </div>
+
+          <div class="card panel reference-panel">
+            <div class="panel-head">
+              <h2 class="mech-h2">Reference (answer)</h2>
+              <button id="flipRefBtn" class="btn btn-ghost" type="button" aria-expanded="true">Hide</button>
+            </div>
+            <div id="referenceBox" class="reference-box" aria-live="polite"></div>
+            <p id="referenceHidden" class="muted" hidden>Hidden. Click <b>Show</b> to compare with the reference.</p>
+          </div>
+
+          <div class="continue-bar">
+            <button id="restartBtn" class="btn" type="button" title="Reset this card's working area">&#8635; Restart card</button>
+            <button id="continueBtn" class="btn btn-primary" type="button">Continue &#8594;</button>
+          </div>
+        </aside>
       </div>
-      <div id="referenceBox" class="reference-box" aria-live="polite" hidden></div>
-      <p id="referenceHidden" class="muted">Hidden. Press <kbd>Space</kbd> or click <b>Flip</b> to compare
-      your answer with the reference mechanism.</p>
     </div>
-  </aside>
+  </div>
 </main>
 
 <footer class="footbar">
   <div class="shortcuts" aria-label="Keyboard shortcuts">
     <span><kbd>Space</kbd> flip</span>
     <span><kbd>Enter</kbd> submit</span>
-    <span><kbd>N</kbd> next</span>
+    <span><kbd>&#8594;</kbd>/<kbd>&#8592;</kbd> next / prev</span>
     <span class="muted">(shortcuts active when not typing in a field)</span>
   </div>
   <div class="honesty muted">
@@ -129,7 +166,19 @@
     },
   ];
 
+  const N = CARDS.length;
   let current = 0;
+
+  // ── per-card runtime state: each card owns its working area + phase + grade,
+  //    so navigating between cards preserves each one's progress. ──
+  //    phase ∈ { "front", "back", "graded" }
+  const state = CARDS.map((card) => ({
+    phase: "front",
+    mechanism: startingMechanism(card), // serialized working mechanism
+    grade: null,
+    error: null,
+    refShown: true, // reference auto-revealed on grade; toggleable
+  }));
 
   // Tiny DOM helpers for the result panel.
   function pill(kind, label) {
@@ -189,40 +238,65 @@
     return { steps: [{ reactants: step0.reactants.slice(), arrows: [], products: [] }] };
   }
 
+  // ── DOM refs ──
   const root = document.getElementById("mechEditor");
   const gradeBox = document.getElementById("gradeBox");
   const jsonBox = document.getElementById("jsonBox");
   const referenceBox = document.getElementById("referenceBox");
   const referenceHidden = document.getElementById("referenceHidden");
+  const flashcard = document.getElementById("flashcard");
+  const frontPrompt = document.getElementById("frontPrompt");
+  const deckCount = document.getElementById("deckCount");
+  const deckBar = document.querySelector(".deck-bar");
+  const deckBarFill = document.getElementById("deckBarFill");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
   const flipBtn = document.getElementById("flipBtn");
+  const continueBtn = document.getElementById("continueBtn");
+  const restartBtn = document.getElementById("restartBtn");
+  const flipRefBtn = document.getElementById("flipRefBtn");
 
+  // One MechEditor instance lives in the back face for the whole session; each
+  // card's working state is swapped in/out of it via editor.reset (see navTo).
   const editor = new MechEditor(root, {
     prompt: CARDS[current].prompt,
-    mechanism: startingMechanism(CARDS[current]),
-    // gradeEndpoint: "http://localhost:8000/grade", // POST fallback if no window.mechgraderGrade
+    mechanism: state[current].mechanism,
     onSubmit: (mechanism, grade, error) => {
-      jsonBox.textContent = JSON.stringify(mechanism, null, 2);
-      renderGrade(grade, error);
+      const cur = state[current];
+      cur.mechanism = mechanism; // persist the graded attempt
+      cur.grade = grade;
+      cur.error = error;
+      cur.refShown = true; // GRADE phase reveals the reference for comparison
+      cur.phase = "graded";
+      render();
     },
-    onFlip: () => toggleReference(),
+    onFlip: () => flip(),
     onNext: () => nextCard(),
   });
 
+  // Keep the assembled JSON live while working: the editor has no change event,
+  // so refresh on any interaction inside it (typing SMILES, chips, arrows…).
+  function refreshJson() {
+    jsonBox.textContent = JSON.stringify(editor.getSerialized(), null, 2);
+  }
+  root.addEventListener("input", refreshJson);
+  root.addEventListener("click", () => setTimeout(refreshJson, 0));
+
   function renderGrade(grade, error) {
+    gradeBox.innerHTML = "";
     if (error) {
-      gradeBox.innerHTML = "";
       gradeBox.append(pill("err", "\u2717 Error"), text(" " + (error.message || String(error))));
       return;
     }
     if (!grade) {
-      gradeBox.innerHTML = "<p class='muted'>Assembled the JSON (no grader configured).</p>";
+      gradeBox.innerHTML = "<p class='muted'>Press <kbd>Enter</kbd> or click <b>Submit</b> to grade.</p>";
       return;
     }
-    const verdict = grade.passed ? pill("ok", "\u2713 Product matches") : pill("err", "\u2717 Product differs");
+    const passed = !!grade.passed;
+    const verdict = passed ? pill("ok", "\u2713 Product matches") : pill("err", "\u2717 Product differs");
     const engine = pill(grade.canonical ? "ok" : "warn", grade.engine);
-    gradeBox.innerHTML = "";
     const line = document.createElement("div");
-    line.className = "grade-line";
+    line.className = "grade-line " + (passed ? "grade-pass" : "grade-fail");
     line.append(verdict, spacer(), text(`Score ${grade.score}/100`));
     const sum = document.createElement("p");
     sum.className = "grade-summary";
@@ -241,23 +315,6 @@
     gradeBox.append(line, sum, eng, det);
   }
 
-  function toggleReference() {
-    const show = referenceBox.hidden;
-    referenceBox.hidden = !show;
-    referenceHidden.hidden = show;
-    flipBtn.setAttribute("aria-expanded", String(show));
-    flipBtn.textContent = show ? "Hide reference" : "Flip to reveal";
-    if (show) {
-      referenceBox.textContent = "";
-      const ref = CARDS[current].reference;
-      const pre = document.createElement("pre");
-      pre.className = "json-pre";
-      pre.textContent = JSON.stringify(ref, null, 2);
-      referenceBox.appendChild(readableReference(ref));
-      referenceBox.appendChild(pre);
-    }
-  }
-
   function readableReference(ref) {
     const box = document.createElement("div");
     box.className = "ref-readable";
@@ -274,20 +331,99 @@
     return box;
   }
 
-  function nextCard() {
-    current = (current + 1) % CARDS.length;
-    editor.reset(CARDS[current].prompt, startingMechanism(CARDS[current]));
-    jsonBox.textContent = JSON.stringify(editor.getSerialized(), null, 2);
-    gradeBox.innerHTML = "<p class='muted'>New card. Push arrows, add products, then Submit.</p>";
-    referenceBox.hidden = true;
-    referenceHidden.hidden = false;
-    flipBtn.setAttribute("aria-expanded", "false");
-    flipBtn.textContent = "Flip to reveal";
+  function populateReference() {
+    referenceBox.textContent = "";
+    const ref = CARDS[current].reference;
+    const pre = document.createElement("pre");
+    pre.className = "json-pre";
+    pre.textContent = JSON.stringify(ref, null, 2);
+    referenceBox.appendChild(readableReference(ref));
+    referenceBox.appendChild(pre);
   }
 
-  flipBtn.addEventListener("click", () => editor.flip());
+  // ── render the whole shell from state[current] ──
+  function render() {
+    const cur = state[current];
+    frontPrompt.textContent = CARDS[current].prompt;
+    deckCount.textContent = `Card ${current + 1} of ${N}`;
+    deckBarFill.style.width = `${((current + 1) / N) * 100}%`;
+    if (deckBar) deckBar.setAttribute("aria-valuenow", String(current + 1));
+    flashcard.dataset.phase = cur.phase;
+    refreshJson();
+    renderGrade(cur.grade, cur.error);
+    const showRef = cur.phase === "graded" && cur.refShown !== false;
+    referenceBox.hidden = !showRef;
+    referenceHidden.hidden = showRef;
+    flipRefBtn.textContent = showRef ? "Hide" : "Show";
+    flipRefBtn.setAttribute("aria-expanded", String(showRef));
+    if (showRef) populateReference();
+  }
 
-  // ── keyboard shortcuts (standalone page): Space=flip, Enter=submit, N=next ──
+  // ── 3D flip (front ⟷ working); prefers-reduced-motion → instant swap ──
+  const REDUCE = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let flipping = false;
+  function animateFlip(swap) {
+    if (REDUCE.matches || flipping) { swap(); return; }
+    flipping = true;
+    const inner = flashcard.querySelector(".flashcard-inner");
+    flashcard.classList.add("flipping");
+    let swapped = false;
+    const doSwap = () => { if (!swapped) { swapped = true; swap(); } };
+    const timer = setTimeout(doSwap, 190); // swap faces at the edge-on midpoint
+    const onEnd = () => {
+      clearTimeout(timer);
+      doSwap();
+      flashcard.classList.remove("flipping");
+      inner.removeEventListener("animationend", onEnd);
+      flipping = false;
+    };
+    inner.addEventListener("animationend", onEnd);
+  }
+  function flip() {
+    const cur = state[current];
+    const target = cur.phase === "front" ? (cur.grade ? "graded" : "back") : "front";
+    animateFlip(() => {
+      cur.phase = target;
+      render();
+    });
+  }
+
+  // ── navigation (wraps); saves the current card's work before switching ──
+  function navTo(i) {
+    state[current].mechanism = editor.getSerialized();
+    current = ((i % N) + N) % N;
+    editor.reset(CARDS[current].prompt, state[current].mechanism);
+    render();
+  }
+  const nextCard = () => navTo(current + 1);
+  const prevCard = () => navTo(current - 1);
+
+  // Explicit restart: reset ONLY the current card's working area (not others).
+  function restartCard() {
+    state[current] = {
+      phase: "back",
+      mechanism: startingMechanism(CARDS[current]),
+      grade: null,
+      error: null,
+      refShown: true,
+    };
+    editor.reset(CARDS[current].prompt, state[current].mechanism);
+    render();
+  }
+
+  // ── controls ──
+  flipBtn.addEventListener("click", () => flip());
+  prevBtn.addEventListener("click", () => prevCard());
+  nextBtn.addEventListener("click", () => nextCard());
+  continueBtn.addEventListener("click", () => nextCard());
+  restartBtn.addEventListener("click", () => restartCard());
+  flipRefBtn.addEventListener("click", () => {
+    const cur = state[current];
+    cur.refShown = !(cur.refShown !== false);
+    render();
+  });
+
+  // ── keyboard: Space=flip, Enter=submit/grade, →/N=next, ←=prev ──
   document.addEventListener("keydown", (e) => {
     const t = e.target;
     const tag = t && t.tagName ? t.tagName.toLowerCase() : "";
@@ -295,13 +431,17 @@
     if (typing || e.metaKey || e.ctrlKey || e.altKey) return;
     if (e.code === "Space") {
       e.preventDefault();
-      editor.flip();
+      flip();
     } else if (e.key === "Enter") {
       e.preventDefault();
-      editor.submit();
-    } else if (e.key === "n" || e.key === "N") {
+      if (state[current].phase === "front") flip();
+      else editor.submit();
+    } else if (e.key === "ArrowRight" || e.key === "n" || e.key === "N") {
       e.preventDefault();
-      editor.next();
+      nextCard();
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      prevCard();
     }
   });
 
@@ -321,8 +461,9 @@
     }
   })();
 
-  // Initial JSON view.
-  jsonBox.textContent = JSON.stringify(editor.getSerialized(), null, 2);
+  // ── init ──
+  if (deckBar) deckBar.setAttribute("aria-valuemax", String(N));
+  render();
 </script>
 </body>
 </html>
