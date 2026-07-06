@@ -1,0 +1,12 @@
+# Core chemistry + graph + API stack for the reaction-mechanism grader.
+# Pins are intentionally loose; pip selects the newest wheels compatible with
+# the interpreter (this repo's isolated venv currently runs CPython 3.9).
+rdkit
+networkx
+pydantic>=2
+fastapi
+uvicorn[standard]
+
+# Testing / API test client
+pytest
+httpx

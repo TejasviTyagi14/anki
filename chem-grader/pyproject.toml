@@ -1,0 +1,26 @@
+[project]
+name = "chemgrader"
+version = "0.1.0"
+description = "Directed-graph grader for multi-step organic reaction mechanisms (RDKit + NetworkX + FastAPI)."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "rdkit",
+  "networkx",
+  "pydantic>=2",
+  "fastapi",
+  "uvicorn[standard]",
+]
+
+[project.optional-dependencies]
+test = ["pytest", "httpx"]
+
+# This subproject is intentionally NOT part of the Anki uv workspace. It runs in
+# its own venv so the heavy RDKit dependency never touches the main build.
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100

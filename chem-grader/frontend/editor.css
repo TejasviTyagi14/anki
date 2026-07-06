@@ -1,0 +1,45 @@
+/* Styles for the reusable <MoleculeEditor> (editor.jsx). Uses theme.css tokens.
+ * The editor fills its parent; the parent controls its height. */
+.mbe-root { display: flex; flex-direction: column; height: 100%; min-height: 0; gap: var(--space-2); }
+
+.mbe-toolbar {
+  display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap;
+  padding: var(--space-2); background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow-sm);
+}
+.mbe-tool {
+  width: 38px; height: 38px; display: grid; place-items: center; color: var(--muted);
+  border: 1px solid transparent; background: transparent; border-radius: var(--radius-sm); cursor: pointer;
+  transition: background .15s, color .15s, transform .06s;
+}
+.mbe-tool:hover { background: var(--surface-2); color: var(--ink); }
+.mbe-tool:active { transform: scale(.94); }
+.mbe-tool[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); box-shadow: 0 6px 14px -6px rgba(37,99,235,.7); }
+.mbe-tool:disabled { opacity: .35; cursor: not-allowed; background: transparent; }
+.mbe-div { width: 1px; height: 24px; background: var(--border); margin: 0 2px; }
+.mbe-el { height: 38px; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0 var(--space-2); font: 700 var(--text-base)/1 var(--font); color: var(--ink); background: var(--surface); cursor: pointer; }
+
+.mbe-canvas {
+  flex: 1; min-height: 180px; width: 100%; display: block; touch-action: none; cursor: crosshair;
+  border: 1px solid var(--border); border-radius: var(--radius); background:
+    radial-gradient(var(--border) 1.1px, transparent 1.1px) 0 0 / 26px 26px, var(--surface);
+}
+.mbe-canvas.is-erase { cursor: not-allowed; }
+
+.mbe-bond { stroke-width: 2.4; stroke-linecap: round; transition: stroke .12s; }
+.mbe-bond-hit { stroke: transparent; stroke-width: 16; cursor: pointer; }
+.mbe-atom-hit { fill: transparent; cursor: pointer; }
+.mbe-label { font: 700 15px var(--font); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+.mbe-sel { fill: rgba(37,99,235,.14); stroke: var(--accent); stroke-width: 1.5; }
+.mbe-hover { fill: rgba(15,23,42,.06); }
+.mbe-preview { stroke: var(--faint); stroke-width: 2.2; stroke-dasharray: 6 5; }
+.mbe-snap { fill: rgba(37,99,235,.15); stroke: var(--accent); stroke-width: 1.5; }
+
+.mbe-readout {
+  font-family: var(--mono); font-size: var(--text-sm); color: var(--muted);
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3); min-height: 20px; word-break: break-all;
+}
+.mbe-readout.ok { color: var(--ink); }
+.mbe-readout.err { color: var(--err); }
+.mbe-hint { font-size: var(--text-xs); color: var(--muted); }

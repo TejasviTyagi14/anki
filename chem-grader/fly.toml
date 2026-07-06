@@ -1,0 +1,21 @@
+# Fly.io config. Rename `app` to something unique (or run `fly launch` to set it).
+# Deploy:  fly launch --copy-config --no-deploy   then   fly deploy
+app = "chemgrader"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  # Scale to zero when idle to keep it cheap; wakes on first request.
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  # RDKit needs headroom; 1 GB is comfortable.
+  memory = "1gb"
+  cpu_kind = "shared"
+  cpus = 1

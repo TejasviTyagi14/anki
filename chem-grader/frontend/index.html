@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reaction Mechanism Grader</title>
+<link rel="stylesheet" href="theme.css" />
+<link rel="stylesheet" href="editor.css" />
+<link rel="stylesheet" href="app.css" />
+<meta name="theme-color" content="#2563eb" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="ChemGrader" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" href="icon.svg" />
+<link rel="apple-touch-icon" href="icon.svg" />
+</head>
+<body>
+<div id="root"></div>
+
+<!-- Self-hosted deps (no runtime CDNs). -->
+<script src="vendor/react.production.min.js"></script>
+<script src="vendor/react-dom.production.min.js"></script>
+<script src="vendor/smiles-drawer.min.js"></script>
+<script src="editor.js"></script>
+<script src="app.js"></script>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => navigator.serviceWorker.register("service-worker.js").catch(() => {}));
+  }
+</script>
+</body>
+</html>

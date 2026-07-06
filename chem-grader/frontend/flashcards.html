@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>OChem Reaction Grader — Flashcards</title>
+<link rel="stylesheet" href="theme.css" />
+<link rel="stylesheet" href="flashcards.css" />
+<link rel="icon" href="icon.svg" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">⌬</span>
+    <div>
+      <h1>OChem Reaction Grader</h1>
+      <p class="tagline">See the prompt · draw the reaction · get graded by a vision model</p>
+    </div>
+  </div>
+  <a class="btn btn-ghost" href="/app/">Mechanism grader →</a>
+</header>
+
+<main class="wrap">
+  <!-- LEFT: the answer surface (draw here) -->
+  <section class="workspace" aria-label="Drawing area">
+    <div class="mode-toggle" role="tablist" aria-label="Input mode">
+      <button class="mode-btn" data-mode="structured" aria-pressed="true">✏️ Structured</button>
+      <button class="mode-btn" data-mode="freehand" aria-pressed="false">🖊️ Freehand</button>
+    </div>
+
+    <div class="toolbar card only-structured" id="structuredTools" role="toolbar" aria-label="Structure tools">
+      <div class="tool-group" data-label="Tools">
+        <button class="tool-btn" data-tool="draw" aria-pressed="true" aria-label="Draw atoms and bonds">Draw</button>
+        <button class="tool-btn" data-tool="select" aria-pressed="false" aria-label="Move atoms, arrows, text">Move</button>
+        <button class="tool-btn" data-tool="erase" aria-pressed="false" aria-label="Erase">Erase</button>
+      </div>
+      <div class="tool-group" data-label="Element">
+        <button class="el-btn" data-el="C" data-elc aria-pressed="true">C</button>
+        <button class="el-btn" data-el="O" aria-pressed="false">O</button>
+        <button class="el-btn" data-el="N" aria-pressed="false">N</button>
+        <button class="el-btn" data-el="S" aria-pressed="false">S</button>
+        <button class="el-btn" data-el="F" aria-pressed="false">F</button>
+        <button class="el-btn" data-el="Cl" aria-pressed="false">Cl</button>
+        <button class="el-btn" data-el="Br" aria-pressed="false">Br</button>
+        <button class="el-btn" data-el="I" aria-pressed="false">I</button>
+        <button class="el-btn" data-el="P" aria-pressed="false">P</button>
+        <button class="el-btn" data-el="H" aria-pressed="false">H</button>
+        <button class="el-btn" data-el="__custom__" aria-label="Custom element symbol">…</button>
+      </div>
+      <div class="tool-group" data-label="Stereo">
+        <button class="tool-btn" data-tool="wedge" aria-pressed="false" aria-label="Wedge bond (toward viewer)">Wedge</button>
+        <button class="tool-btn" data-tool="hash" aria-pressed="false" aria-label="Dash bond (away from viewer)">Dash</button>
+      </div>
+      <div class="tool-group" data-label="Charge">
+        <button class="tool-btn" data-tool="plus" aria-pressed="false" aria-label="Add positive charge">⊕</button>
+        <button class="tool-btn" data-tool="minus" aria-pressed="false" aria-label="Add negative charge">⊖</button>
+      </div>
+      <div class="tool-group" data-label="Annotate">
+        <button class="tool-btn" data-tool="arrow" aria-pressed="false" aria-label="Reaction arrow">Arrow</button>
+        <button class="tool-btn" data-tool="text" aria-pressed="false" aria-label="Reagent / condition text">Text</button>
+      </div>
+      <div class="tool-group" data-label="Edit">
+        <button class="tool-btn" id="undoBtn" aria-label="Undo (Ctrl/Cmd+Z)">Undo</button>
+        <button class="tool-btn" id="clearBtn" aria-label="Clear canvas">Clear</button>
+      </div>
+    </div>
+
+    <div class="toolbar card only-freehand" id="freehandTools" role="toolbar" aria-label="Freehand tools">
+      <div class="tool-group" data-label="Ink">
+        <button class="tool-btn" data-ftool="pen" aria-pressed="true" aria-label="Pen">Pen</button>
+        <button class="tool-btn" data-ftool="eraser" aria-pressed="false" aria-label="Eraser">Eraser</button>
+      </div>
+      <div class="tool-group" data-label="Size">
+        <button class="tool-btn" data-fsize="2" aria-label="Fine">Fine</button>
+        <button class="tool-btn" data-fsize="3.2" aria-label="Medium">Medium</button>
+        <button class="tool-btn" data-fsize="6" aria-label="Bold">Bold</button>
+      </div>
+      <div class="tool-group" data-label="Edit">
+        <button class="tool-btn" id="fUndo" aria-label="Undo last stroke">Undo</button>
+        <button class="tool-btn" id="fClear" aria-label="Clear canvas">Clear</button>
+      </div>
+    </div>
+
+    <p class="help-strip only-structured">
+      Pick an element, then <b>click</b> empty space to drop it or <b>drag from an atom</b> to bond.
+      <b>Click a bond</b> to cycle single→double→triple. Use <b>Arrow</b> for the reaction arrow and
+      <b>Text</b> for reagents.
+    </p>
+    <p class="help-strip only-freehand">
+      Draw the reaction <b>freehand</b>, like paper — great with a trackpad or Apple Pencil (pressure-aware).
+      The image is sent straight to the vision model.
+    </p>
+
+    <div class="canvas-wrap card">
+      <svg id="canvas" class="only-structured" viewBox="0 0 960 560" aria-label="Reaction drawing canvas" role="img"></svg>
+      <canvas id="inkCanvas" class="only-freehand" aria-label="Freehand drawing canvas" role="img"></canvas>
+    </div>
+
+    <div class="canvas-foot card only-structured">
+      <div class="readout"><span class="readout-label">SMILES</span> <code id="smilesReadout">—</code></div>
+      <details>
+        <summary>What the grader sees</summary>
+        <pre id="payloadPre">{}</pre>
+      </details>
+    </div>
+    <div class="canvas-foot card only-freehand">
+      <div class="readout">Freehand sketch — the image is graded directly by the vision model (no SMILES readout).</div>
+    </div>
+  </section>
+
+  <!-- RIGHT: the prompt (front of card) + grading -->
+  <aside class="sidebar">
+    <div class="prompt-card card">
+      <div class="prompt-head">
+        <label class="sr-only" for="problemSelect">Choose a card</label>
+        <select id="problemSelect" class="select"></select>
+        <button class="btn btn-ghost" id="nextCard" aria-label="Next card">Next ⟳</button>
+      </div>
+      <div class="prompt-tag" id="problemTag"></div>
+      <p class="prompt-statement" id="problemStatement"></p>
+      <textarea id="customProblem" class="input custom-problem" hidden
+        placeholder="Type your own reaction question — e.g. &quot;Draw the product of cyclohexene + Br2&quot;"></textarea>
+    </div>
+
+    <div class="grade-controls card">
+      <label class="hint-line">
+        <input type="checkbox" id="hintMode" />
+        <span>Hint mode <em>(don't reveal the product — just nudge me)</em></span>
+      </label>
+      <button class="btn btn-primary grade-btn" id="gradeBtn">Grade my drawing</button>
+      <p class="grade-note">The drawing is sent to your company's OpenAI vision model on the server. No key in the browser.</p>
+    </div>
+
+    <div id="feedback" class="feedback" aria-live="polite"></div>
+  </aside>
+</main>
+
+<script src="chem.js"></script>
+<script src="moleditor.js"></script>
+<script src="freehand.js"></script>
+<script src="flashcard-grader.js"></script>
+<script src="flashcards.js"></script>
+</body>
+</html>
