@@ -12,7 +12,14 @@
   <key>CFBundleSupportedPlatforms</key><array><string>iPhoneSimulator</string></array>
   <key>LSRequiresIPhoneOS</key><true/>
   <key>MinimumOSVersion</key><string>18.0</string>
-  <key>UIDeviceFamily</key><array><integer>1</integer></array>
+  <key>UIDeviceFamily</key><array><integer>1</integer><integer>2</integer></array>
+  <key>UISupportedInterfaceOrientations~ipad</key>
+  <array>
+    <string>UIInterfaceOrientationPortrait</string>
+    <string>UIInterfaceOrientationPortraitUpsideDown</string>
+    <string>UIInterfaceOrientationLandscapeLeft</string>
+    <string>UIInterfaceOrientationLandscapeRight</string>
+  </array>
   <key>UILaunchScreen</key><dict/>
   <key>NSAppTransportSecurity</key>
   <dict><key>NSAllowsLocalNetworking</key><true/></dict>

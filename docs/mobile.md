@@ -63,14 +63,16 @@ a machine with the Android SDK/NDK.
 
 A minimal SwiftUI iOS app in `ios/MechGrader/` hosts the **same** shared
 `web/mechgrader/` editor bundle desktop/Android use, inside a `WKWebView`, and
-**runs in the Xcode iOS Simulator**. Verified on Xcode 16.4 / iOS 18.6:
-the app compiles, installs, launches, and renders the full editor — the prompt
-pin, `① Structures`, `Step 1` with the `✎ Draw` button, prefilled reactant
-SMILES (`[OH-:1]`, `[CH3:2][Br:3]`), and the quick-insert chips.
+**runs in the Xcode iOS Simulator**. It is **universal** (`UIDeviceFamily` =
+iPhone + iPad) so it fills iPad screens natively instead of running letterboxed.
+Verified on Xcode 16.4 / iOS 18.6 (iPhone 16 + iPad Pro 11"/13"): the app
+compiles, installs, launches, and renders the full editor — the prompt pin,
+`① Structures`, `Step 1` with the `✎ Draw` button, prefilled reactant SMILES
+(`[OH-:1]`, `[CH3:2][Br:3]`), quick-insert chips, and the arrow-drawing canvas.
 
-Run it (a Simulator must be booted, or the script boots `iPhone 16`):
+Run it (installs + launches on every booted simulator; boots `iPhone 16` if none):
 ```
-bash ios/build_sim.sh          # compiles with swiftc, installs + launches
+bash ios/build_sim.sh          # or: make ios   (compiles with swiftc)
 xcrun simctl io booted screenshot /tmp/mech.png   # capture proof
 ```
 No `.xcodeproj` is needed — `build_sim.sh` compiles `MechGraderApp.swift` with

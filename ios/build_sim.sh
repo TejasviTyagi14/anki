@@ -27,15 +27,22 @@ xcrun --sdk iphonesimulator swiftc \
   -o "$APP/MechGrader" \
   ios/MechGrader/MechGraderApp.swift
 
-# Ensure a simulator is booted (boot iPhone 16 if none).
-if ! xcrun simctl list devices booted | grep -qi iphone; then
+# Collect booted simulators (boot iPhone 16 if none).
+BOOTED=$(xcrun simctl list devices booted | grep -oE '[0-9A-Fa-f-]{36}')
+if [ -z "$BOOTED" ]; then
   xcrun simctl boot "iPhone 16" || true
   open -a Simulator || true
   xcrun simctl bootstatus booted -b || true
+  BOOTED=$(xcrun simctl list devices booted | grep -oE '[0-9A-Fa-f-]{36}')
 fi
 
-echo "== install + launch =="
-xcrun simctl terminate booted "$BUNDLE_ID" 2>/dev/null || true
-xcrun simctl install booted "$APP"
-xcrun simctl launch booted "$BUNDLE_ID"
-echo "launched $BUNDLE_ID on the booted simulator"
+echo "== install + launch on all booted simulators =="
+# The app is universal (UIDeviceFamily = iPhone + iPad) so it fills iPad screens
+# natively instead of running letterboxed.
+for udid in $BOOTED; do
+  name=$(xcrun simctl list devices | grep "$udid" | sed -E 's/ *\(.*//' | xargs)
+  xcrun simctl terminate "$udid" "$BUNDLE_ID" 2>/dev/null || true
+  xcrun simctl install "$udid" "$APP"
+  xcrun simctl launch "$udid" "$BUNDLE_ID" >/dev/null 2>&1 || true
+  echo "  launched on $name ($udid)"
+done

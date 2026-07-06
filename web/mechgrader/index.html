@@ -150,8 +150,13 @@
   // The grade callback seam. Submit calls THIS. It POSTs to the real RDKit
   // grader (chem-grader on :8000, endpoint /mech/grade) for an honest grade, and
   // falls back to the client-side string grader if the server is unreachable
-  // (offline). Start the server with:  make grader   (clears :8000 first).
-  const GRADER_URL = "http://localhost:8000/mech/grade";
+  // (offline). Start the server with:  make grader   (clears :8000, serves this
+  // editor at / AND the grader at /mech/grade on :8000).
+  // Origin-aware: same-origin when the grader also serves this page (:8000),
+  // else fall back to localhost:8000 (dev editor on :5178, or the iOS bundle).
+  const GRADER_URL = (location.port === "8000")
+    ? "/mech/grade"
+    : "http://localhost:8000/mech/grade";
   window.mechgraderGrade = async (mechanism) => {
     const reference = CARDS[current].reference;
     try {

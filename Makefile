@@ -28,6 +28,7 @@ help:
 	@echo "  make build-mobile  Build the AnkiDroid fork w/ rsdroid rebuilt on this rslib  [needs Android SDK/NDK — see docs/mobile.md]"
 	@echo "  make run-mobile    Install & launch the Android build on a device/emulator     [needs Android SDK/NDK — see docs/mobile.md]"
 	@echo "  make ios           Build the iOS WebView companion & launch it in the Simulator [needs Xcode — see docs/mobile.md]"
+	@echo "  make grader        Serve the editor + RDKit grader at http://localhost:8000 (clears :8000 first)"
 	@echo "  make test          Run the MechGrader Rust + Python engine tests"
 	@echo "  make test-anki     Run the full upstream Anki test suite (cargo + pytest + vitest)"
 	@echo "  make stage0-proof  Re-run the Stage 0 engine-liveness proof (Rust test + rsbridge probe)"
@@ -51,12 +52,13 @@ run-desktop:
 
 # Dev servers for the mechanism editor + the real RDKit grader.
 # Each CLEARS ITS PORT FIRST (so re-hosting never hits "address in use").
-# Run `make grader` in one terminal and `make editor` in another, then open
-# http://localhost:5178 — the editor's Submit POSTs to the grader on :8000.
+# `make grader` is the one-command option: it serves the CURRENT MechGrader
+# editor at http://localhost:8000/ AND the RDKit grader at /mech/grade on the
+# same origin. (`make editor` still serves just the static bundle on :5178.)
 .PHONY: grader
 grader:
 	@bash -c 'p=$$(lsof -ti tcp:8000); [ -n "$$p" ] && kill -9 $$p || true'
-	PYTHONPATH=chem-grader/src:. chem-grader/.venv/bin/python -m uvicorn chemgrader.api:app --port 8000
+	PYTHONPATH=chem-grader/src:. chem-grader/.venv/bin/python -m uvicorn chemgrader.api:app --host 0.0.0.0 --port 8000
 
 .PHONY: editor
 editor:
