@@ -16,6 +16,7 @@ rm -rf "$APP"
 mkdir -p "$APP/web"
 cp web/mechgrader/*.html web/mechgrader/*.css "$APP/web/"
 cp web/mechgrader/*.js "$APP/web/"          # .mjs test file is excluded
+cp -R web/mechgrader/vendor "$APP/web/vendor"   # vendored RDKit-JS (WASM)
 cp ios/MechGrader/Info.plist "$APP/Info.plist"
 
 echo "== building the native Rust engine (rslib) FFI for the simulator =="

@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MechGrader — organic mechanism practice</title>
 <link rel="stylesheet" href="./app.css" />
+<!-- Vendored RDKit-JS (WASM), offline. Defines window.initRDKitModule so the
+     editor canonicalizes SMILES in-browser instead of the string fallback. -->
+<script src="./vendor/rdkit/RDKit_minimal.js"></script>
 </head>
 <body>
 <header class="topbar">

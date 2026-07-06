@@ -116,6 +116,7 @@ final class BundleSchemeHandler: NSObject, WKURLSchemeHandler {
         if path.hasSuffix(".js") || path.hasSuffix(".mjs") { return "text/javascript; charset=utf-8" }
         if path.hasSuffix(".css") { return "text/css; charset=utf-8" }
         if path.hasSuffix(".json") { return "application/json; charset=utf-8" }
+        if path.hasSuffix(".wasm") { return "application/wasm" }
         if path.hasSuffix(".svg") { return "image/svg+xml" }
         return "application/octet-stream"
     }
@@ -126,11 +127,13 @@ final class BundleSchemeHandler: NSObject, WKURLSchemeHandler {
         }
         var rel = url.path
         if rel.isEmpty || rel == "/" { rel = "/index.html" }
-        rel = String(rel.drop(while: { $0 == "/" }))           // "editor.js"
-        let name = (rel as NSString).deletingPathExtension       // "editor"
-        let ext = (rel as NSString).pathExtension                // "js"
-        guard let fileURL = Bundle.main.url(forResource: name, withExtension: ext, subdirectory: "web"),
-              let data = try? Data(contentsOf: fileURL) else {
+        rel = String(rel.drop(while: { $0 == "/" }))  // e.g. "editor.js" or "vendor/rdkit/RDKit_minimal.wasm"
+        // Resolve against the bundled web/ dir so nested paths (vendor/rdkit/…) work.
+        guard let webRoot = Bundle.main.resourceURL?.appendingPathComponent("web") else {
+            task.didFailWithError(NSError(domain: "mgapp", code: 500)); return
+        }
+        let fileURL = webRoot.appendingPathComponent(rel)
+        guard let data = try? Data(contentsOf: fileURL) else {
             task.didFailWithError(NSError(domain: "mgapp", code: 404,
                 userInfo: [NSLocalizedDescriptionKey: "not found: \(rel)"]))
             return
