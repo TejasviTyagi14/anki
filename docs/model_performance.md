@@ -25,5 +25,10 @@ novel substrate.)
 Accuracy on **held-out exam-style mechanisms**; report with a range.
 
 ## Status
-Design fixed. Grades feed it in Stage 1–2; held-out accuracy + paraphrase gap:
-**pending Stage 3.**
+Design fixed; `mechgrader/scoring/performance_by_type` computes per-type P(correct)
+= exact observed k/n with a Wilson interval, gated at ≥3 attempts. **Paraphrase
+bridge test built + run** (`mechgrader/paraphrase/`): on a labeled simulation,
+recall 0.844 vs mechanism performance 0.536 (gap +0.308, r=0.54) → performance
+diverges from memory (a real bridge, not memory in disguise). Held-out accuracy on
+**real** exam-style mechanisms is honestly pending real data; the harness runs on
+it directly.

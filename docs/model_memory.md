@@ -17,5 +17,10 @@
 - Seeded, re-runnable; data + chart land in `docs/results.md`.
 
 ## Status
-Wired to FSRS in Stage 1 (range display + give-up gating). Calibration evidence:
-**pending Stage 3** — stated as such wherever shown.
+Wired to FSRS in Stage 1 (range display + give-up gating). **Calibration harness
+built + tested** (`mechgrader/calibration/`: reliability bins + Brier + log loss +
+ECE, `python -m mechgrader.calibration`); on a labeled simulation it detects
+miscalibration (well-calibrated ECE 0.016 vs overconfident 0.148). **Real-model
+calibration is honestly pending real longitudinal reviews** (FSRS predicted vs
+actual recall from the revlog) — the machinery is proven, the real-data claim is
+not made yet (Section 9). Stated as such wherever a memory number is shown.

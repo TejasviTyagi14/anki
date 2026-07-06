@@ -13,7 +13,7 @@ marked by what is *demonstrable now*, not by intent.**
 | AI checking & safety (15%) | **Built + tested (AI-off runnable)**: rubric grader (injection-hardened, citation-required, deterministic-clamped, kill switch; 11 tests), source validator (6 tests), card-gen 3-count checker w/ blocking cutoff (17 tests). Held-out AI *numbers* require a key (`make eval` abstains without one). | `mechgrader/ai/`, `mechgrader/registry/`, `mechgrader/cardgen/`, `docs/ai_eval.md` |
 | Re-runnable fair tests (12%) | **`make eval` / `make bench` / `make leakage` all run with real seeded numbers** + calibration harness; `make test`/`test-grader` green. Leakage caught + fixed a real gold-set contamination. | `Makefile`, `docs/results.md`, `docs/ai_eval.md` |
 | One shared engine + working sync (10%) | Engine shared by design; desktop proven; **sync conflict logic implemented + tested** (10 tests: card+UUID keyed, logical-timestamp LWW, wrong-clock safe). Server + real 2-device round-trip pending; **mobile build blocked (no SDK here)**. | `mechgrader/sync/`, `docs/sync_conflict_rule.md`, `docs/mobile.md` |
-| Useful product & clean UX both apps (8%) | **Core loop pieces built + tested**: MechCard type, web editor (arrow overlay + submit), deterministic grader (62 tests), review pipeline glue (submit->grade->mg_pass->engine, tested end-to-end). aqt reviewer GUI wiring documented but not wired (headless box). Mobile deferred. | `mechgrader/`, `web/mechgrader/`, `docs/reviewer_loop.md` |
+| Useful product & clean UX both apps (8%) | Core loop built + tested: MechCard type, web editor (guided flow, quick-insert chips, **click-to-draw structure editor**, curved arrows), deterministic grader (62 tests) wired to the editor's Submit (**live RDKit grades in-browser**), review pipeline (submit->grade->mg_pass->engine). **Desktop installer built** (.dmg). aqt reviewer GUI wiring documented, not wired (headless box); mobile deferred. | `web/mechgrader/`, `mechgrader/`, `docs/reviewer_loop.md`, `docs/installer.md` |
 
 ## Hard limits (must avoid)
 | Hard limit | Current standing |
@@ -28,6 +28,17 @@ marked by what is *demonstrable now*, not by intent.**
 | AI claims with no traceable source → AI section zero | Source registry + CI validator required before any AI output (Stage 2). |
 
 ## Current honest summary
-Stage 0 gate met on desktop (build + real, tested engine change + scaffolding).
-The one **open Stage 0 item is the AnkiDroid build**, blocked only by the absence
-of an Android toolchain in this environment — documented, not faked.
+Stages 0–3 substantially built on desktop: the real Rust engine change
+(`topic_mastery`, tested), the deterministic grader + AI rubric grader (sourced,
+injection-hardened, baseline-beating-by-design), the three scores + give-up rule,
+sync conflict logic, the shared web editor (with a click-to-draw structure
+editor + live RDKit grading), and Stage-3 evidence: **leakage CLEAN** (after
+catching a real leak), **bench** (dashboard p95 38ms on 50k), **calibration**,
+**paraphrase bridge**, **study-feature experiment**, and **crash recovery**
+(zero corruption). The **desktop app is fully built** (`.dmg`).
+
+Honest open items: the **AnkiDroid/iOS mobile build** (no Android toolchain here —
+turnkey path documented, `make build-mobile` preflight), the **aqt reviewer GUI
+wiring** (needs a display), and **real-data** calibration/accuracy/study numbers
+(the harnesses are built + tested on labeled simulations and run on real data
+directly). Nothing is faked; simulations are labeled as such.
