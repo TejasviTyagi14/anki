@@ -52,6 +52,63 @@ a machine with the Android SDK/NDK.
    `web/mechgrader/` bundle as desktop.
 
 ## Make targets
-- `make build-mobile` / `make run-mobile` currently print this blocker and exit
-  non-zero (so they can't be mistaken for a pass). They will invoke the Gradle
-  build once the toolchain is available.
+- `make build-mobile` runs `mechgrader/tools/mobile_preflight.sh` — an honest
+  toolchain check that prints what's present/missing and the exact reproducible
+  build steps, then exits non-zero if prerequisites are missing (so it can't be
+  mistaken for a pass). `make run-mobile` points at the same.
+
+## iOS — WebView companion runs in the Simulator (BUILT); native engine is next
+
+### What is built and runs (verified 2026-07-05)
+
+A minimal SwiftUI iOS app in `ios/MechGrader/` hosts the **same** shared
+`web/mechgrader/` editor bundle desktop/Android use, inside a `WKWebView`, and
+**runs in the Xcode iOS Simulator**. Verified on Xcode 16.4 / iOS 18.6:
+the app compiles, installs, launches, and renders the full editor — the prompt
+pin, `① Structures`, `Step 1` with the `✎ Draw` button, prefilled reactant
+SMILES (`[OH-:1]`, `[CH3:2][Br:3]`), and the quick-insert chips.
+
+Run it (a Simulator must be booted, or the script boots `iPhone 16`):
+```
+bash ios/build_sim.sh          # compiles with swiftc, installs + launches
+xcrun simctl io booted screenshot /tmp/mech.png   # capture proof
+```
+No `.xcodeproj` is needed — `build_sim.sh` compiles `MechGraderApp.swift` with
+`swiftc` against the `iphonesimulator` SDK, assembles a `.app` bundle (Swift
+binary + `Info.plist` + the copied web bundle), then `simctl install`/`launch`.
+
+**Implementation note (why a custom URL scheme):** the bundle is served through
+a `WKURLSchemeHandler` (`mgapp://`) rather than `file://`, so ES-module scripts
+load with a correct `text/javascript` MIME. Loading from `file://` renders the
+static HTML but silently fails to execute the editor modules.
+
+### Honest scope of the iOS app
+
+This is the **WebView companion** — the same editor UI and client-side/offline
+grading path as the web bundle. It does **not yet embed the Rust engine**
+(`rslib`) natively; grade submission uses the web bundle's fallback and can hit
+the desktop grader at `http://localhost:8000` (allowed via `NSAllowsLocalNetworking`).
+The native shared-engine path below is the remaining work.
+
+### Native shared-engine path (remaining, from scratch)
+
+Unlike Android (AnkiDroid + `rsdroid` give a JNI FFI to build on), there is **no
+open-source iOS Anki client to fork** (official AnkiMobile is closed-source) and
+this repo has **no Rust FFI layer for Swift** (desktop reaches `rslib` via PyO3,
+unusable on iOS). To make iOS a true shared-engine client:
+1. **Build a Swift↔Rust FFI over `rslib`** (the main new work). Use `uniffi-rs`
+   (or a C header via `cbindgen`) to expose backend service methods — including
+   `MechgraderService` (`MechgraderEngineInfo`, `TopicMastery`).
+2. **Cross-compile `rslib` for iOS:**
+   `rustup target add aarch64-apple-ios aarch64-apple-ios-sim x86_64-apple-ios`,
+   then build a static lib / `.xcframework` (e.g. via `cargo-xcframework`).
+3. **Call the engine from the app** through the FFI — the Swift analogue of
+   `mechgrader/tools/stage0_engine_probe.py` (call `MechgraderEngineInfo` and show
+   `"MechGrader engine live on Anki 26.05 …"`), and add a JS↔Swift bridge so the
+   embedded editor grades against the native engine instead of the web fallback.
+4. **Sync** against the same self-hosted Anki sync server (`docs/sync_conflict_rule.md`).
+5. **Ship** via TestFlight or a dev-signed sideload.
+
+Design reference: `mockups/ios.html`. **Recommendation:** for a full native
+mobile client, do **Android (AnkiDroid) first** — it's far cheaper because
+`rsdroid` already wraps `rslib`; iOS requires the new FFI layer above.

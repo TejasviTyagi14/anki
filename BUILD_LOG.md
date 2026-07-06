@@ -294,7 +294,27 @@ a server + 2 devices; the merge logic is tested, wiring documented).
   source_refs normalized + resolve.
 - **Offline/AI-off scores**: proven (AI kill switch -> deterministic; pure-stdlib scoring).
 
+### iOS Simulator app — BUILT (2026-07-05)
+- **MechGrader runs in the Xcode iOS Simulator.** New minimal SwiftUI app in
+  `ios/MechGrader/` hosts the **same** `web/mechgrader/` editor bundle in a
+  `WKWebView`. `bash ios/build_sim.sh` (or `make ios`) compiles it with `swiftc`
+  against the `iphonesimulator` SDK (no `.xcodeproj`), assembles a `.app`, and
+  `simctl install`/`launch`es it.
+- **Verified visually** on Xcode 16.4 / iOS 18.6 (screenshot via
+  `xcrun simctl io booted screenshot`): full editor renders — prompt pin,
+  `① Structures`, `Step 1` + `✎ Draw`, prefilled reactants (`[OH-:1]`,
+  `[CH3:2][Br:3]`), quick-insert chips. RDKit-JS badge honestly shows
+  "not loaded — string fallback".
+- **Fix that mattered:** first attempt loaded from `file://` → static HTML
+  rendered but the ES-module editor didn't execute. Switched to a
+  `WKURLSchemeHandler` (`mgapp://`) serving the bundle with correct
+  `text/javascript` MIME → modules load, editor runs.
+- **Honest scope:** this is the **WebView companion** (same UI + web/offline
+  grading, can reach the desktop grader at `localhost:8000`). It does **not** yet
+  embed `rslib` natively; the Swift↔Rust FFI path is documented as the remaining
+  work in `docs/mobile.md`.
+
 ### Remaining Stage 3
 Reviewer GUI wiring (needs a display); real-data calibration/accuracy (needs real
 reviews); full evidence for a few adversarial rows (contradictory sources, broken
-images) alongside the reviewer GUI.
+images) alongside the reviewer GUI. iOS: native `rslib` FFI (currently WebView-only).

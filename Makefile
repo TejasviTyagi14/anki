@@ -27,6 +27,7 @@ help:
 	@echo "  make run-desktop   Build & launch the desktop app (needs a display)"
 	@echo "  make build-mobile  Build the AnkiDroid fork w/ rsdroid rebuilt on this rslib  [needs Android SDK/NDK — see docs/mobile.md]"
 	@echo "  make run-mobile    Install & launch the Android build on a device/emulator     [needs Android SDK/NDK — see docs/mobile.md]"
+	@echo "  make ios           Build the iOS WebView companion & launch it in the Simulator [needs Xcode — see docs/mobile.md]"
 	@echo "  make test          Run the MechGrader Rust + Python engine tests"
 	@echo "  make test-anki     Run the full upstream Anki test suite (cargo + pytest + vitest)"
 	@echo "  make stage0-proof  Re-run the Stage 0 engine-liveness proof (Rust test + rsbridge probe)"
@@ -126,6 +127,11 @@ run-mobile:
 	@echo "            Run 'make build-mobile' for the toolchain preflight + exact steps."
 	@echo "            See docs/mobile.md."
 	@exit 2
+
+.PHONY: ios
+ios:
+	@echo "[MechGrader] Building the iOS WebView companion and launching it in the Simulator..."
+	bash ios/build_sim.sh
 
 # ----------------------------------------------------------------------------
 # Model eval / benchmarks / leakage / gold / sync — later stages
