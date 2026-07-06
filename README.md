@@ -10,6 +10,10 @@ separate scores and re-runnable proof behind every number.
 > **AGPL-3.0-or-later**. Mobile companion is an **AnkiDroid** fork (GPL-3.0-or-later).
 > See `THIRD_PARTY_NOTICES.md`.
 
+> **Grading this?** Start with **[`docs/SUBMISSION.md`](docs/SUBMISSION.md)** — a
+> one-page index mapping every deliverable, rubric line, and hard limit to its
+> proof and the command that reproduces it. The Brainlift is `BRAINLIFT.md`.
+
 ## Exam & scope (stated up front)
 - **Exam:** MCAT (scored **472–528**); the Chem/Phys section is **118–132**.
 - **MechGrader's scope:** the **organic-chemistry reaction/mechanism** content

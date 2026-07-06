@@ -39,8 +39,14 @@ end-to-end Python `rsbridge` call (see `BUILD_LOG.md`).
    instability.
 
 Required for the real change (status): ≥ 3 Rust unit tests ✓ (5), 1 Python
-integration test ✓, an undo-does-not-break test ✓. Android/rsdroid build
-confirmation is pending a machine with the Android toolchain (`docs/mobile.md`).
+integration test ✓, an undo-does-not-break test ✓.
+
+**The same change runs natively on the phone.** `ios/rust-ffi` cross-compiles
+`rslib` to the iOS simulator and the app calls the engine RPC natively — it shows
+"MechGrader engine live on Anki 26.05 (&lt;hash&gt;)" (`make ios`), and
+`make sync-ios-verify` proves a phone→desktop card sync on that same engine.
+Android/`rsdroid` build confirmation is pending a machine with the Android
+toolchain (`docs/mobile.md`).
 
 ## Why this must be in Rust (not Python/JS)
 
