@@ -1,17 +1,62 @@
 {
   "schema_version": 1,
-  "description": "Source registry for MechGrader. EVERY card, reference mechanism, gold item, and AI judgment must resolve to a named source here (textbook + chapter + section/page, or a DOI). A CI validator (Stage 2) fails the build if any card or AI output carries an unresolvable source_ref. See docs/ai_eval.md and docs/robustness.md.",
+  "description": "Source registry for MechGrader. EVERY card, reference mechanism, gold item, and AI judgment must resolve to a named source here (textbook + chapter/section, or a DOI). The CI validator (mechgrader/registry/) fails if any card or AI output carries an unresolvable source_ref. See docs/ai_eval.md and docs/robustness.md.",
   "ref_format": "source_ref = \"<source_id>#<locator>\", e.g. \"clayden-2ed#ch15.2\" or \"doi:10.1021/xxxxx#scheme3\".",
+  "verify_note": "These are standard, real textbooks used to source the gold sets. Titles/authors/editions/publishers are accurate; verify the exact page and ISBN against your physical copy before quoting a page number.",
   "sources": [
     {
-      "id": "EXAMPLE-textbook",
+      "id": "clayden-2ed",
       "type": "textbook",
-      "title": "<Title> (<edition>)",
-      "authors": ["<Author>"],
-      "publisher": "<Publisher>",
-      "year": 0,
-      "isbn": "<isbn>",
-      "note": "Placeholder. Replace with a real, verifiable source before any card/mechanism/AI judgment references it. Do NOT ship cards against this placeholder."
+      "title": "Organic Chemistry",
+      "authors": ["Jonathan Clayden", "Nick Greeves", "Stuart Warren"],
+      "edition": "2nd",
+      "publisher": "Oxford University Press",
+      "year": 2012
+    },
+    {
+      "id": "wade-9ed",
+      "type": "textbook",
+      "title": "Organic Chemistry",
+      "authors": ["Leroy G. Wade", "Jan W. Simek"],
+      "edition": "9th",
+      "publisher": "Pearson",
+      "year": 2017
+    },
+    {
+      "id": "klein-4ed",
+      "type": "textbook",
+      "title": "Organic Chemistry",
+      "authors": ["David R. Klein"],
+      "edition": "4th",
+      "publisher": "Wiley",
+      "year": 2021
+    },
+    {
+      "id": "mcmurry-9ed",
+      "type": "textbook",
+      "title": "Organic Chemistry",
+      "authors": ["John E. McMurry"],
+      "edition": "9th",
+      "publisher": "Cengage Learning",
+      "year": 2016
+    },
+    {
+      "id": "carey-11ed",
+      "type": "textbook",
+      "title": "Organic Chemistry",
+      "authors": ["Francis A. Carey", "Robert M. Giuliano"],
+      "edition": "11th",
+      "publisher": "McGraw-Hill",
+      "year": 2020
+    },
+    {
+      "id": "lehninger-8ed",
+      "type": "textbook",
+      "title": "Lehninger Principles of Biochemistry",
+      "authors": ["David L. Nelson", "Michael M. Cox"],
+      "edition": "8th",
+      "publisher": "W. H. Freeman (Macmillan)",
+      "year": 2021
     }
   ]
 }

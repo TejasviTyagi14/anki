@@ -21,5 +21,14 @@ implemented in the stage noted; this page is finalized with evidence in Stage 3.
 | 14 | Corrupt deck / 50k-card deck / broken images | Import validation; 50k bench; missing-media handled without crash | 3 |
 
 ## Status
-Table fixed. Evidence (crash test, offline test, leakage run, paraphrase result)
-is produced in Stage 3 and linked from `docs/results.md`.
+Evidence PRODUCED for most rows and linked from `docs/results.md`:
+- #1 paraphrase bridge (recall vs performance gap) — done.
+- #2 coverage abstain (give-up rule) — done (tests).
+- #4/#10 AI injection-hardening + broken-JSON/offline fallback + kill switch — done (tests).
+- #9 leakage scan — done (caught + fixed real leakage; CLEAN).
+- #11/#12 sync conflict + wrong-clock — done (tests).
+- #13 crash mid-review — done (20 unclean exits + SIGKILL, zero corruption).
+- Offline still scores — done (AI-off fallback + pure-stdlib scoring).
+Remaining rows (#3 contradictory sources, #5 low-effort taps, #8 AI-useless cards
+at scale, #14 broken-image import) are designed/partially-tested; full evidence
+continues alongside the reviewer GUI + real data.

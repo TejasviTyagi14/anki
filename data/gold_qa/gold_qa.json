@@ -8,7 +8,9 @@
     "source_ref": "<source_id>#<locator>",
     "question": "the prompt",
     "answer": "the known-correct short answer",
-    "acceptable_variants": ["other correct phrasings"],
+    "acceptable_variants": [
+      "other correct phrasings"
+    ],
     "notes": "what makes a generated card useful vs bad-teaching here"
   },
   "items": [
@@ -17,7 +19,12 @@
       "source_ref": "clayden-2ed#ch15.2",
       "question": "In an SN2 reaction, what happens to the stereochemistry at the electrophilic carbon?",
       "answer": "inversion of configuration",
-      "acceptable_variants": ["inversion", "Walden inversion", "the configuration is inverted", "backside attack causes inversion"],
+      "acceptable_variants": [
+        "inversion",
+        "Walden inversion",
+        "the configuration is inverted",
+        "backside attack causes inversion"
+      ],
       "notes": "Useful cards tie inversion to backside attack; 'the stereochemistry changes' is too vague."
     },
     {
@@ -25,7 +32,11 @@
       "source_ref": "clayden-2ed#ch15.1",
       "question": "What is the overall rate order (molecularity) of the SN2 reaction?",
       "answer": "second order (bimolecular)",
-      "acceptable_variants": ["second order", "bimolecular", "rate = k[substrate][nucleophile]"],
+      "acceptable_variants": [
+        "second order",
+        "bimolecular",
+        "rate = k[substrate][nucleophile]"
+      ],
       "notes": "SN2 is second order overall; a card claiming first order is wrong."
     },
     {
@@ -33,7 +44,12 @@
       "source_ref": "klein-4ed#ch7.4",
       "question": "Which substrate class reacts fastest in an SN2 reaction?",
       "answer": "methyl and primary",
-      "acceptable_variants": ["primary", "methyl", "least hindered substrates", "primary and methyl halides"],
+      "acceptable_variants": [
+        "primary",
+        "methyl",
+        "least hindered substrates",
+        "primary and methyl halides"
+      ],
       "notes": "Steric access controls SN2; tertiary is essentially unreactive by SN2."
     },
     {
@@ -41,7 +57,12 @@
       "source_ref": "klein-4ed#ch7.4",
       "question": "How does increasing steric bulk at the reacting carbon affect the SN2 rate?",
       "answer": "it decreases the rate",
-      "acceptable_variants": ["decreases", "slows the reaction", "the rate decreases", "hinders the reaction"],
+      "acceptable_variants": [
+        "decreases",
+        "slows the reaction",
+        "the rate decreases",
+        "hinders the reaction"
+      ],
       "notes": "Backside attack is blocked by bulk; a card saying it increases the rate is wrong."
     },
     {
@@ -49,7 +70,12 @@
       "source_ref": "clayden-2ed#ch15.1",
       "question": "How many elementary steps does the SN2 mechanism have?",
       "answer": "one concerted step",
-      "acceptable_variants": ["one", "single step", "concerted", "one step"],
+      "acceptable_variants": [
+        "one",
+        "single step",
+        "concerted",
+        "one step"
+      ],
       "notes": "Bond making and breaking are simultaneous; contrast with the two-step SN1."
     },
     {
@@ -57,7 +83,11 @@
       "source_ref": "clayden-2ed#ch15.3",
       "question": "What is the rate-determining step of an SN1 reaction?",
       "answer": "formation of the carbocation",
-      "acceptable_variants": ["carbocation formation", "ionization", "loss of the leaving group to form a carbocation"],
+      "acceptable_variants": [
+        "carbocation formation",
+        "ionization",
+        "loss of the leaving group to form a carbocation"
+      ],
       "notes": "The slow step is ionization; the nucleophile does not appear in the rate law."
     },
     {
@@ -65,7 +95,12 @@
       "source_ref": "clayden-2ed#ch15.3",
       "question": "What is the rate order of the SN1 reaction?",
       "answer": "first order (unimolecular)",
-      "acceptable_variants": ["first order", "unimolecular", "rate = k[substrate]", "independent of nucleophile concentration"],
+      "acceptable_variants": [
+        "first order",
+        "unimolecular",
+        "rate = k[substrate]",
+        "independent of nucleophile concentration"
+      ],
       "notes": "Rate depends only on the substrate; a card saying it depends on nucleophile concentration is wrong."
     },
     {
@@ -73,7 +108,11 @@
       "source_ref": "klein-4ed#ch7.6",
       "question": "Which substrate class reacts fastest in an SN1 reaction?",
       "answer": "tertiary",
-      "acceptable_variants": ["3 degree", "tertiary substrates", "most substituted"],
+      "acceptable_variants": [
+        "3 degree",
+        "tertiary substrates",
+        "most substituted"
+      ],
       "notes": "Carbocation stability drives SN1; a card saying primary is wrong."
     },
     {
@@ -81,7 +120,12 @@
       "source_ref": "wade-9ed#ch6.13",
       "question": "What is the stereochemical outcome at a stereocenter formed in an SN1 reaction?",
       "answer": "racemization",
-      "acceptable_variants": ["racemic mixture", "loss of optical activity", "both enantiomers form", "a nearly racemic mixture"],
+      "acceptable_variants": [
+        "racemic mixture",
+        "loss of optical activity",
+        "both enantiomers form",
+        "a nearly racemic mixture"
+      ],
       "notes": "The planar carbocation is attacked from both faces; useful cards mention the planar intermediate."
     },
     {
@@ -89,7 +133,10 @@
       "source_ref": "clayden-2ed#ch15.3",
       "question": "What is the key reactive intermediate in an SN1 reaction?",
       "answer": "carbocation",
-      "acceptable_variants": ["carbenium ion", "a carbocation intermediate"],
+      "acceptable_variants": [
+        "carbenium ion",
+        "a carbocation intermediate"
+      ],
       "notes": "Its stability explains SN1 substrate and rearrangement behavior."
     },
     {
@@ -97,7 +144,11 @@
       "source_ref": "wade-9ed#ch7.14",
       "question": "What is the rate-determining step of an E1 reaction?",
       "answer": "formation of the carbocation",
-      "acceptable_variants": ["carbocation formation", "ionization", "loss of the leaving group to form a carbocation"],
+      "acceptable_variants": [
+        "carbocation formation",
+        "ionization",
+        "loss of the leaving group to form a carbocation"
+      ],
       "notes": "E1 shares its slow ionization step (and intermediate) with SN1."
     },
     {
@@ -105,7 +156,12 @@
       "source_ref": "wade-9ed#ch7.9",
       "question": "Which alkene is the major (Zaitsev) product of a typical E1 or E2 elimination?",
       "answer": "the more substituted alkene",
-      "acceptable_variants": ["more substituted alkene", "most substituted alkene", "Zaitsev product", "the most stable alkene"],
+      "acceptable_variants": [
+        "more substituted alkene",
+        "most substituted alkene",
+        "Zaitsev product",
+        "the most stable alkene"
+      ],
       "notes": "Zaitsev = more substituted/more stable; contrast with the Hofmann (less substituted) product."
     },
     {
@@ -113,7 +169,11 @@
       "source_ref": "wade-9ed#ch7.14",
       "question": "What is the rate order of the E1 reaction?",
       "answer": "first order (unimolecular)",
-      "acceptable_variants": ["first order", "unimolecular", "rate = k[substrate]"],
+      "acceptable_variants": [
+        "first order",
+        "unimolecular",
+        "rate = k[substrate]"
+      ],
       "notes": "Like SN1, the base/nucleophile does not appear in the E1 rate law."
     },
     {
@@ -121,7 +181,12 @@
       "source_ref": "clayden-2ed#ch19.2",
       "question": "What geometric relationship between the leaving group and the beta-hydrogen must the E2 transition state achieve?",
       "answer": "anti-periplanar",
-      "acceptable_variants": ["antiperiplanar", "anti coplanar", "180 degrees dihedral", "anti and coplanar"],
+      "acceptable_variants": [
+        "antiperiplanar",
+        "anti coplanar",
+        "180 degrees dihedral",
+        "anti and coplanar"
+      ],
       "notes": "The C-H and C-LG bonds must be anti-periplanar; a card saying syn-periplanar is wrong for the typical case."
     },
     {
@@ -129,7 +194,11 @@
       "source_ref": "clayden-2ed#ch19.2",
       "question": "What is the rate order of the E2 reaction?",
       "answer": "second order (bimolecular)",
-      "acceptable_variants": ["second order", "bimolecular", "rate = k[substrate][base]"],
+      "acceptable_variants": [
+        "second order",
+        "bimolecular",
+        "rate = k[substrate][base]"
+      ],
       "notes": "Both substrate and base appear in the rate law."
     },
     {
@@ -137,7 +206,12 @@
       "source_ref": "clayden-2ed#ch19.2",
       "question": "How many elementary steps does the E2 mechanism have?",
       "answer": "one concerted step",
-      "acceptable_variants": ["one", "single step", "concerted", "one step"],
+      "acceptable_variants": [
+        "one",
+        "single step",
+        "concerted",
+        "one step"
+      ],
       "notes": "Deprotonation and leaving-group loss are simultaneous."
     },
     {
@@ -145,7 +219,11 @@
       "source_ref": "klein-4ed#ch8.11",
       "question": "What kind of base favors E2 over SN2 for a given substrate?",
       "answer": "a strong, bulky base",
-      "acceptable_variants": ["bulky strong base", "sterically hindered strong base", "a bulky base such as tert-butoxide"],
+      "acceptable_variants": [
+        "bulky strong base",
+        "sterically hindered strong base",
+        "a bulky base such as tert-butoxide"
+      ],
       "notes": "Bulk disfavors backside substitution and favors deprotonation."
     },
     {
@@ -153,7 +231,12 @@
       "source_ref": "klein-4ed#ch8.9",
       "question": "Using a bulky base pushes an elimination toward which regiochemical product?",
       "answer": "the less substituted (Hofmann) alkene",
-      "acceptable_variants": ["Hofmann product", "less substituted alkene", "least substituted alkene", "the Hofmann alkene"],
+      "acceptable_variants": [
+        "Hofmann product",
+        "less substituted alkene",
+        "least substituted alkene",
+        "the Hofmann alkene"
+      ],
       "notes": "Steric approach control gives the less-substituted alkene; useful cards name the bulky base."
     },
     {
@@ -161,7 +244,11 @@
       "source_ref": "wade-9ed#ch8.3",
       "question": "What regiochemistry does addition of HBr to an alkene follow in the absence of peroxides?",
       "answer": "Markovnikov",
-      "acceptable_variants": ["Markovnikov addition", "Markovnikov orientation", "H adds to the carbon with more hydrogens"],
+      "acceptable_variants": [
+        "Markovnikov addition",
+        "Markovnikov orientation",
+        "H adds to the carbon with more hydrogens"
+      ],
       "notes": "Proton adds to give the more stable carbocation; contrast with radical anti-Markovnikov."
     },
     {
@@ -169,7 +256,10 @@
       "source_ref": "wade-9ed#ch8.3",
       "question": "What reactive intermediate forms during electrophilic addition of HX to an alkene?",
       "answer": "carbocation",
-      "acceptable_variants": ["the more stable carbocation", "a carbocation intermediate"],
+      "acceptable_variants": [
+        "the more stable carbocation",
+        "a carbocation intermediate"
+      ],
       "notes": "Its stability sets Markovnikov regiochemistry and possible rearrangements."
     },
     {
@@ -177,7 +267,10 @@
       "source_ref": "wade-9ed#ch8.4",
       "question": "What regiochemistry results from radical addition of HBr to an alkene (with peroxides)?",
       "answer": "anti-Markovnikov",
-      "acceptable_variants": ["anti-Markovnikov addition", "Br adds to the less substituted carbon"],
+      "acceptable_variants": [
+        "anti-Markovnikov addition",
+        "Br adds to the less substituted carbon"
+      ],
       "notes": "Only HBr does this radical chain; a card claiming Markovnikov here is wrong."
     },
     {
@@ -185,7 +278,11 @@
       "source_ref": "clayden-2ed#ch19.4",
       "question": "What is the stereochemistry of Br2 (bromine) addition across an alkene?",
       "answer": "anti addition",
-      "acceptable_variants": ["anti", "anti (trans) addition", "trans addition"],
+      "acceptable_variants": [
+        "anti",
+        "anti (trans) addition",
+        "trans addition"
+      ],
       "notes": "The bromonium ion forces backside opening; a card saying syn addition is wrong."
     },
     {
@@ -193,7 +290,10 @@
       "source_ref": "clayden-2ed#ch19.4",
       "question": "What cyclic intermediate forms when Br2 adds to an alkene?",
       "answer": "bromonium ion",
-      "acceptable_variants": ["cyclic bromonium ion", "a bromonium ion"],
+      "acceptable_variants": [
+        "cyclic bromonium ion",
+        "a bromonium ion"
+      ],
       "notes": "The three-membered bromonium ion explains anti stereochemistry."
     },
     {
@@ -201,7 +301,10 @@
       "source_ref": "klein-4ed#ch9.5",
       "question": "What regiochemistry does oxymercuration-demercuration give, and does it rearrange?",
       "answer": "Markovnikov without rearrangement",
-      "acceptable_variants": ["Markovnikov, no rearrangement", "Markovnikov and no carbocation rearrangement"],
+      "acceptable_variants": [
+        "Markovnikov, no rearrangement",
+        "Markovnikov and no carbocation rearrangement"
+      ],
       "notes": "The mercurinium ion prevents rearrangement while keeping Markovnikov selectivity."
     },
     {
@@ -209,7 +312,11 @@
       "source_ref": "klein-4ed#ch9.6",
       "question": "What regiochemistry does hydroboration-oxidation give?",
       "answer": "anti-Markovnikov",
-      "acceptable_variants": ["anti-Markovnikov and syn", "anti-Markovnikov, syn addition", "OH adds to the less substituted carbon"],
+      "acceptable_variants": [
+        "anti-Markovnikov and syn",
+        "anti-Markovnikov, syn addition",
+        "OH adds to the less substituted carbon"
+      ],
       "notes": "Boron adds to the less hindered carbon (syn); useful cards note the syn addition too."
     },
     {
@@ -217,7 +324,12 @@
       "source_ref": "carey-11ed#ch12.2",
       "question": "What is the first step of electrophilic aromatic substitution?",
       "answer": "the arene attacks the electrophile to form an arenium ion (sigma complex)",
-      "acceptable_variants": ["formation of the arenium ion", "formation of the sigma complex", "attack of the ring on the electrophile", "arenium (sigma) complex formation"],
+      "acceptable_variants": [
+        "formation of the arenium ion",
+        "formation of the sigma complex",
+        "attack of the ring on the electrophile",
+        "arenium (sigma) complex formation"
+      ],
       "notes": "The rate-determining step forms the resonance-stabilized arenium ion."
     },
     {
@@ -225,7 +337,11 @@
       "source_ref": "carey-11ed#ch12.11",
       "question": "Are -OH, -NH2, and alkyl groups ortho/para directors or meta directors in EAS?",
       "answer": "ortho/para directors",
-      "acceptable_variants": ["ortho and para directors", "ortho/para directing", "o/p directors"],
+      "acceptable_variants": [
+        "ortho and para directors",
+        "ortho/para directing",
+        "o/p directors"
+      ],
       "notes": "These activators are ortho/para directing; contrast with deactivating meta directors."
     },
     {
@@ -233,7 +349,11 @@
       "source_ref": "carey-11ed#ch12.12",
       "question": "Is a nitro (-NO2) group an activating ortho/para director or a deactivating meta director?",
       "answer": "deactivating meta director",
-      "acceptable_variants": ["meta director", "meta directing", "deactivator and meta director"],
+      "acceptable_variants": [
+        "meta director",
+        "meta directing",
+        "deactivator and meta director"
+      ],
       "notes": "Strong electron withdrawal deactivates and directs meta."
     },
     {
@@ -241,7 +361,11 @@
       "source_ref": "carey-11ed#ch12.2",
       "question": "What step restores aromaticity at the end of electrophilic aromatic substitution?",
       "answer": "loss of a proton (deprotonation)",
-      "acceptable_variants": ["deprotonation", "loss of a proton", "proton loss to rearomatize"],
+      "acceptable_variants": [
+        "deprotonation",
+        "loss of a proton",
+        "proton loss to rearomatize"
+      ],
       "notes": "Rearomatization by proton loss, not by adding a nucleophile (that would be addition, not substitution)."
     },
     {
@@ -249,7 +373,11 @@
       "source_ref": "carey-11ed#ch12.6",
       "question": "What type of catalyst is required for Friedel-Crafts acylation?",
       "answer": "a Lewis acid",
-      "acceptable_variants": ["Lewis acid", "AlCl3", "aluminum chloride (a Lewis acid)"],
+      "acceptable_variants": [
+        "Lewis acid",
+        "AlCl3",
+        "aluminum chloride (a Lewis acid)"
+      ],
       "notes": "The Lewis acid generates the acylium electrophile."
     },
     {
@@ -257,7 +385,12 @@
       "source_ref": "clayden-2ed#ch6.4",
       "question": "At approximately what angle does a nucleophile attack a carbonyl (the Buergi-Dunitz trajectory)?",
       "answer": "about 107 degrees",
-      "acceptable_variants": ["107 degrees", "roughly 107", "the Buergi-Dunitz angle (~107)", "105 to 107 degrees"],
+      "acceptable_variants": [
+        "107 degrees",
+        "roughly 107",
+        "the Buergi-Dunitz angle (~107)",
+        "105 to 107 degrees"
+      ],
       "notes": "Nucleophile approaches the carbonyl carbon slightly off the C=O axis."
     },
     {
@@ -265,7 +398,10 @@
       "source_ref": "wade-9ed#ch18.9",
       "question": "What product results when a ketone is reduced by NaBH4 or LiAlH4?",
       "answer": "a secondary alcohol",
-      "acceptable_variants": ["secondary alcohol", "2 degree alcohol"],
+      "acceptable_variants": [
+        "secondary alcohol",
+        "2 degree alcohol"
+      ],
       "notes": "Hydride adds to the carbonyl carbon; a ketone gives a secondary alcohol."
     },
     {
@@ -273,7 +409,10 @@
       "source_ref": "wade-9ed#ch18.9",
       "question": "What product results when an aldehyde is reduced by a hydride reagent?",
       "answer": "a primary alcohol",
-      "acceptable_variants": ["primary alcohol", "1 degree alcohol"],
+      "acceptable_variants": [
+        "primary alcohol",
+        "1 degree alcohol"
+      ],
       "notes": "Aldehydes give primary alcohols; ketones give secondary alcohols."
     },
     {
@@ -281,7 +420,11 @@
       "source_ref": "clayden-2ed#ch6.2",
       "question": "Which atom of a carbonyl group does a nucleophile attack?",
       "answer": "the carbonyl carbon",
-      "acceptable_variants": ["carbonyl carbon", "the electrophilic carbon", "the carbon of the C=O"],
+      "acceptable_variants": [
+        "carbonyl carbon",
+        "the electrophilic carbon",
+        "the carbon of the C=O"
+      ],
       "notes": "The carbonyl carbon is electrophilic; the oxygen is nucleophilic/basic."
     },
     {
@@ -289,7 +432,11 @@
       "source_ref": "klein-4ed#ch20.5",
       "question": "In carbonyl chemistry, does a Grignard reagent act as a nucleophile or an electrophile?",
       "answer": "a nucleophile",
-      "acceptable_variants": ["nucleophile", "a carbanion nucleophile", "a carbon nucleophile"],
+      "acceptable_variants": [
+        "nucleophile",
+        "a carbanion nucleophile",
+        "a carbon nucleophile"
+      ],
       "notes": "The polarized C-Mg bond makes carbon nucleophilic (and strongly basic)."
     },
     {
@@ -297,7 +444,10 @@
       "source_ref": "clayden-2ed#ch10.3",
       "question": "What high-energy intermediate is common to nucleophilic acyl substitution reactions?",
       "answer": "the tetrahedral intermediate",
-      "acceptable_variants": ["tetrahedral intermediate", "a tetrahedral intermediate"],
+      "acceptable_variants": [
+        "tetrahedral intermediate",
+        "a tetrahedral intermediate"
+      ],
       "notes": "Addition then elimination proceeds through the tetrahedral intermediate."
     },
     {
@@ -305,7 +455,11 @@
       "source_ref": "clayden-2ed#ch10.7",
       "question": "Which carboxylic acid derivative is the most reactive toward nucleophilic acyl substitution?",
       "answer": "acyl chloride",
-      "acceptable_variants": ["acid chloride", "acid halide", "the acyl halide"],
+      "acceptable_variants": [
+        "acid chloride",
+        "acid halide",
+        "the acyl halide"
+      ],
       "notes": "Best leaving group and least resonance donation into the carbonyl."
     },
     {
@@ -313,7 +467,10 @@
       "source_ref": "clayden-2ed#ch10.7",
       "question": "Which carboxylic acid derivative is the least reactive toward nucleophilic acyl substitution?",
       "answer": "amide",
-      "acceptable_variants": ["amides", "the amide"],
+      "acceptable_variants": [
+        "amides",
+        "the amide"
+      ],
       "notes": "Strong nitrogen resonance donation stabilizes the carbonyl and worsens the leaving group."
     },
     {
@@ -321,7 +478,11 @@
       "source_ref": "clayden-2ed#ch10.7",
       "question": "What structural factor best explains the reactivity order of carboxylic acid derivatives?",
       "answer": "leaving-group ability",
-      "acceptable_variants": ["the leaving group ability", "how good the leaving group is", "stability of the leaving group"],
+      "acceptable_variants": [
+        "the leaving group ability",
+        "how good the leaving group is",
+        "stability of the leaving group"
+      ],
       "notes": "Better leaving group = more reactive derivative (acyl chloride > anhydride > ester > amide)."
     },
     {
@@ -329,7 +490,11 @@
       "source_ref": "clayden-2ed#ch20.1",
       "question": "What nucleophile adds to the electrophilic carbonyl in an aldol addition?",
       "answer": "an enolate",
-      "acceptable_variants": ["enolate", "the enolate ion", "an enol or enolate"],
+      "acceptable_variants": [
+        "enolate",
+        "the enolate ion",
+        "an enol or enolate"
+      ],
       "notes": "The base-generated enolate is the nucleophilic carbon."
     },
     {
@@ -337,7 +502,12 @@
       "source_ref": "clayden-2ed#ch20.2",
       "question": "What product forms after an aldol condensation undergoes dehydration?",
       "answer": "an alpha,beta-unsaturated carbonyl",
-      "acceptable_variants": ["alpha beta unsaturated carbonyl", "a,b-unsaturated carbonyl", "an enone", "a conjugated enone"],
+      "acceptable_variants": [
+        "alpha beta unsaturated carbonyl",
+        "a,b-unsaturated carbonyl",
+        "an enone",
+        "a conjugated enone"
+      ],
       "notes": "Loss of water gives the conjugated enone; the plain aldol (before dehydration) is a beta-hydroxy carbonyl."
     },
     {
@@ -345,7 +515,11 @@
       "source_ref": "clayden-2ed#ch20.1",
       "question": "Why is the alpha-carbon of a carbonyl acidic?",
       "answer": "the resulting enolate is resonance-stabilized",
-      "acceptable_variants": ["resonance stabilization of the enolate", "the conjugate base (enolate) is stabilized by resonance", "enolate resonance stabilization"],
+      "acceptable_variants": [
+        "resonance stabilization of the enolate",
+        "the conjugate base (enolate) is stabilized by resonance",
+        "enolate resonance stabilization"
+      ],
       "notes": "Deprotonation gives a resonance-delocalized enolate; useful cards mention delocalization onto oxygen."
     },
     {
@@ -353,7 +527,12 @@
       "source_ref": "wade-9ed#ch20.6",
       "question": "What catalyst is used in a Fischer esterification?",
       "answer": "an acid catalyst",
-      "acceptable_variants": ["acid catalyst", "a strong acid", "sulfuric acid", "H2SO4"],
+      "acceptable_variants": [
+        "acid catalyst",
+        "a strong acid",
+        "sulfuric acid",
+        "H2SO4"
+      ],
       "notes": "Acid activates the carbonyl and the leaving group; Fischer esterification is acid-catalyzed."
     },
     {
@@ -361,7 +540,11 @@
       "source_ref": "wade-9ed#ch20.6",
       "question": "How is the equilibrium of a Fischer esterification driven toward the ester?",
       "answer": "by Le Chatelier (excess alcohol or removing water)",
-      "acceptable_variants": ["Le Chatelier", "remove water or add excess alcohol", "excess alcohol and/or removing water"],
+      "acceptable_variants": [
+        "Le Chatelier",
+        "remove water or add excess alcohol",
+        "excess alcohol and/or removing water"
+      ],
       "notes": "It is a reversible equilibrium, so it is driven by removing product or adding reactant."
     },
     {
@@ -369,7 +552,11 @@
       "source_ref": "wade-9ed#ch21.7",
       "question": "In acid-catalyzed ester hydrolysis, what species acts as the nucleophile?",
       "answer": "water",
-      "acceptable_variants": ["water is the nucleophile", "a water molecule", "H2O"],
+      "acceptable_variants": [
+        "water is the nucleophile",
+        "a water molecule",
+        "H2O"
+      ],
       "notes": "Water attacks the protonated carbonyl; distinguish from base hydrolysis (hydroxide)."
     },
     {
@@ -377,7 +564,11 @@
       "source_ref": "clayden-2ed#ch20.3",
       "question": "Which tautomer is generally more stable for a simple aldehyde or ketone?",
       "answer": "the keto form",
-      "acceptable_variants": ["keto", "keto tautomer", "the keto tautomer"],
+      "acceptable_variants": [
+        "keto",
+        "keto tautomer",
+        "the keto tautomer"
+      ],
       "notes": "The C=O keto form is usually favored over the enol; a card saying the enol is more stable is wrong for simple carbonyls."
     },
     {
@@ -385,7 +576,11 @@
       "source_ref": "clayden-2ed#ch20.3",
       "question": "Keto-enol tautomerization is catalyzed by what?",
       "answer": "acid or base",
-      "acceptable_variants": ["both acid and base", "acid and base catalysis", "either acid or base"],
+      "acceptable_variants": [
+        "both acid and base",
+        "acid and base catalysis",
+        "either acid or base"
+      ],
       "notes": "Both pathways exist; useful cards sketch the enol via acid and the enolate via base."
     },
     {
@@ -393,7 +588,11 @@
       "source_ref": "clayden-2ed#ch8.3",
       "question": "In an acid-base proton transfer, which side does the equilibrium favor?",
       "answer": "the side with the weaker acid and weaker base",
-      "acceptable_variants": ["toward the weaker acid", "formation of the weaker acid and base", "the weaker acid/base side"],
+      "acceptable_variants": [
+        "toward the weaker acid",
+        "formation of the weaker acid and base",
+        "the weaker acid/base side"
+      ],
       "notes": "Equilibrium favors the more stable (weaker) conjugate acid/base."
     },
     {
@@ -401,7 +600,11 @@
       "source_ref": "clayden-2ed#ch8.2",
       "question": "A lower pKa corresponds to what kind of acid?",
       "answer": "a stronger acid",
-      "acceptable_variants": ["stronger acid", "more acidic", "the stronger acid"],
+      "acceptable_variants": [
+        "stronger acid",
+        "more acidic",
+        "the stronger acid"
+      ],
       "notes": "Lower pKa = stronger acid; a card saying lower pKa means weaker acid is wrong."
     },
     {
@@ -409,7 +612,11 @@
       "source_ref": "wade-9ed#ch11.2",
       "question": "Which reagent oxidizes a primary alcohol to an aldehyde and stops there?",
       "answer": "PCC",
-      "acceptable_variants": ["pyridinium chlorochromate", "PCC (a mild oxidant)", "Dess-Martin periodinane"],
+      "acceptable_variants": [
+        "pyridinium chlorochromate",
+        "PCC (a mild oxidant)",
+        "Dess-Martin periodinane"
+      ],
       "notes": "PCC is anhydrous/mild and stops at the aldehyde; Jones/KMnO4 would over-oxidize."
     },
     {
@@ -417,7 +624,10 @@
       "source_ref": "wade-9ed#ch11.2",
       "question": "To what product does Jones reagent (CrO3/H2SO4) oxidize a primary alcohol?",
       "answer": "a carboxylic acid",
-      "acceptable_variants": ["carboxylic acid", "the carboxylic acid"],
+      "acceptable_variants": [
+        "carboxylic acid",
+        "the carboxylic acid"
+      ],
       "notes": "Aqueous strong Cr(VI) over-oxidizes past the aldehyde to the acid."
     },
     {
@@ -425,7 +635,10 @@
       "source_ref": "wade-9ed#ch11.2",
       "question": "What product forms when a secondary alcohol is oxidized?",
       "answer": "a ketone",
-      "acceptable_variants": ["ketone", "the ketone"],
+      "acceptable_variants": [
+        "ketone",
+        "the ketone"
+      ],
       "notes": "Secondary alcohols give ketones (no further oxidation without C-C cleavage)."
     },
     {
@@ -433,7 +646,11 @@
       "source_ref": "klein-4ed#ch20.4",
       "question": "Which carbonyl types does NaBH4 selectively reduce?",
       "answer": "aldehydes and ketones",
-      "acceptable_variants": ["ketones and aldehydes", "only aldehydes and ketones", "aldehydes/ketones but not esters or acids"],
+      "acceptable_variants": [
+        "ketones and aldehydes",
+        "only aldehydes and ketones",
+        "aldehydes/ketones but not esters or acids"
+      ],
       "notes": "NaBH4 is mild: it does not reduce esters or carboxylic acids well; contrast with LiAlH4."
     },
     {
@@ -441,7 +658,11 @@
       "source_ref": "klein-4ed#ch20.4",
       "question": "Which functional groups can the strong reductant LiAlH4 reduce that NaBH4 generally cannot?",
       "answer": "esters, carboxylic acids, and amides",
-      "acceptable_variants": ["carboxylic acids, esters, amides", "esters and carboxylic acids", "amides, esters, and acids"],
+      "acceptable_variants": [
+        "carboxylic acids, esters, amides",
+        "esters and carboxylic acids",
+        "amides, esters, and acids"
+      ],
       "notes": "LiAlH4 is a powerful hydride source; useful cards contrast it with milder NaBH4."
     },
     {
@@ -449,7 +670,11 @@
       "source_ref": "klein-4ed#ch9.7",
       "question": "What is the stereochemistry of catalytic hydrogenation (H2/Pd) across an alkene?",
       "answer": "syn addition",
-      "acceptable_variants": ["syn", "same-face (syn) addition", "cis addition"],
+      "acceptable_variants": [
+        "syn",
+        "same-face (syn) addition",
+        "cis addition"
+      ],
       "notes": "Both hydrogens add to the same face on the metal surface; a card saying anti is wrong."
     },
     {
@@ -457,7 +682,10 @@
       "source_ref": "mcmurry-9ed#ch6.3",
       "question": "What are the three phases of a radical chain mechanism, in order?",
       "answer": "initiation, propagation, termination",
-      "acceptable_variants": ["initiation propagation termination", "initiation, then propagation, then termination"],
+      "acceptable_variants": [
+        "initiation propagation termination",
+        "initiation, then propagation, then termination"
+      ],
       "notes": "A useful card can ask which step consumes/creates radicals net."
     },
     {
@@ -465,7 +693,11 @@
       "source_ref": "mcmurry-9ed#ch6.4",
       "question": "In radical halogenation, is bromination or chlorination more selective?",
       "answer": "bromination is more selective",
-      "acceptable_variants": ["bromination", "Br2 is more selective", "bromine is more selective"],
+      "acceptable_variants": [
+        "bromination",
+        "Br2 is more selective",
+        "bromine is more selective"
+      ],
       "notes": "The endothermic, late transition state of bromination makes it more selective (Hammond)."
     },
     {
@@ -473,7 +705,11 @@
       "source_ref": "mcmurry-9ed#ch6.5",
       "question": "Which carbon radical is the most stable?",
       "answer": "tertiary",
-      "acceptable_variants": ["tertiary radical", "3 degree radical", "the tertiary radical"],
+      "acceptable_variants": [
+        "tertiary radical",
+        "3 degree radical",
+        "the tertiary radical"
+      ],
       "notes": "Radical stability parallels carbocations: tertiary > secondary > primary."
     },
     {
@@ -481,7 +717,11 @@
       "source_ref": "wade-9ed#ch18.13",
       "question": "What functional group forms when a primary amine reacts with an aldehyde or ketone?",
       "answer": "an imine",
-      "acceptable_variants": ["imine", "a Schiff base", "an imine (Schiff base)"],
+      "acceptable_variants": [
+        "imine",
+        "a Schiff base",
+        "an imine (Schiff base)"
+      ],
       "notes": "Primary amine -> imine; a card saying enamine is wrong (that needs a secondary amine)."
     },
     {
@@ -489,7 +729,10 @@
       "source_ref": "wade-9ed#ch18.13",
       "question": "What functional group forms when a secondary amine reacts with an aldehyde or ketone?",
       "answer": "an enamine",
-      "acceptable_variants": ["enamine", "an enamine product"],
+      "acceptable_variants": [
+        "enamine",
+        "an enamine product"
+      ],
       "notes": "Secondary amine -> enamine (no N-H left to lose, so the double bond goes to carbon)."
     },
     {
@@ -497,7 +740,11 @@
       "source_ref": "wade-9ed#ch18.13",
       "question": "Around what pH is imine formation typically fastest?",
       "answer": "mildly acidic (about pH 4 to 5)",
-      "acceptable_variants": ["mildly acidic", "around pH 4-5", "weakly acidic, pH ~4.5"],
+      "acceptable_variants": [
+        "mildly acidic",
+        "around pH 4-5",
+        "weakly acidic, pH ~4.5"
+      ],
       "notes": "Acid catalyzes dehydration but too much acid protonates the amine; the optimum is mildly acidic."
     },
     {
@@ -505,7 +752,10 @@
       "source_ref": "wade-9ed#ch18.11",
       "question": "What product forms when an aldehyde reacts with two equivalents of alcohol under acid?",
       "answer": "an acetal",
-      "acceptable_variants": ["acetal", "an acetal product"],
+      "acceptable_variants": [
+        "acetal",
+        "an acetal product"
+      ],
       "notes": "One equivalent gives a hemiacetal; two give the acetal (with loss of water)."
     },
     {
@@ -513,7 +763,11 @@
       "source_ref": "clayden-2ed#ch23.5",
       "question": "What common synthetic role do acetals serve?",
       "answer": "protecting groups for aldehydes and ketones",
-      "acceptable_variants": ["carbonyl protecting groups", "a protecting group for carbonyls", "protecting group for aldehydes/ketones"],
+      "acceptable_variants": [
+        "carbonyl protecting groups",
+        "a protecting group for carbonyls",
+        "protecting group for aldehydes/ketones"
+      ],
       "notes": "Acetals are stable to base/nucleophiles and removed by aqueous acid."
     },
     {
@@ -521,7 +775,11 @@
       "source_ref": "clayden-2ed#ch42.2",
       "question": "How do sugars form a cyclic hemiacetal?",
       "answer": "an intramolecular hydroxyl adds to the carbonyl",
-      "acceptable_variants": ["intramolecular addition of an OH to the carbonyl", "a hydroxyl in the same molecule attacks the carbonyl", "intramolecular hemiacetal formation"],
+      "acceptable_variants": [
+        "intramolecular addition of an OH to the carbonyl",
+        "a hydroxyl in the same molecule attacks the carbonyl",
+        "intramolecular hemiacetal formation"
+      ],
       "notes": "Ring closure of the open-chain sugar; the new stereocenter is the anomeric carbon."
     },
     {
@@ -529,7 +787,11 @@
       "source_ref": "clayden-2ed#ch23.9",
       "question": "What type of bond links two amino acids in a peptide?",
       "answer": "an amide (peptide) bond",
-      "acceptable_variants": ["peptide bond", "amide bond", "an amide/peptide bond"],
+      "acceptable_variants": [
+        "peptide bond",
+        "amide bond",
+        "an amide/peptide bond"
+      ],
       "notes": "A peptide bond is an amide between the carboxyl of one residue and the amine of the next."
     },
     {
@@ -537,7 +799,11 @@
       "source_ref": "lehninger-8ed#ch6.4",
       "question": "What class of enzymes catalyzes hydrolysis of peptide bonds?",
       "answer": "proteases",
-      "acceptable_variants": ["peptidases", "protease enzymes", "proteases (peptidases)"],
+      "acceptable_variants": [
+        "peptidases",
+        "protease enzymes",
+        "proteases (peptidases)"
+      ],
       "notes": "Proteases lower the huge kinetic barrier of amide hydrolysis."
     },
     {
@@ -545,7 +811,11 @@
       "source_ref": "lehninger-8ed#ch4.2",
       "question": "What is the geometry of the peptide (amide) bond, and why?",
       "answer": "planar due to resonance (partial double-bond character)",
-      "acceptable_variants": ["planar", "planar because of amide resonance", "rigid and planar from resonance"],
+      "acceptable_variants": [
+        "planar",
+        "planar because of amide resonance",
+        "rigid and planar from resonance"
+      ],
       "notes": "Nitrogen lone-pair delocalization gives partial C-N double-bond character and restricted rotation."
     },
     {
@@ -553,7 +823,11 @@
       "source_ref": "lehninger-8ed#ch13.3",
       "question": "In phosphoryl transfer reactions, what role does ATP most often play?",
       "answer": "the phosphoryl donor",
-      "acceptable_variants": ["phosphate donor", "phosphoryl group donor", "donor of a phosphoryl group"],
+      "acceptable_variants": [
+        "phosphate donor",
+        "phosphoryl group donor",
+        "donor of a phosphoryl group"
+      ],
       "notes": "ATP donates a phosphoryl group to an acceptor (e.g., an enzyme or substrate hydroxyl)."
     },
     {
@@ -561,7 +835,11 @@
       "source_ref": "lehninger-8ed#ch13.3",
       "question": "What class of enzymes transfers a phosphoryl group from ATP to a substrate?",
       "answer": "kinases",
-      "acceptable_variants": ["kinase", "a kinase", "protein/small-molecule kinases"],
+      "acceptable_variants": [
+        "kinase",
+        "a kinase",
+        "protein/small-molecule kinases"
+      ],
       "notes": "Kinases catalyze phosphoryl transfer; phosphatases do the reverse hydrolysis."
     },
     {
@@ -569,7 +847,11 @@
       "source_ref": "lehninger-8ed#ch13.3",
       "question": "Which metal ion is the usual cofactor that stabilizes ATP's phosphates during phosphoryl transfer?",
       "answer": "magnesium (Mg2+)",
-      "acceptable_variants": ["Mg2+", "magnesium", "Mg(II)"],
+      "acceptable_variants": [
+        "Mg2+",
+        "magnesium",
+        "Mg(II)"
+      ],
       "notes": "Mg2+ coordinates the phosphate oxygens and shields negative charge."
     },
     {
@@ -577,7 +859,11 @@
       "source_ref": "lehninger-8ed#ch6.4",
       "question": "What catalytic triad do serine proteases use?",
       "answer": "Ser-His-Asp",
-      "acceptable_variants": ["serine-histidine-aspartate", "the Ser-His-Asp triad", "Asp-His-Ser"],
+      "acceptable_variants": [
+        "serine-histidine-aspartate",
+        "the Ser-His-Asp triad",
+        "Asp-His-Ser"
+      ],
       "notes": "The triad performs general base/covalent catalysis via a covalent acyl-enzyme intermediate."
     },
     {
@@ -585,7 +871,11 @@
       "source_ref": "lehninger-8ed#ch6.2",
       "question": "How do enzymes increase reaction rates thermodynamically?",
       "answer": "by lowering the activation energy",
-      "acceptable_variants": ["lowering activation energy", "reducing Ea", "stabilizing the transition state"],
+      "acceptable_variants": [
+        "lowering activation energy",
+        "reducing Ea",
+        "stabilizing the transition state"
+      ],
       "notes": "Enzymes lower Ea (stabilize the transition state) without changing the overall equilibrium."
     },
     {
@@ -593,7 +883,11 @@
       "source_ref": "lehninger-8ed#ch6.3",
       "question": "In covalent catalysis, what does the enzyme transiently form with the substrate?",
       "answer": "a covalent intermediate",
-      "acceptable_variants": ["a transient covalent bond to the substrate", "a covalent enzyme-substrate intermediate", "a covalent adduct"],
+      "acceptable_variants": [
+        "a transient covalent bond to the substrate",
+        "a covalent enzyme-substrate intermediate",
+        "a covalent adduct"
+      ],
       "notes": "A transient covalent bond provides an alternative lower-energy path."
     }
   ]

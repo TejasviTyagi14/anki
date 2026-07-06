@@ -2,7 +2,7 @@
   {
     "id": "gold-0001",
     "reaction_type": "SN2",
-    "source_ref": "clayden-2e#ch15.1",
+    "source_ref": "clayden-2ed#ch15.1",
     "label_source": "author-reference",
     "human_grade": 100,
     "human_labels": [
@@ -66,7 +66,7 @@
   {
     "id": "gold-0002",
     "reaction_type": "SN2",
-    "source_ref": "clayden-2e#ch15.1",
+    "source_ref": "clayden-2ed#ch15.1",
     "label_source": "author-reference",
     "human_grade": 78,
     "human_labels": [
@@ -130,7 +130,7 @@
   {
     "id": "gold-0003",
     "reaction_type": "SN2",
-    "source_ref": "clayden-2e#ch15.1",
+    "source_ref": "clayden-2ed#ch15.1",
     "label_source": "author-reference",
     "human_grade": 18,
     "human_labels": [
@@ -194,7 +194,7 @@
   {
     "id": "gold-0004",
     "reaction_type": "SN2",
-    "source_ref": "clayden-2e#ch15.1",
+    "source_ref": "clayden-2ed#ch15.1",
     "label_source": "author-reference",
     "human_grade": 5,
     "human_labels": [
@@ -246,7 +246,7 @@
   {
     "id": "gold-0005",
     "reaction_type": "SN2",
-    "source_ref": "clayden-2e#ch15.1",
+    "source_ref": "clayden-2ed#ch15.1",
     "label_source": "author-reference",
     "human_grade": 55,
     "human_labels": [
@@ -298,7 +298,7 @@
   {
     "id": "gold-0006",
     "reaction_type": "SN1",
-    "source_ref": "clayden-2e#ch15.5",
+    "source_ref": "clayden-2ed#ch15.5",
     "label_source": "author-reference",
     "human_grade": 100,
     "human_labels": [
@@ -416,7 +416,7 @@
   {
     "id": "gold-0007",
     "reaction_type": "SN1",
-    "source_ref": "clayden-2e#ch15.5",
+    "source_ref": "clayden-2ed#ch15.5",
     "label_source": "author-reference",
     "human_grade": 80,
     "human_labels": [
@@ -534,7 +534,7 @@
   {
     "id": "gold-0008",
     "reaction_type": "SN1",
-    "source_ref": "clayden-2e#ch15.5",
+    "source_ref": "clayden-2ed#ch15.5",
     "label_source": "author-reference",
     "human_grade": 40,
     "human_labels": [
@@ -652,7 +652,7 @@
   {
     "id": "gold-0009",
     "reaction_type": "SN1",
-    "source_ref": "clayden-2e#ch15.5",
+    "source_ref": "clayden-2ed#ch15.5",
     "label_source": "author-reference",
     "human_grade": 18,
     "human_labels": [
@@ -775,7 +775,7 @@
   {
     "id": "gold-0010",
     "reaction_type": "SN1",
-    "source_ref": "clayden-2e#ch15.5",
+    "source_ref": "clayden-2ed#ch15.5",
     "label_source": "author-reference",
     "human_grade": 58,
     "human_labels": [
@@ -885,7 +885,7 @@
   {
     "id": "gold-0011",
     "reaction_type": "SN1",
-    "source_ref": "clayden-2e#ch15.5",
+    "source_ref": "clayden-2ed#ch15.5",
     "label_source": "author-reference",
     "human_grade": 95,
     "human_labels": [
@@ -993,7 +993,7 @@
   {
     "id": "gold-0012",
     "reaction_type": "E2",
-    "source_ref": "wade-9e#ch7.9",
+    "source_ref": "wade-9ed#ch7.9",
     "label_source": "author-reference",
     "human_grade": 100,
     "human_labels": [
@@ -1069,7 +1069,7 @@
   {
     "id": "gold-0013",
     "reaction_type": "E2",
-    "source_ref": "wade-9e#ch7.9",
+    "source_ref": "wade-9ed#ch7.9",
     "label_source": "author-reference",
     "human_grade": 76,
     "human_labels": [
@@ -1145,7 +1145,7 @@
   {
     "id": "gold-0014",
     "reaction_type": "E2",
-    "source_ref": "wade-9e#ch7.9",
+    "source_ref": "wade-9ed#ch7.9",
     "label_source": "author-reference",
     "human_grade": 20,
     "human_labels": [
@@ -1216,7 +1216,7 @@
   {
     "id": "gold-0015",
     "reaction_type": "E2",
-    "source_ref": "wade-9e#ch7.9",
+    "source_ref": "wade-9ed#ch7.9",
     "label_source": "author-reference",
     "human_grade": 50,
     "human_labels": [
@@ -1280,7 +1280,7 @@
   {
     "id": "gold-0016",
     "reaction_type": "E1",
-    "source_ref": "wade-9e#ch7.10",
+    "source_ref": "wade-9ed#ch7.10",
     "label_source": "author-reference",
     "human_grade": 100,
     "human_labels": [
@@ -1376,7 +1376,7 @@
   {
     "id": "gold-0017",
     "reaction_type": "E1",
-    "source_ref": "wade-9e#ch7.10",
+    "source_ref": "wade-9ed#ch7.10",
     "label_source": "author-reference",
     "human_grade": 79,
     "human_labels": [
@@ -1472,7 +1472,7 @@
   {
     "id": "gold-0018",
     "reaction_type": "E1",
-    "source_ref": "wade-9e#ch7.10",
+    "source_ref": "wade-9ed#ch7.10",
     "label_source": "author-reference",
     "human_grade": 15,
     "human_labels": [
@@ -1568,7 +1568,7 @@
   {
     "id": "gold-0019",
     "reaction_type": "E1",
-    "source_ref": "wade-9e#ch7.10",
+    "source_ref": "wade-9ed#ch7.10",
     "label_source": "author-reference",
     "human_grade": 96,
     "human_labels": [
@@ -1664,7 +1664,7 @@
   {
     "id": "gold-0020",
     "reaction_type": "EAS",
-    "source_ref": "mcmurry-9e#ch16.2",
+    "source_ref": "mcmurry-9ed#ch16.2",
     "label_source": "author-reference",
     "human_grade": 100,
     "human_labels": [
@@ -1760,7 +1760,7 @@
   {
     "id": "gold-0021",
     "reaction_type": "EAS",
-    "source_ref": "mcmurry-9e#ch16.2",
+    "source_ref": "mcmurry-9ed#ch16.2",
     "label_source": "author-reference",
     "human_grade": 79,
     "human_labels": [
@@ -1856,7 +1856,7 @@
   {
     "id": "gold-0022",
     "reaction_type": "EAS",
-    "source_ref": "mcmurry-9e#ch16.2",
+    "source_ref": "mcmurry-9ed#ch16.2",
     "label_source": "author-reference",
     "human_grade": 45,
     "human_labels": [
@@ -1952,7 +1952,7 @@
   {
     "id": "gold-0023",
     "reaction_type": "EAS",
-    "source_ref": "mcmurry-9e#ch16.2",
+    "source_ref": "mcmurry-9ed#ch16.2",
     "label_source": "author-reference",
     "human_grade": 3,
     "human_labels": [
@@ -2021,7 +2021,7 @@
   {
     "id": "gold-0024",
     "reaction_type": "carbonyl",
-    "source_ref": "klein-4e#ch20.4",
+    "source_ref": "klein-4ed#ch20.4",
     "label_source": "author-reference",
     "human_grade": 100,
     "human_labels": [
@@ -2127,7 +2127,7 @@
   {
     "id": "gold-0025",
     "reaction_type": "carbonyl",
-    "source_ref": "klein-4e#ch20.4",
+    "source_ref": "klein-4ed#ch20.4",
     "label_source": "author-reference",
     "human_grade": 75,
     "human_labels": [
@@ -2233,7 +2233,7 @@
   {
     "id": "gold-0026",
     "reaction_type": "carbonyl",
-    "source_ref": "klein-4e#ch20.4",
+    "source_ref": "klein-4ed#ch20.4",
     "label_source": "author-reference",
     "human_grade": 22,
     "human_labels": [
@@ -2334,7 +2334,7 @@
   {
     "id": "gold-0027",
     "reaction_type": "carbonyl",
-    "source_ref": "klein-4e#ch20.4",
+    "source_ref": "klein-4ed#ch20.4",
     "label_source": "author-reference",
     "human_grade": 60,
     "human_labels": [
@@ -2427,7 +2427,7 @@
   {
     "id": "gold-0028",
     "reaction_type": "carbonyl",
-    "source_ref": "klein-4e#ch20.4",
+    "source_ref": "klein-4ed#ch20.4",
     "label_source": "author-reference",
     "human_grade": 92,
     "human_labels": [

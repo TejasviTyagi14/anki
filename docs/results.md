@@ -58,6 +58,48 @@ don't have — so no calibrated-memory *claim* is made yet.
 - **Mobile**: not buildable here — `make build-mobile` preflight shows 7/8
   prerequisites missing; exact reproducible steps provided. See `docs/mobile.md`.
 
+### Study-feature experiment — interleaving vs blocked vs plain (`python -m mechgrader.experiment`)
+Fair three-arm SIMULATION (stated learner model; interleaving pays a switch cost
+for cross-type discrimination, so it isn't rigged). Same learners (n=200), same
+items, equal time, seed 0. Primary metric: novel mixed-type accuracy.
+
+| arm | accuracy | 95% range |
+| --- | --- | --- |
+| interleaved | 0.873 | [0.741, 0.959] |
+| blocked | 0.679 | [0.456, 0.873] |
+| plain | 0.621 | [0.390, 0.840] |
+
+interleaved − blocked = **+0.194** at orgo-like confusability (1.6). Confusability
+sweep shows the fair crossover: at confusability 0 the delta is **−0.019**
+(interleaving *hurts* — the switch cost with nothing to discriminate). 5 tests.
+**Honest:** simulation, not real students; the harness runs on a real cohort by
+swapping the simulated learner for logged data. A null/negative real result would
+be reported as-is.
+
+### Paraphrase / bridge test — recall vs performance (`python -m mechgrader.paraphrase`)
+`bridge_report` compares per-card recall (memory) with reworded-reaction mechanism
+accuracy (performance). SIMULATION (30 cards ×2 reworded): recall **0.844** vs
+performance **0.536**, gap **+0.308**, r=0.54 → performance diverges from memory
+(a real bridge, not memory in disguise). If they were equal & highly correlated it
+would report "performance is just copying recall". 5 tests.
+
+### Crash recovery — zero corrupted collections (`test_crash_recovery`)
+Engine-level: (A) 20× unclean process exit right after a committed write →
+integrity OK, all 20 notes survived; (B) hard SIGKILL mid write-loop (4,436 notes
+in) → SQLite `pragma integrity_check` OK + Anki `fix_integrity` OK, no corruption.
+(The GUI kill needs a display; the durability/no-corruption guarantee is the
+collection's, tested here.)
+
+### Offline / AI-off still scores
+With no key or `MECHGRADER_AI_DISABLED` set, the AI grader returns
+`ai_status="off"` and falls back to the deterministic grade (test_ai_grader), and
+the scoring math is pure-stdlib (test_scoring) — so both apps still produce a
+score offline.
+
+### Source tracing — registry populated, gold resolves
+`sources/registry.json` now holds 6 real texts (Clayden 2e, Wade 9e, Klein 4e,
+McMurry 9e, Carey 11e, Lehninger 8e); every gold source_ref resolves (validated).
+
 ## Still planned
 1. **Memory calibration** — reliability diagram + Brier/log loss on held-out
    reviews. (`make eval` memory path.)

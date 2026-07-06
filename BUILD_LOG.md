@@ -278,6 +278,23 @@ a server + 2 devices; the merge logic is tested, wiring documented).
   rust android targets, no cargo-ndk, no AnkiDroid checkout. Exact reproducible
   build steps printed by the preflight + in docs/mobile.md. Not faked.
 
+### More Stage 3 evidence — DONE
+- **Study-feature experiment** (`mechgrader/experiment/`, `python -m mechgrader.experiment`):
+  fair three-arm sim (interleaved/blocked/plain, same learners/items/time; stated
+  model with a switch cost so interleaving only wins at high confusability — the
+  sweep shows the null/negative region). interleaved-blocked = +0.194 at
+  confusability 1.6; -0.019 at 0. 5 tests. Simulation, honestly labeled.
+- **Paraphrase/bridge test** (`mechgrader/paraphrase/`): recall vs mechanism
+  performance gap + verdict. Sim: recall 0.844 vs perf 0.536 (gap +0.308) -> bridge
+  demonstrated. 5 tests.
+- **Crash recovery** (`mechgrader/tests/test_crash_recovery.py`): 20 unclean exits
+  (20 notes survive) + a SIGKILL mid-write (4436 notes in) -> `pragma
+  integrity_check` OK + `fix_integrity` OK, zero corruption.
+- **Source tracing**: `sources/registry.json` populated with 6 real texts; all gold
+  source_refs normalized + resolve.
+- **Offline/AI-off scores**: proven (AI kill switch -> deterministic; pure-stdlib scoring).
+
 ### Remaining Stage 3
-Paraphrase/bridge test + study-feature experiment (simulation harnesses);
-crash-safety + offline engine tests; reviewer GUI wiring (needs a display).
+Reviewer GUI wiring (needs a display); real-data calibration/accuracy (needs real
+reviews); full evidence for a few adversarial rows (contradictory sources, broken
+images) alongside the reviewer GUI.

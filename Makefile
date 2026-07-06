@@ -83,6 +83,7 @@ test:
 	$(PY) mechgrader/tests/test_calibration.py
 	$(PY) mechgrader/tests/test_study_feature.py
 	$(PY) mechgrader/tests/test_paraphrase.py
+	$(PY) mechgrader/tests/test_crash_recovery.py
 	@echo ">> For the RDKit grader suite + the baseline eval, run: make test-grader eval"
 
 # Deterministic grader suite (needs RDKit in chem-grader/.venv). One-time setup:
